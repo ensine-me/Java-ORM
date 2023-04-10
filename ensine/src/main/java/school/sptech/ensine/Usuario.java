@@ -3,14 +3,15 @@ package school.sptech.ensine;
 import net.bytebuddy.asm.Advice;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.PastOrPresent;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+//@DiscriminatorColumn(name = "tipo_usuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,23 @@ public class Usuario {
 
     @PastOrPresent
     private LocalDate dataNasc;
+
+
+    // Criação de materia com tabela associativa
+//    @ManyToMany
+//    @JoinTable(name = "usuario_materia",
+//            joinColumns = @JoinColumn,
+//            inverseJoinColumns = @JoinColumn)
+//    private List<Materia> materias;
+
+
+    //Para situação de contorno sem ter que fazer um crud das materias essa seria a melhor solução
+    //Porém da erro na hora de cadastrar algum usuario com o atributo de materias
+    //Sim está como string de proposito
+    
+   // @NotEmpty
+    @ElementCollection
+    private List<String> materias = new ArrayList<>();
 
     public Usuario(boolean isProfessor, String nome, String email, String senha) {
         this.isProfessor = isProfessor;
@@ -97,5 +115,13 @@ public class Usuario {
 
     public void setDataNasc(LocalDate dataNasc) {
         this.dataNasc = dataNasc;
+    }
+
+    public List<String> getMaterias() {
+        return materias;
+    }
+
+    public void setMaterias(List<String> materias) {
+        this.materias = materias;
     }
 }

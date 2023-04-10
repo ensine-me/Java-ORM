@@ -88,6 +88,4 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuariosOrdenadosPorIdade);
     }
 
-    @GetMapping
-
 }
