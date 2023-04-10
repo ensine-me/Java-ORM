@@ -26,6 +26,11 @@ public class Professor extends Usuario {
     @ElementCollection
     private List<String> competencias = new ArrayList<>();
 
+    public Professor(boolean isProfessor, String nome, String email, String senha) {
+        super(isProfessor, nome, email, senha);
+    }
+
+    public Professor() {}
 
     @Override
     public int getId() {
