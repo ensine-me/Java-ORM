@@ -3,6 +3,7 @@ package school.sptech.ensine;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,7 +19,14 @@ public class Materia {
     private String nome;
 
     @ManyToMany(mappedBy = "materias")
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios = new ArrayList<>();
+
+    public Materia(String nome) {
+        this.nome = nome;
+    }
+
+    public Materia() {
+    }
 
     public int getId() {
         return id;
@@ -34,5 +42,13 @@ public class Materia {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
     }
 }

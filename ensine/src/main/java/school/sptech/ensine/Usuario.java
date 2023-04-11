@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 //@DiscriminatorColumn(name = "tipo_usuario")
-public class Usuario {
+public  class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -36,21 +36,14 @@ public class Usuario {
     private LocalDate dataNasc;
 
 
-    // Criação de materia com tabela associativa
-//    @ManyToMany
-//    @JoinTable(name = "usuario_materia",
-//            joinColumns = @JoinColumn,
-//            inverseJoinColumns = @JoinColumn)
-//    private List<Materia> materias;
+//     Criação de materia com tabela associativa
+    @ManyToMany(cascade=CascadeType.PERSIST)
+    @JoinTable(name = "usuario_materia",
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn)
+    private List<Materia> materias = new ArrayList<>();
 
 
-    //Para situação de contorno sem ter que fazer um crud das materias essa seria a melhor solução
-    //Porém da erro na hora de cadastrar algum usuario com o atributo de materias
-    //Sim está como string de proposito
-    
-   // @NotEmpty
-    @ElementCollection
-    private List<String> materias = new ArrayList<>();
 
     public Usuario(boolean isProfessor, String nome, String email, String senha) {
         this.isProfessor = isProfessor;
@@ -117,11 +110,13 @@ public class Usuario {
         this.dataNasc = dataNasc;
     }
 
-    public List<String> getMaterias() {
+    public List<Materia> getMaterias() {
+
         return materias;
     }
 
-    public void setMaterias(List<String> materias) {
+    public void setMaterias(List<Materia> materias) {
+
         this.materias = materias;
     }
 }
