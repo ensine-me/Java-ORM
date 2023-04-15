@@ -1,8 +1,11 @@
 package school.sptech.ensine;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +21,13 @@ public class Materia {
     @Size(min = 4, max = 30)
     private String nome;
 
-    @ManyToMany(mappedBy = "materias")
-    private List<Usuario> usuarios = new ArrayList<>();
-
     public Materia(String nome) {
         this.nome = nome;
     }
+
+    @ManyToOne
+    private Usuario usuario;
+//    private List<Usuario> usuarios = new ArrayList<>();
 
     public Materia() {
     }
@@ -44,11 +48,19 @@ public class Materia {
         this.nome = nome;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
+
+//        public List<Usuario> getUsuarios() {
+//        return usuarios;
+//    }
+//
+//    public void setUsuarios(List<Usuario> usuarios) {
+//        this.usuarios = usuarios;
+//    }
 }

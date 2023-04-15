@@ -1,9 +1,12 @@
 package school.sptech.ensine;
 
-import net.bytebuddy.asm.Advice;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -11,8 +14,8 @@ import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-//@DiscriminatorColumn(name = "tipo_usuario")
-public  class Usuario {
+public class Usuario {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -35,15 +38,8 @@ public  class Usuario {
     @PastOrPresent
     private LocalDate dataNasc;
 
-
-//     Criação de materia com tabela associativa
-    @ManyToMany(cascade=CascadeType.PERSIST)
-    @JoinTable(name = "usuario_materia",
-            joinColumns = @JoinColumn,
-            inverseJoinColumns = @JoinColumn)
-    private List<Materia> materias = new ArrayList<>();
-
-
+    @OneToMany(mappedBy = "usuario")
+    private List<Materia> materias;
 
     public Usuario(boolean isProfessor, String nome, String email, String senha) {
         this.isProfessor = isProfessor;
