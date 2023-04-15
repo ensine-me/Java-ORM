@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -40,6 +41,10 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private List<Materia> materias;
 
+//    @ManyToMany(cascade=CascadeType.PERSIST)
+//    @JoinTable(name = "usuario_materia",
+//        joinColumns = @JoinColumn,
+//        inverseJoinColumns = @JoinColumn)
 
     public static int converterEmAnos(Usuario usuario) {
         LocalDate dataNasc = usuario.getDataNasc();

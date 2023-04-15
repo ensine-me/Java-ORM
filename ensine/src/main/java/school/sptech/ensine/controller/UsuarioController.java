@@ -15,36 +15,18 @@ import school.sptech.ensine.repository.UsuarioRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("usuarios")
 public class UsuarioController {
 
-    private List<Usuario> usuariosLogados = new ArrayList<>();
+    private List<UsuarioDto> usuariosLogados = new ArrayList<>();
 
     @Autowired
     private UsuarioRepository usuarioRepository;
     @Autowired
     private MateriaRepository materiaRepository;
-
-    // INSERT INTO usuario(isProfessor, nome, email, senha, dataNasc) values (false, 'Clébin', 'clebin@email.com', '1234senha', '2022-04-14');
-
-//    @PostMapping("/materias")
-//    public ResponseEntity<List<Materia>> cadastrarMaterias(){
-//        materiaRepository.save(new Materia("Matematica"));
-//        materiaRepository.save(new Materia("Portugues"));
-//        materiaRepository.save(new Materia("Fisica"));
-//        materiaRepository.save(new Materia("Quimica"));
-//        materiaRepository.save(new Materia("Filosofia"));
-//        materiaRepository.save(new Materia("Sociologia"));
-//        materiaRepository.save(new Materia("Geografia"));
-//        materiaRepository.save(new Materia("Historia"));
-//        materiaRepository.save(new Materia("Biologia"));
-
-
-//        List<Materia> materias = materiaRepository.findAll();
-//        return ResponseEntity.status(201).body(materias);
-//  }
 
     @GetMapping("/materias")
     public ResponseEntity<List<Materia>> listarMaterias(){
@@ -68,7 +50,14 @@ public class UsuarioController {
             return ResponseEntity.status(409).build();
         }
         alunoNovo.setProfessor(false);
+
+        List<String> materias = new ArrayList<>();
+        alunoNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
+        alunoNovo.getMaterias().clear();
+
         Usuario aluno = usuarioRepository.save(alunoNovo);
+        adicionarMateriaUsuario(aluno.getId(), materias);
+        usuariosLogados.add(new UsuarioDto(aluno));
         return ResponseEntity.status(201).body(aluno);
     }
 
@@ -84,11 +73,15 @@ public class UsuarioController {
         }
         professorNovo.setProfessor(true);
 
+        List<String> materias = new ArrayList<>();
+        professorNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
+        professorNovo.getMaterias().clear();
 
-        Professor professor = usuarioRepository.<Professor>save(professorNovo);
+        Professor professor = usuarioRepository.save(professorNovo);
+        adicionarMateriaUsuario(professor.getId(), materias);
+        usuariosLogados.add(new UsuarioDto(professor));
         return ResponseEntity.status(201).body(professor);
     }
-
 
     @GetMapping
     public ResponseEntity<List<Usuario>> listar(){
@@ -101,23 +94,75 @@ public class UsuarioController {
     }
 
     @GetMapping("/logados")
-    public ResponseEntity<List<Usuario>> listarLogados(){
+    public ResponseEntity<List<UsuarioDto>> listarLogados(){
 
-        if (usuariosLogados.isEmpty()){
-         return ResponseEntity.status(204).build();
-        }
+//        if (usuariosLogados.isEmpty()){
+//         return ResponseEntity.status(204).build();
+//        }
         return ResponseEntity.status(200).body(usuariosLogados);
     }
 
-//    @PostMapping("/login")
-//    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario){
-//
-//
-//
-//        UsuarioDto usuarioLogin = new UsuarioDto(usuario);
-//
-//
-//    }
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioDto> login(@RequestBody Usuario usuarioLogar){
+
+        Optional<Usuario> usuarioTemp = usuarioRepository.findByEmail(usuarioLogar.getEmail());
+
+        if(usuarioTemp.isEmpty()){
+            return ResponseEntity.status(404).build();
+        }
+
+        Usuario usuario = usuarioTemp.get();
+
+        for(UsuarioDto usuarioDto :usuariosLogados){
+            if (usuarioDto.getEmail().equals(usuario.getEmail())){
+                return ResponseEntity.status(409).build();
+            }
+        }
+
+        if (usuario.getSenha().equals(usuarioLogar.getSenha())){
+            usuariosLogados.add(new UsuarioDto(usuario));
+        }else{
+            return ResponseEntity.status(401).build();
+        }
+
+        return ResponseEntity.status(200).body(new UsuarioDto(usuario)) ;
+    }
+
+    @DeleteMapping("/logoff")
+    public ResponseEntity<String> logoff(@RequestBody String email){
+
+        int tamanho = usuariosLogados.size();
+
+        for(int i = 0; i < usuariosLogados.size(); i++){
+            if(usuariosLogados.get(i).getEmail().equals(email)){
+                usuariosLogados.remove(i);
+                break;
+            }
+        }
+        if (usuariosLogados.size() == tamanho){
+            return ResponseEntity.status(404).body("Usuario não está logado");
+        }
+        return ResponseEntity.status(200).body("Usuario deslogado com sucesso");
+    }
+
+    public void adicionarMateriaUsuario(int id, @RequestBody List<String> nomesMaterias){
+        //List<Materia> materias = new ArrayList<>();
+        Optional<Usuario> usuarioTemp = usuarioRepository.findById(id);
+        Usuario usuario = usuarioTemp.get();
+
+        for(String nome: nomesMaterias){
+
+          Optional<Materia> materiaAtual = materiaRepository.findByNomeContainingIgnoreCase(nome);
+          Materia materia = materiaAtual.get();
+            usuario.getMaterias().add(materia);
+        }
+
+
+
+        //materias.forEach(materia -> usuario.getMaterias().add(materia));
+
+        usuarioRepository.save(usuario);
+    }
 
     // Hugo´s ordenations:
 

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface MateriaRepository extends JpaRepository<Materia, Integer> {
 
-    Optional<Materia> findByNomeIgnoreCase(String nome);
+    Optional<Materia> findByNomeContainingIgnoreCase(String nome);
 
 
 }
