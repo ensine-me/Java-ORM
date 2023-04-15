@@ -1,56 +1,48 @@
-package school.sptech.ensine;
+package school.sptech.ensine.DTO;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
-
+import school.sptech.ensine.domain.Materia;
+import school.sptech.ensine.domain.Usuario;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Usuario {
+public class UsuarioDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public UsuarioDto(Usuario usuario) {
+        this.id = usuario.getId();
+        this.isProfessor = usuario.isProfessor();
+        this.nome = usuario.getNome();
+        this.email = usuario.getEmail();
+        this.senha = usuario.getSenha();
+        this.dataNasc = usuario.getDataNasc();
+        this.materias = usuario.getMaterias();
+    }
+
     private int id;
 
     private boolean isProfessor;
 
-    @NotBlank
-    @Size(min = 2, max = 80)
     private String nome;
 
-    @NotBlank
-    @Email
-    @Size(min = 9, max = 40)
     private String email;
 
-    @NotBlank
-    @Size(min = 8, max = 30)
     private String senha;
 
-    @PastOrPresent
     private LocalDate dataNasc;
 
-    @OneToMany(mappedBy = "usuario")
     private List<Materia> materias;
 
-    public Usuario(boolean isProfessor, String nome, String email, String senha) {
-        this.isProfessor = isProfessor;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-    }
 
-    public Usuario() {}
-
-    public static int converterEmAnos(Usuario usuario) {
+    public static int converterEmAnos(school.sptech.ensine.domain.Usuario usuario) {
         LocalDate dataNasc = usuario.getDataNasc();
         LocalDate dataAtual = LocalDate.now();
 
@@ -90,7 +82,7 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getSenha() {
+    public String pegarSenha() {
         return senha;
     }
 
@@ -115,4 +107,9 @@ public class Usuario {
 
         this.materias = materias;
     }
+
+//    public boolean getLogado(){
+//        return ;
+//    }
 }
+

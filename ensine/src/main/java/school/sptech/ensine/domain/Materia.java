@@ -1,13 +1,9 @@
-package school.sptech.ensine;
+package school.sptech.ensine.domain;
 
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
@@ -21,16 +17,11 @@ public class Materia {
     @Size(min = 4, max = 30)
     private String nome;
 
-    public Materia(String nome) {
-        this.nome = nome;
-    }
-
     @ManyToOne
     private Usuario usuario;
 //    private List<Usuario> usuarios = new ArrayList<>();
 
-    public Materia() {
-    }
+
 
     public int getId() {
         return id;

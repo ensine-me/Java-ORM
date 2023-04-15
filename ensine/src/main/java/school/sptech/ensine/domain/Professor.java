@@ -1,4 +1,4 @@
-package school.sptech.ensine;
+package school.sptech.ensine.domain;
 
 
 import jakarta.persistence.Entity;
@@ -14,9 +14,6 @@ public class Professor extends Usuario {
     private String descricao;
 
 
-    public Professor(boolean isProfessor, String nome, String email, String senha) {
-        super(isProfessor, nome, email, senha);
-    }
 
     public Professor() {}
 

@@ -1,21 +1,26 @@
-package school.sptech.ensine;
+package school.sptech.ensine.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.ensine.DTO.UsuarioDto;
+import school.sptech.ensine.domain.Materia;
+import school.sptech.ensine.domain.Professor;
+import school.sptech.ensine.domain.Usuario;
+import school.sptech.ensine.repository.MateriaRepository;
+import school.sptech.ensine.repository.UsuarioRepository;
 
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("usuarios")
 public class UsuarioController {
+
+    private List<Usuario> usuariosLogados = new ArrayList<>();
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -94,6 +99,25 @@ public class UsuarioController {
         }
         return ResponseEntity.status(200).body(usuarios);
     }
+
+    @GetMapping("/logados")
+    public ResponseEntity<List<Usuario>> listarLogados(){
+
+        if (usuariosLogados.isEmpty()){
+         return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(usuariosLogados);
+    }
+
+//    @PostMapping("/login")
+//    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario){
+//
+//
+//
+//        UsuarioDto usuarioLogin = new UsuarioDto(usuario);
+//
+//
+//    }
 
     // Hugo´s ordenations:
 
