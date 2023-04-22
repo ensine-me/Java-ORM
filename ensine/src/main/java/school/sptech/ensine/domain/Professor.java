@@ -13,8 +13,6 @@ public class Professor extends Usuario {
     @Size(max = 300)
     private String descricao;
 
-
-
     public Professor() {}
 
     @Override

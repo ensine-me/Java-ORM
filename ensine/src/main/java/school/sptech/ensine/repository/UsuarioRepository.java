@@ -6,7 +6,8 @@ import school.sptech.ensine.domain.Usuario;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    boolean existsByEmail(String email);
-
-    Optional<Usuario> findByEmail(String email);
+    boolean existsByEmailIgnoreCase(String email);
+    boolean existsByNomeIgnoreCase(String nome);
+    Optional<Usuario> findByEmailIgnoreCase(String email);
+   Usuario findByNomeIgnoreCase(String nome);
 }

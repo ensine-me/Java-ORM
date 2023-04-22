@@ -5,16 +5,18 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
+import school.sptech.ensine.observer.AulaObserver;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Usuario {
+public class Usuario implements AulaObserver {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +54,12 @@ public class Usuario {
 
         Period periodo = Period.between(dataNasc, dataAtual);
         return periodo.getYears();
+    }
+
+    @Override
+    public void update(Aula aula) {
+        System.out.println(String.format("Olá %s, sua aula %s com o professor %s começa em uma hora!",
+                nome, aula.getTitulo(), aula.getProfessor().getNome()));
     }
 
     public int getId() {

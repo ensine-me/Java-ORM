@@ -45,7 +45,7 @@ public class UsuarioController {
             System.out.println("ERRO(CADASTRO) >>> O ALUNO NÃO RESPEITA AS VALIDAÇÕES");
             return ResponseEntity.status(406).build();
         }
-        if (usuarioRepository.existsByEmail(alunoNovo.getEmail())) {
+        if (usuarioRepository.existsByEmailIgnoreCase(alunoNovo.getEmail())) {
             System.out.println("ERRO(CADASTRO) >>> ALUNO COM EMAIL JÁ CADASTRADO");
             return ResponseEntity.status(409).build();
         }
@@ -67,7 +67,7 @@ public class UsuarioController {
             System.out.println("ERRO(CADASTRO) >>> O PROFESSOR NÃO RESPEITA AS VALIDAÇÕES");
             return ResponseEntity.status(406).build();
         }
-        if (usuarioRepository.existsByEmail(professorNovo.getEmail())) {
+        if (usuarioRepository.existsByEmailIgnoreCase(professorNovo.getEmail())) {
             System.out.println("ERRO(CADASTRO) >>> PROFESSOR COM EMAIL JÁ CADASTRADO");
             return ResponseEntity.status(409).build();
         }
@@ -102,10 +102,22 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuariosLogados);
     }
 
+    @GetMapping("/isProfessor")
+    public ResponseEntity<Boolean> isUsuarioProfessor(@RequestParam String nomeUsuario) {
+        if (usuarioRepository.existsByNomeIgnoreCase(nomeUsuario)) {
+            Usuario usuario = usuarioRepository.findByNomeIgnoreCase(nomeUsuario);
+            if (usuario.isProfessor()) {
+                return ResponseEntity.status(200).body(true);
+            }
+            return ResponseEntity.status(200).body(false);
+        }
+        return ResponseEntity.status(404).build();
+    }
+
     @PostMapping("/login")
     public ResponseEntity<UsuarioDto> login(@RequestBody Usuario usuarioLogar){
 
-        Optional<Usuario> usuarioTemp = usuarioRepository.findByEmail(usuarioLogar.getEmail());
+        Optional<Usuario> usuarioTemp = usuarioRepository.findByEmailIgnoreCase(usuarioLogar.getEmail());
 
         if(usuarioTemp.isEmpty()){
             return ResponseEntity.status(404).build();
