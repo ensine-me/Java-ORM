@@ -12,6 +12,7 @@ import school.sptech.ensine.repository.UsuarioRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.SubmissionPublisher;
 
 @RestController
@@ -23,12 +24,6 @@ public class AulaController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-
-    private final SubmissionPublisher<Aula> publisher;
-
-    public AulaController(SubmissionPublisher<Aula> publisher) {
-        this.publisher = publisher;
-    }
 
     @GetMapping
     public ResponseEntity<List<Aula>> getAulas() {
@@ -60,16 +55,29 @@ public class AulaController {
     @PostMapping
     public ResponseEntity<Aula> cadastrarAula(@RequestBody Aula newAula) {
         Aula aulaCadastrada = aulaRepository.save(newAula);
-        publisher.submit(aulaCadastrada);
+//        for (int i = 0; i < aulaCadastrada.getAlunos().size(); i++) { // for para adicionar cada aluno como um observador
+//            aulaCadastrada.addObserver(aulaCadastrada.getAlunos().get(i));
+//        }
         return ResponseEntity.status(201).body(aulaCadastrada);
     }
 
-    @Scheduled(fixedRate = 60000) // Executa a cada minuto
-    public void notificarObservadores() {
-        LocalDateTime agora = LocalDateTime.now();
-        List<Aula> aulas = aulaRepository.findByHorarioBetween(agora, agora.plusHours(1));
-        for (Aula aula : aulas) {
-            aula.notificarObservadores();
+    @PutMapping("/iniciar-aula")
+    public ResponseEntity<String> iniciarAula(@RequestParam int id) {
+        if (aulaRepository.existsById(id)) {
+            Aula aula = aulaRepository.getReferenceById(id);
+            aula.setStatus("Iniciada");
+            return ResponseEntity.status(200).body("Aula iniciada");
         }
+        return ResponseEntity.status(404).body("Aula não encontrada");
+    }
+
+    @PutMapping("/finalizar-aula")
+    public ResponseEntity<String> finalizarAula(@RequestParam int id) {
+        if (aulaRepository.existsById(id)) {
+            Aula aula = aulaRepository.getReferenceById(id);
+            aula.setStatus("Finalizada");
+            return ResponseEntity.status(200).body("Aula finalizada");
+        }
+        return ResponseEntity.status(404).body("Aula não encontrada");
     }
 }

@@ -1,20 +1,11 @@
 package school.sptech.ensine.domain;
 
 import jakarta.persistence.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import school.sptech.ensine.observer.AulaObserver;
-import school.sptech.ensine.observer.AulaObserverClass;
-import school.sptech.ensine.repository.AulaRepository;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Flow;
-import java.util.concurrent.SubmissionPublisher;
 
 @Entity
-public class Aula implements Flow.Publisher<Aula> {
+public class Aula {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -34,29 +25,8 @@ public class Aula implements Flow.Publisher<Aula> {
     @OneToMany
     private List<Usuario> alunos;
 
+    private String status; // se a aula está iniciada, programada ou finalizada
 
-    public void notificarObservadores() {
-        for (AulaObserver observer : AulaObserverClass.getObservers()) {
-            observer.update(this);
-        }
-    }
-
-    public void notificar() {
-        SubmissionPublisher<Aula> publisher = new SubmissionPublisher<>();
-        LocalDateTime agora = LocalDateTime.now();
-        LocalDateTime umaHoraAntesDaAula = dataHora.minusHours(1);
-        if (agora.isAfter(umaHoraAntesDaAula) && agora.isBefore(dataHora)) {
-            String mensagem = String.format("Olá, sua aula de %s com o professor %s começa em uma hora!", titulo, professor.getNome());
-            publisher.submit(this);
-            publisher.close();
-        }
-    }
-
-    @Override
-    public void subscribe(Flow.Subscriber<? super Aula> subscriber) {
-        SubmissionPublisher<Aula> publisher = new SubmissionPublisher<>();
-        publisher.subscribe(subscriber);
-    }
 
     public int getId() {
         return id;
@@ -108,5 +78,17 @@ public class Aula implements Flow.Publisher<Aula> {
 
     public void setAlunos(List<Usuario> alunos) {
         this.alunos = alunos;
+    }
+
+    public List<Usuario> getAlunos() {
+        return alunos;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

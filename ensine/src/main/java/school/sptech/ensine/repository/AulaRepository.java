@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByProfessorNomeEqualsIgnoreCase(String nome);
-    List<Aula> findByHorarioBetween(LocalDateTime inicio, LocalDateTime fim);
-
 }
