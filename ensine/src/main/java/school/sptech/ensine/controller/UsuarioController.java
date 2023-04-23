@@ -11,6 +11,8 @@ import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
+import school.sptech.ensine.service.usuario.UsuarioService;
+import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 
 
 import java.util.ArrayList;
@@ -24,9 +26,7 @@ public class UsuarioController {
     private List<UsuarioDto> usuariosLogados = new ArrayList<>();
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    private MateriaRepository materiaRepository;
+    UsuarioService usuarioService;
 
     @GetMapping("/materias")
     public ResponseEntity<List<Materia>> listarMaterias(){
@@ -40,26 +40,18 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> adicionaAluno(@RequestBody @Valid Usuario alunoNovo, BindingResult result){
+    public ResponseEntity<UsuarioCriacaoDto> adicionaAluno(@RequestBody @Valid UsuarioCriacaoDto alunoNovo, BindingResult result){
         if (result.hasErrors()) {
             System.out.println("ERRO(CADASTRO) >>> O ALUNO NÃO RESPEITA AS VALIDAÇÕES");
             return ResponseEntity.status(406).build();
         }
-        if (usuarioRepository.existsByEmailIgnoreCase(alunoNovo.getEmail())) {
+        if (usuarioService.existeEmail(alunoNovo.getEmail())) {
             System.out.println("ERRO(CADASTRO) >>> ALUNO COM EMAIL JÁ CADASTRADO");
             return ResponseEntity.status(409).build();
         }
-        alunoNovo.setProfessor(false);
-
-        List<String> materias = new ArrayList<>();
-        alunoNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
-        alunoNovo.getMaterias().clear();
-
-        Usuario aluno = usuarioRepository.save(alunoNovo);
-        adicionarMateriaUsuario(aluno.getId(), materias);
-        usuariosLogados.add(new UsuarioDto(aluno));
-        return ResponseEntity.status(201).body(aluno);
+        return ResponseEntity.status(201).body(usuarioService.criarAluno(alunoNovo));
     }
+
 
     @PostMapping("/professor")
     public ResponseEntity<Professor> adicionaProfessor(@RequestBody @Valid Professor professorNovo, BindingResult result){
@@ -67,7 +59,7 @@ public class UsuarioController {
             System.out.println("ERRO(CADASTRO) >>> O PROFESSOR NÃO RESPEITA AS VALIDAÇÕES");
             return ResponseEntity.status(406).build();
         }
-        if (usuarioRepository.existsByEmailIgnoreCase(professorNovo.getEmail())) {
+        if (usuarioService.existeEmail(professorNovo.getEmail())) {
             System.out.println("ERRO(CADASTRO) >>> PROFESSOR COM EMAIL JÁ CADASTRADO");
             return ResponseEntity.status(409).build();
         }
@@ -77,11 +69,13 @@ public class UsuarioController {
         professorNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
         professorNovo.getMaterias().clear();
 
-        Professor professor = usuarioRepository.save(professorNovo);
+        Professor professor = usuarioService.criarProfessor(professorNovo);
         adicionarMateriaUsuario(professor.getId(), materias);
         usuariosLogados.add(new UsuarioDto(professor));
         return ResponseEntity.status(201).body(professor);
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<Usuario>> listar(){
@@ -91,6 +85,16 @@ public class UsuarioController {
             return ResponseEntity.status(204).build();
         }
         return ResponseEntity.status(200).body(usuarios);
+    }
+
+    @GetMapping("teste")
+    public ResponseEntity<List<Materia>> listarMateria(){
+        List<Usuario> usuarios = usuarioRepository.findAll();
+
+        if(usuarios.isEmpty()){
+            return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(usuarios.get(2).getMaterias());
     }
 
     @GetMapping("/logados")
@@ -157,24 +161,7 @@ public class UsuarioController {
         return ResponseEntity.status(200).body("Usuario deslogado com sucesso");
     }
 
-    public void adicionarMateriaUsuario(int id, @RequestBody List<String> nomesMaterias){
-        //List<Materia> materias = new ArrayList<>();
-        Optional<Usuario> usuarioTemp = usuarioRepository.findById(id);
-        Usuario usuario = usuarioTemp.get();
 
-        for(String nome: nomesMaterias){
-
-          Optional<Materia> materiaAtual = materiaRepository.findByNomeContainingIgnoreCase(nome);
-          Materia materia = materiaAtual.get();
-            usuario.getMaterias().add(materia);
-        }
-
-
-
-        //materias.forEach(materia -> usuario.getMaterias().add(materia));
-
-        usuarioRepository.save(usuario);
-    }
 
     // Hugo´s ordenations:
 

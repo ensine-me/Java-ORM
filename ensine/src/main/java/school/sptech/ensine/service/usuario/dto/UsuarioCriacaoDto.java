@@ -1,25 +1,17 @@
-package school.sptech.ensine.domain;
+package school.sptech.ensine.service.usuario.dto;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
+import school.sptech.ensine.domain.Materia;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Usuario {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+public class UsuarioCriacaoDto {
 
     private boolean isProfessor;
 
@@ -39,30 +31,7 @@ public class Usuario {
     @PastOrPresent
     private LocalDate dataNasc;
 
-    @OneToMany(mappedBy = "usuario")
     private List<Materia> materias;
-
-//    @ManyToMany(cascade=CascadeType.PERSIST)
-//    @JoinTable(name = "usuario_materia",
-//        joinColumns = @JoinColumn,
-//        inverseJoinColumns = @JoinColumn)
-
-    public static int converterEmAnos(Usuario usuario) {
-        LocalDate dataNasc = usuario.getDataNasc();
-        LocalDate dataAtual = LocalDate.now();
-
-        Period periodo = Period.between(dataNasc, dataAtual);
-        return periodo.getYears();
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public boolean isProfessor() {
         return isProfessor;
@@ -105,13 +74,11 @@ public class Usuario {
     }
 
     public List<Materia> getMaterias() {
-
         return materias;
     }
 
     public void setMaterias(List<Materia> materias) {
-
         this.materias = materias;
     }
-
 }
+

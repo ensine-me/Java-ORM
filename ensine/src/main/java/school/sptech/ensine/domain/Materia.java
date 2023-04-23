@@ -23,11 +23,6 @@ public class Materia {
     @ManyToOne
     private Usuario usuario;
 
-//    @ManyToMany(mappedBy = "materias")
-//    private List<Usuario> usuarios = new ArrayList<>();
-
-
-
     public int getId() {
         return id;
     }
@@ -52,11 +47,4 @@ public class Materia {
 //        this.usuario = usuario;
 //    }
 
-//        public List<Usuario> getUsuarios() {
-//        return usuarios;
-//    }
-//
-//    public void setUsuarios(List<Usuario> usuarios) {
-//        this.usuarios = usuarios;
-//    }
 }
