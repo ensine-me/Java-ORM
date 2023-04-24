@@ -1,12 +1,15 @@
 package school.sptech.ensine.service.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import school.sptech.ensine.DTO.UsuarioDto;
+import school.sptech.ensine.domain.ListaObj;
 import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
+import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
 import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 import school.sptech.ensine.service.usuario.dto.UsuarioMapper;
 
@@ -22,6 +25,18 @@ public class UsuarioService {
     @Autowired
     private MateriaRepository materiaRepository;
 
+    public ListaObj<Usuario> listar(){
+        int qtdUsuarios = Math.toIntExact(usuarioRepository.count());
+        ListaObj<Usuario> usuarios = new ListaObj<>(qtdUsuarios);
+        usuarios.adiciona(usuarioRepository.findAll().toArray(new Usuario[qtdUsuarios]));
+
+        if(usuarios.isEmpty()){
+            return null;
+        }
+
+        return usuarios;
+    }
+
     public UsuarioCriacaoDto criarAluno(UsuarioCriacaoDto alunoNovo){
 
         alunoNovo.setProfessor(false);
@@ -34,7 +49,7 @@ public class UsuarioService {
         adicionarMateriaUsuario(aluno.getId(), materias);
         return alunoNovo;
     }
-    public UsuarioCriacaoDto criarProfessor(UsuarioCriacaoDto profNovo){
+    public ProfessorCriacaoDto criarProfessor(ProfessorCriacaoDto profNovo){
 
         profNovo.setProfessor(true);
 

@@ -13,6 +13,7 @@ public class UsuarioMapper {
         usuario.setSenha(usuarioCriacaoDto.getSenha());
         usuario.setDataNasc(usuarioCriacaoDto.getDataNasc());
         usuario.setProfessor(usuarioCriacaoDto.isProfessor());
+
         return usuario;
     }
 

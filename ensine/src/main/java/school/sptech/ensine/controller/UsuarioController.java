@@ -10,7 +10,10 @@ import school.sptech.ensine.domain.*;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.UsuarioService;
+import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
+import school.sptech.ensine.service.usuario.dto.ProfessorMapper;
 import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
+import school.sptech.ensine.service.usuario.dto.UsuarioMapper;
 
 
 import java.util.ArrayList;
@@ -21,7 +24,7 @@ import java.util.Optional;
 @RequestMapping("usuarios")
 public class UsuarioController {
 
-    //private List<UsuarioDto> usuariosLogados = new ArrayList<>();
+//    private List<UsuarioDto> usuariosLogados = new ArrayList<>();
 
     @Autowired
     UsuarioService usuarioService;
@@ -61,31 +64,28 @@ public class UsuarioController {
             System.out.println("ERRO(CADASTRO) >>> ALUNO COM EMAIL JÁ CADASTRADO");
             return ResponseEntity.status(409).build();
         }
+
+        Usuario aluno = UsuarioMapper.of(usuarioService.criarAluno(alunoNovo));
+        usuariosLogados.adiciona(new UsuarioDto(aluno));
         return ResponseEntity.status(201).body(usuarioService.criarAluno(alunoNovo));
     }
 
 
-//    @PostMapping("/professor")
-//    public ResponseEntity<Professor> adicionaProfessor(@RequestBody @Valid Professor professorNovo, BindingResult result){
-//        if (result.hasErrors()) {
-//            System.out.println("ERRO(CADASTRO) >>> O PROFESSOR NÃO RESPEITA AS VALIDAÇÕES");
-//            return ResponseEntity.status(406).build();
-//        }
-//        if (usuarioService.existeEmail(professorNovo.getEmail())) {
-//            System.out.println("ERRO(CADASTRO) >>> PROFESSOR COM EMAIL JÁ CADASTRADO");
-//            return ResponseEntity.status(409).build();
-//        }
-//        professorNovo.setProfessor(true);
-//
-//        List<String> materias = new ArrayList<>();
-//        professorNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
-//        professorNovo.getMaterias().clear();
-//
-//        Professor professor = usuarioService.criarProfessor(professorNovo);
-//        adicionarMateriaUsuario(professor.getId(), materias);
-//        usuariosLogados.add(new UsuarioDto(professor));
-//        return ResponseEntity.status(201).body(professor);
-//    }
+    @PostMapping("/professor")
+    public ResponseEntity<ProfessorCriacaoDto> adicionaProfessor(@RequestBody @Valid ProfessorCriacaoDto professorNovo, BindingResult result){
+        if (result.hasErrors()) {
+            System.out.println("ERRO(CADASTRO) >>> O PROFESSOR NÃO RESPEITA AS VALIDAÇÕES");
+            return ResponseEntity.status(406).build();
+        }
+        if (usuarioService.existeEmail(professorNovo.getEmail())) {
+            System.out.println("ERRO(CADASTRO) >>> PROFESSOR COM EMAIL JÁ CADASTRADO");
+            return ResponseEntity.status(409).build();
+        }
+
+        Professor professor = ProfessorMapper.of(usuarioService.criarProfessor(professorNovo));
+        usuariosLogados.adiciona(new UsuarioDto(professor));
+        return ResponseEntity.status(201).body(professorNovo);
+    }
 
 
 

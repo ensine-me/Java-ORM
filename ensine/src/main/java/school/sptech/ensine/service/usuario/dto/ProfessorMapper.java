@@ -4,11 +4,17 @@ import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
 
-public class ProfessorMapper extends UsuarioMapper{
+public class ProfessorMapper{
     public static Professor of(ProfessorCriacaoDto professorCriacaoDto) {
         Professor professor = new Professor();
 
+        professor.setEmail(professorCriacaoDto.getEmail());
+        professor.setNome(professorCriacaoDto.getNome());
+        professor.setSenha(professorCriacaoDto.getSenha());
+        professor.setDataNasc(professorCriacaoDto.getDataNasc());
+        professor.setProfessor(professorCriacaoDto.isProfessor());
         professor.setDescricao(professorCriacaoDto.getDescricao());
+
         return professor;
     }
 
