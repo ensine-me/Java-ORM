@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.ensine.domain.Aula;
+import school.sptech.ensine.domain.ListaObj;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
@@ -26,8 +27,10 @@ public class AulaController {
     private UsuarioRepository usuarioRepository;
 
     @GetMapping
-    public ResponseEntity<List<Aula>> getAulas() {
-        List<Aula> aulas = aulaRepository.findAll();
+    public ResponseEntity<ListaObj<Aula>> getAulas() {
+        int qtdAulas = (int) aulaRepository.count();
+        ListaObj<Aula> aulas = new ListaObj<Aula>(qtdAulas);
+        aulas.adiciona(aulaRepository.findAll().toArray(new Aula[qtdAulas]));
         if (aulas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
@@ -40,10 +43,12 @@ public class AulaController {
     }
 
     @GetMapping("busca-professor")
-    public ResponseEntity<List<Aula>> getAulasPorProfessor(@RequestParam String nomeProfessor) {
+    public ResponseEntity<ListaObj<Aula>> getAulasPorProfessor(@RequestParam String nomeProfessor) {
         Usuario usuario = usuarioRepository.findByNomeIgnoreCase(nomeProfessor);
         if (usuario.isProfessor()) {
-            List<Aula> aulas = aulaRepository.findByProfessorNomeEqualsIgnoreCase(nomeProfessor);
+            int qtdAulas = Math.toIntExact(aulaRepository.countByProfessorNomeEqualsIgnoreCase(nomeProfessor));
+            ListaObj<Aula> aulas = new ListaObj<Aula>(qtdAulas);
+            aulas.adiciona(aulaRepository.findAll().toArray(new Aula[qtdAulas]));
             if (aulas.isEmpty()) {
                 return ResponseEntity.status(204).build();
             }

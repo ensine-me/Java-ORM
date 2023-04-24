@@ -22,18 +22,18 @@ public class UsuarioService {
     @Autowired
     private MateriaRepository materiaRepository;
 
-        public UsuarioCriacaoDto criarAluno(UsuarioCriacaoDto alunoNovo){
+    public UsuarioCriacaoDto criarAluno(UsuarioCriacaoDto alunoNovo){
 
-            alunoNovo.setProfessor(false);
+        alunoNovo.setProfessor(false);
 
-            List<String> materias = new ArrayList<>();
-            alunoNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
-            alunoNovo.getMaterias().clear();
+        List<String> materias = new ArrayList<>();
+        alunoNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
+        alunoNovo.getMaterias().clear();
 
-            Usuario aluno = usuarioRepository.save(UsuarioMapper.of(alunoNovo));
-            adicionarMateriaUsuario(aluno.getId(), materias);
-            return alunoNovo;
-        }
+        Usuario aluno = usuarioRepository.save(UsuarioMapper.of(alunoNovo));
+        adicionarMateriaUsuario(aluno.getId(), materias);
+        return alunoNovo;
+    }
     public UsuarioCriacaoDto criarProfessor(UsuarioCriacaoDto profNovo){
 
         profNovo.setProfessor(true);

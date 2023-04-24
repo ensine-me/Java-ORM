@@ -23,6 +23,12 @@ public class UsuarioDto {
         this.email = usuario.getEmail();
     }
 
+    public UsuarioDto(UsuarioDto usuarioDto) {
+        this.id = usuarioDto.getId();
+        this.nome = usuarioDto.getNome();
+        this.email = usuarioDto.getEmail();
+    }
+
     private int id;
 
     private String nome;
