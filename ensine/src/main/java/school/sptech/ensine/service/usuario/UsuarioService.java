@@ -2,13 +2,22 @@ package school.sptech.ensine.service.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import school.sptech.ensine.DTO.UsuarioDto;
+import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.ListaObj;
 import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
+import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
+import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
 import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 import school.sptech.ensine.service.usuario.dto.UsuarioMapper;
@@ -24,6 +33,16 @@ public class UsuarioService {
 
     @Autowired
     private MateriaRepository materiaRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private GerenciadorTokenJwt gerenciadorTokenJwt;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
 
     public ListaObj<Usuario> listar(){
         int qtdUsuarios = Math.toIntExact(usuarioRepository.count());
@@ -45,8 +64,11 @@ public class UsuarioService {
         alunoNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
         alunoNovo.getMaterias().clear();
 
+        String senhaCripto = passwordEncoder.encode(alunoNovo.getSenha());
+        alunoNovo.setSenha(senhaCripto);
+
         Usuario aluno = usuarioRepository.save(UsuarioMapper.of(alunoNovo));
-        adicionarMateriaUsuario(aluno.getId(), materias);
+        //adicionarMateriaUsuario(aluno.getId(), materias);
         return alunoNovo;
     }
     public ProfessorCriacaoDto criarProfessor(ProfessorCriacaoDto profNovo){
@@ -57,8 +79,11 @@ public class UsuarioService {
         profNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
         profNovo.getMaterias().clear();
 
+        String senhaCripto = passwordEncoder.encode(profNovo.getSenha());
+        profNovo.setSenha(senhaCripto);
+
         Usuario professor = usuarioRepository.save(UsuarioMapper.of(profNovo));
-        adicionarMateriaUsuario(professor.getId(), materias);
+       // adicionarMateriaUsuario(professor.getId(), materias);
         return profNovo;
     }
 
@@ -79,6 +104,26 @@ public class UsuarioService {
     }
     public boolean existeEmail(String email) {
            return usuarioRepository.existsByEmailIgnoreCase(email);
+    }
+
+    public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLoginDto) {
+
+        final UsernamePasswordAuthenticationToken credentials = new UsernamePasswordAuthenticationToken(
+                usuarioLoginDto.getEmail(), usuarioLoginDto.getSenha());
+
+        final Authentication authentication = this.authenticationManager.authenticate(credentials);
+
+        Usuario usuarioAutenticado =
+                usuarioRepository.findByEmailIgnoreCase(usuarioLoginDto.getEmail())
+                        .orElseThrow(
+                                () -> new ResponseStatusException(404, "Email do usuário não cadastrado", null)
+                        );
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        final String token = gerenciadorTokenJwt.generateToken(authentication);
+
+        return UsuarioMapper.of(usuarioAutenticado, token);
     }
 
 }

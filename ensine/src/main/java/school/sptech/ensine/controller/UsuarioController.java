@@ -10,6 +10,8 @@ import school.sptech.ensine.domain.*;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.UsuarioService;
+import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
+import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
 import school.sptech.ensine.service.usuario.dto.ProfessorMapper;
 import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
@@ -35,11 +37,10 @@ public class UsuarioController {
     @Autowired
     UsuarioRepository usuarioRepository;
 
-    int qtdUsuarios = Math.toIntExact(usuarioRepository.count());
     //pode ocorrer um bug na lista de usuariosLogados ao tentar cadastrar um novo usuário e logá-lo
     //logo em seguida, porque o limite da lista será o de número de usuários cadastrados anteriormente.
     // TODO: desenvolver uma lógica para que isso não aconteça
-    private ListaObj<UsuarioDto> usuariosLogados = new ListaObj<>(qtdUsuarios);
+    private ListaObj<UsuarioDto> usuariosLogados = new ListaObj<>();
 
     @GetMapping("/materias")
     public ResponseEntity<ListaObj<Materia>> listarMaterias(){
@@ -54,7 +55,7 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(materias);
     }
 
-    @PostMapping
+    @PostMapping("/cadastrar")
     public ResponseEntity<UsuarioCriacaoDto> adicionaAluno(@RequestBody @Valid UsuarioCriacaoDto alunoNovo, BindingResult result){
         if (result.hasErrors()) {
             System.out.println("ERRO(CADASTRO) >>> O ALUNO NÃO RESPEITA AS VALIDAÇÕES");
@@ -71,7 +72,7 @@ public class UsuarioController {
     }
 
 
-    @PostMapping("/professor")
+    @PostMapping("/professor/cadastrar")
     public ResponseEntity<ProfessorCriacaoDto> adicionaProfessor(@RequestBody @Valid ProfessorCriacaoDto professorNovo, BindingResult result){
         if (result.hasErrors()) {
             System.out.println("ERRO(CADASTRO) >>> O PROFESSOR NÃO RESPEITA AS VALIDAÇÕES");
@@ -134,29 +135,21 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UsuarioDto> login(@RequestBody Usuario usuarioLogar){
+    public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLogar){
 
-        Optional<Usuario> usuarioTemp = usuarioRepository.findByEmailIgnoreCase(usuarioLogar.getEmail());
-
-        if(usuarioTemp.isEmpty()){
-            return ResponseEntity.status(404).build();
-        }
-
-        Usuario usuario = usuarioTemp.get();
+        UsuarioTokenDto usuarioToken = usuarioService.  autenticar(usuarioLogar);
 
         for(int i = 0; i < usuariosLogados.size(); i++){
-            if (usuariosLogados.get(i).getEmail().equals(usuario.getEmail())){
+            if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
                 return ResponseEntity.status(409).build();
             }
         }
 
-        if (usuario.getSenha().equals(usuarioLogar.getSenha())){
-            usuariosLogados.adiciona(new UsuarioDto(usuario));
-        }else{
-            return ResponseEntity.status(401).build();
-        }
+        Optional<Usuario> usuario = usuarioRepository.findByEmailIgnoreCase(usuarioToken.getEmail());
 
-        return ResponseEntity.status(200).body(new UsuarioDto(usuario)) ;
+        usuariosLogados.adiciona(new UsuarioDto (usuario.get()));
+
+        return ResponseEntity.status(200).body(usuarioToken);
     }
 
     @DeleteMapping("/logoff")
@@ -175,7 +168,6 @@ public class UsuarioController {
         }
         return ResponseEntity.status(200).body("Usuario deslogado com sucesso");
     }
-
 
 
     // Hugo´s ordenations:

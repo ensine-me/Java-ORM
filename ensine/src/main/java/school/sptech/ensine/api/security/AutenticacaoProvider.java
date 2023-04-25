@@ -11,6 +11,7 @@ import school.sptech.ensine.service.usuario.autenticacao.AutenticacaoService;
 
 public class AutenticacaoProvider implements AuthenticationProvider {
 
+
     private final AutenticacaoService usuarioAutorizacaoService;
     private final PasswordEncoder passwordEncoder;
 

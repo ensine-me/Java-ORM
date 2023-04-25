@@ -33,7 +33,7 @@ public class Usuario {
     private String email;
 
     @NotBlank
-    @Size(min = 8, max = 30)
+    @Size(min = 8)
     private String senha;
 
     @PastOrPresent

@@ -9,6 +9,10 @@ public class ListaObj<T> {
         vetor = (T[]) new Object[tamanho];
         nroElem = 0;
     }
+    public ListaObj() {
+        vetor = (T[]) new Object[0];
+        nroElem = 0;
+    }
 
     public T[] getVetor() {
         T[] vetorNovo = (T[]) new Object[nroElem];
