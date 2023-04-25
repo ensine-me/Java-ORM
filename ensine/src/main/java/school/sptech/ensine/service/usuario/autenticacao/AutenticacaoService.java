@@ -21,7 +21,9 @@ public class AutenticacaoService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmailIgnoreCase(username);
+        System.out.println("=".repeat(50));
+        System.out.println(username);
+        Optional<Usuario> usuarioOpt = usuarioRepository.findByEmail(username);
 
         if (usuarioOpt.isEmpty()) {
 

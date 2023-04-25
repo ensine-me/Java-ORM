@@ -52,8 +52,6 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/error/"),
             new AntPathRequestMatcher("/usuarios/cadastrar"),
             new AntPathRequestMatcher("/usuarios/professor/cadastrar"),
-
-
     };
 
     @Bean

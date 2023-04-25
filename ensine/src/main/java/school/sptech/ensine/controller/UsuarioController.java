@@ -66,8 +66,7 @@ public class UsuarioController {
             return ResponseEntity.status(409).build();
         }
 
-        Usuario aluno = UsuarioMapper.of(usuarioService.criarAluno(alunoNovo));
-        usuariosLogados.adiciona(new UsuarioDto(aluno));
+        //usuariosLogados.adiciona(new UsuarioDto(aluno));
         return ResponseEntity.status(201).body(usuarioService.criarAluno(alunoNovo));
     }
 
@@ -83,9 +82,8 @@ public class UsuarioController {
             return ResponseEntity.status(409).build();
         }
 
-        Professor professor = ProfessorMapper.of(usuarioService.criarProfessor(professorNovo));
-        usuariosLogados.adiciona(new UsuarioDto(professor));
-        return ResponseEntity.status(201).body(professorNovo);
+        //usuariosLogados.adiciona(new UsuarioDto(professor));
+        return ResponseEntity.status(201).body(usuarioService.criarProfessor(professorNovo));
     }
 
 
@@ -137,7 +135,7 @@ public class UsuarioController {
     @PostMapping("/login")
     public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLogar){
 
-        UsuarioTokenDto usuarioToken = usuarioService.  autenticar(usuarioLogar);
+        UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLogar);
 
         for(int i = 0; i < usuariosLogados.size(); i++){
             if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
@@ -145,7 +143,7 @@ public class UsuarioController {
             }
         }
 
-        Optional<Usuario> usuario = usuarioRepository.findByEmailIgnoreCase(usuarioToken.getEmail());
+        Optional<Usuario> usuario = usuarioRepository.findByEmail(usuarioToken.getEmail());
 
         usuariosLogados.adiciona(new UsuarioDto (usuario.get()));
 
