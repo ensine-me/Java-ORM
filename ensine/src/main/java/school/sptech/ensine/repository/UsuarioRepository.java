@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     boolean existsByEmailIgnoreCase(String email);
     boolean existsByNomeIgnoreCase(String nome);
-    Optional<Usuario> findByEmail(String email);
+    Optional<Usuario> findByEmailIgnoreCase(String email);
    Usuario findByNomeIgnoreCase(String nome);
 }

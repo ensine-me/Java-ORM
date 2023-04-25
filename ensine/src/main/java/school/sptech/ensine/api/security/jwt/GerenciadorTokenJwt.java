@@ -36,12 +36,9 @@ public class GerenciadorTokenJwt {
         final String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        String teste = Jwts.builder().setSubject(authentication.getName())
+        return Jwts.builder().setSubject(authentication.getName())
                 .signWith(parseSecret()).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1_000)).compact();
-        System.out.println("=".repeat(50));
-        System.out.println(teste);
-        return teste;
     }
 
     public <T> T getClaimForToken(String token, Function<Claims, T> claimsResolver) {
