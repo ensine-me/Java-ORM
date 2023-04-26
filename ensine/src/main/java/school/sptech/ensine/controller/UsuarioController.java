@@ -1,5 +1,10 @@
 package school.sptech.ensine.controller;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "Usuário", description = "Requisições relacionadas aos usuários")
 @RestController
 @RequestMapping("usuarios")
 public class UsuarioController {
@@ -43,6 +49,11 @@ public class UsuarioController {
     private ListaObj<UsuarioDto> usuariosLogados = new ListaObj<>();
 
     @GetMapping("/materias")
+    @SecurityRequirement(name = "Bearer")
+    @Tag(name = "Listar matérias", description = "Devolve uma lista de disciplinas")
+    @ApiResponse(responseCode = "200", description = "Disciplinas encontradas")
+    @ApiResponse(responseCode = "204", description = "Não há disciplinas cadastradas", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
     public ResponseEntity<ListaObj<Materia>> listarMaterias(){
         Long qtdMaterias = materiaRepository.count();
         ListaObj<Materia> materias = new ListaObj<>(Math.toIntExact(qtdMaterias));
@@ -56,6 +67,10 @@ public class UsuarioController {
     }
 
     @PostMapping("/cadastrar")
+    @Tag(name = "Cadastrar usuários", description = "Cadastra um usuário do sistema")
+    @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso")
+    @ApiResponse(responseCode = "406", description = "Erro: o aluno informado não respeita as validações", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "409", description = "Erro: o e-mail informado já possui cadastro", content = @Content(schema = @Schema(hidden = true)))
     public ResponseEntity<UsuarioCriacaoDto> adicionaAluno(@RequestBody @Valid UsuarioCriacaoDto alunoNovo, BindingResult result){
         if (result.hasErrors()) {
             System.out.println("ERRO(CADASTRO) >>> O ALUNO NÃO RESPEITA AS VALIDAÇÕES");
@@ -66,13 +81,16 @@ public class UsuarioController {
             return ResponseEntity.status(409).build();
         }
 
-        Usuario aluno = UsuarioMapper.of(usuarioService.criarAluno(alunoNovo));
-        usuariosLogados.adiciona(new UsuarioDto(aluno));
+        //usuariosLogados.adiciona(new UsuarioDto(aluno));
         return ResponseEntity.status(201).body(usuarioService.criarAluno(alunoNovo));
     }
 
 
     @PostMapping("/professor/cadastrar")
+    @Tag(name = "Cadastrar professor", description = "Cadastra um professor")
+    @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso")
+    @ApiResponse(responseCode = "406", description = "Erro: o professor informado não respeita as validações", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "409", description = "Erro: o e-mail informado já possui cadastro", content = @Content(schema = @Schema(hidden = true)))
     public ResponseEntity<ProfessorCriacaoDto> adicionaProfessor(@RequestBody @Valid ProfessorCriacaoDto professorNovo, BindingResult result){
         if (result.hasErrors()) {
             System.out.println("ERRO(CADASTRO) >>> O PROFESSOR NÃO RESPEITA AS VALIDAÇÕES");
@@ -83,14 +101,17 @@ public class UsuarioController {
             return ResponseEntity.status(409).build();
         }
 
-        Professor professor = ProfessorMapper.of(usuarioService.criarProfessor(professorNovo));
-        usuariosLogados.adiciona(new UsuarioDto(professor));
-        return ResponseEntity.status(201).body(professorNovo);
+        //usuariosLogados.adiciona(new UsuarioDto(professor));
+        return ResponseEntity.status(201).body(usuarioService.criarProfessor(professorNovo));
     }
 
 
 
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
+    @Tag(name = "Listar usuários", description = "Lista os usuários cadastrados")
+    @ApiResponse(responseCode = "204", description = "Não há usuários cadastrados", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "Usuários encontrados com sucesso")
     public ResponseEntity<ListaObj<Usuario>> listar(){
         int qtdUsuarios = Math.toIntExact(usuarioRepository.count());
         ListaObj<Usuario> usuarios = new ListaObj<>(qtdUsuarios);
@@ -102,17 +123,27 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuarios);
     }
 
-    @GetMapping("teste")
-    public ResponseEntity<List<Materia>> listarMateria(){
-        List<Usuario> usuarios = usuarioRepository.findAll();
+//    @GetMapping("teste")
+//    @SecurityRequirement(name = "Bearer")
+//    @Tag(name = "Cadastrar professor", description = "Cadastra um professor")
+//    @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
+//    @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso")
+//    @ApiResponse(responseCode = "406", description = "Erro: o professor informado não respeita as validações", content = @Content(schema = @Schema(hidden = true)))
+//    @ApiResponse(responseCode = "409", description = "Erro: o e-mail informado já possui cadastro", content = @Content(schema = @Schema(hidden = true)))
+//    public ResponseEntity<List<Materia>> listarMateria(){
+//        List<Usuario> usuarios = usuarioRepository.findAll();
+//
+//        if(usuarios.isEmpty()){
+//            return ResponseEntity.status(204).build();
+//        }
+//        return ResponseEntity.status(200).body(usuarios.get(2).getMaterias());
+//    }
 
-        if(usuarios.isEmpty()){
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.status(200).body(usuarios.get(2).getMaterias());
-    }
-
+    @SecurityRequirement(name = "Bearer")
+    @Tag(name = "Listar usuários logados", description = "Lista os usuários atualmente logados no sistema")
+    @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
     @GetMapping("/logados")
+    @ApiResponse(responseCode = "200", description = "Usuários encontrados com sucesso")
     public ResponseEntity<ListaObj<UsuarioDto>> listarLogados(){
         ListaObj<UsuarioDto> usuariosLogadosDto = new ListaObj<>(usuariosLogados.size());
         for (int i = 0; i < usuariosLogados.size(); i ++) {
@@ -123,6 +154,11 @@ public class UsuarioController {
     }
 
     @GetMapping("/isProfessor")
+    @SecurityRequirement(name = "Bearer")
+    @Tag(name = "Is Usuario Professor", description = "Dado um usuário, devolve se é professor ou não")
+    @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "404", description = "Professor requisitado não foi encontrado", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "Professor encontrado")
     public ResponseEntity<Boolean> isUsuarioProfessor(@RequestParam String nomeUsuario) {
         if (usuarioRepository.existsByNomeIgnoreCase(nomeUsuario)) {
             Usuario usuario = usuarioRepository.findByNomeIgnoreCase(nomeUsuario);
@@ -135,9 +171,12 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
+    @Tag(name = "Login", description = "Autentica os usuários no sistema")
+    @ApiResponse(responseCode = "409", description = "Usuário já está logado", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso")
     public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLogar){
 
-        UsuarioTokenDto usuarioToken = usuarioService.  autenticar(usuarioLogar);
+        UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLogar);
 
         for(int i = 0; i < usuariosLogados.size(); i++){
             if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
@@ -153,6 +192,11 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/logoff")
+    @SecurityRequirement(name = "Bearer")
+    @Tag(name = "Login", description = "Desautentica os usuários no sistema")
+    @ApiResponse(responseCode = "404", description = "Usuário não existe ou não está logado")
+    @ApiResponse(responseCode = "200", description = "Usuário deslogado com sucesso")
+    @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
     public ResponseEntity<String> logoff(@RequestBody String email){
 
         int tamanho = usuariosLogados.size();
@@ -163,13 +207,13 @@ public class UsuarioController {
                 break;
             }
         }
+        // por que estamos comparando o tamanho da lista com o tamanho da lista?
+        // por que isso implica que o usuário não está logado?
+        // remover o IF não dá no mesmo?
         if (usuariosLogados.size() == tamanho){
             return ResponseEntity.status(404).body("Usuario não está logado");
         }
         return ResponseEntity.status(200).body("Usuario deslogado com sucesso");
     }
-
-
-    // Hugo´s ordenations:
 
 }

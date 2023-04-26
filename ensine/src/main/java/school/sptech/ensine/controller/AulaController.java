@@ -1,6 +1,8 @@
 package school.sptech.ensine.controller;
 
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,6 +18,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.SubmissionPublisher;
 
+@Tag(name = "Aula", description = "Requisições relacionada às aulas")
+@SecurityRequirement(name = "Bearer")
 @RestController
 @RequestMapping("/aulas")
 public class AulaController {
