@@ -193,7 +193,7 @@ public class UsuarioController {
 
     @DeleteMapping("/logoff")
     @SecurityRequirement(name = "Bearer")
-    @Tag(name = "Login", description = "Desautentica os usuários no sistema")
+    @Tag(name = "LogOff", description = "Desautentica os usuários no sistema")
     @ApiResponse(responseCode = "404", description = "Usuário não existe ou não está logado")
     @ApiResponse(responseCode = "200", description = "Usuário deslogado com sucesso")
     @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))

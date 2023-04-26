@@ -14,9 +14,8 @@ import org.springframework.context.annotation.Configuration;
                 title = "Ensine.Me",
                 description = "Backend da plataforma de ensino Ensine.Me",
                 contact = @Contact(
-                        name = "Diego",
-                        url = "https://github.com/BandTec/spring-security-jwt-exemplo",
-                        email = "diego.lima@sptech.school"
+                        name = "Ensine.Me",
+                        url = "https://github.com/ensine-me"
                 ),
                 license = @License(name = "UNLICENSED"),
                 version = "1.0.0"
