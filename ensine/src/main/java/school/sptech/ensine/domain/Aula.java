@@ -10,8 +10,8 @@ public class Aula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
-    private Professor professor;
+    @OneToOne
+    private Usuario professor;
 
     private String titulo;
 
@@ -36,11 +36,11 @@ public class Aula {
         this.id = id;
     }
 
-    public Professor getProfessor() {
+    public Usuario getProfessor() {
         return professor;
     }
 
-    public void setProfessor(Professor professor) {
+    public void setProfessor(Usuario professor) {
         this.professor = professor;
     }
 

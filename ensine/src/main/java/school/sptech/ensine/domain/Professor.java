@@ -2,6 +2,7 @@ package school.sptech.ensine.domain;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.validation.constraints.Size;
 
@@ -12,6 +13,9 @@ public class Professor extends Usuario {
 
     @Size(max = 300)
     private String descricao;
+
+    @OneToOne
+    private Aula aula;
 
     public Professor() {}
 
@@ -29,5 +33,11 @@ public class Professor extends Usuario {
         this.descricao = descricao;
     }
 
+    public Aula getAula() {
+        return aula;
+    }
 
+    public void setAula(Aula aula) {
+        this.aula = aula;
+    }
 }
