@@ -40,8 +40,6 @@ public class UsuarioController {
     @Autowired
     MateriaRepository materiaRepository;
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
 
     //pode ocorrer um bug na lista de usuariosLogados ao tentar cadastrar um novo usuário e logá-lo
     //logo em seguida, porque o limite da lista será o de número de usuários cadastrados anteriormente.
@@ -113,16 +111,16 @@ public class UsuarioController {
     @ApiResponse(responseCode = "204", description = "Não há usuários cadastrados", content = @Content(schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "200", description = "Usuários encontrados com sucesso")
     public ResponseEntity<ListaObj<Usuario>> listar(){
-        int qtdUsuarios = Math.toIntExact(usuarioRepository.count());
+        int qtdUsuarios = usuarioService.qtdeUsuario();
         ListaObj<Usuario> usuarios = new ListaObj<>(qtdUsuarios);
-        usuarios.adiciona(usuarioRepository.findAll().toArray(new Usuario[qtdUsuarios]));
+        usuarios.adiciona(usuarioService.todosUsuarios().toArray(new Usuario[qtdUsuarios]));
 
         if(usuarios.isEmpty()){
             return ResponseEntity.status(204).build();
         }
         return ResponseEntity.status(200).body(usuarios);
     }
-
+// NAO APAGAR ATÉ A RESOLUÇÃO DO PROBLEMA DE MATÉRIAS
 //    @GetMapping("teste")
 //    @SecurityRequirement(name = "Bearer")
 //    @Tag(name = "Cadastrar professor", description = "Cadastra um professor")
@@ -131,12 +129,22 @@ public class UsuarioController {
 //    @ApiResponse(responseCode = "406", description = "Erro: o professor informado não respeita as validações", content = @Content(schema = @Schema(hidden = true)))
 //    @ApiResponse(responseCode = "409", description = "Erro: o e-mail informado já possui cadastro", content = @Content(schema = @Schema(hidden = true)))
 //    public ResponseEntity<List<Materia>> listarMateria(){
-//        List<Usuario> usuarios = usuarioRepository.findAll();
+//        List<Usuario> usuarios = usuarioService.todosUsuarios();
 //
 //        if(usuarios.isEmpty()){
 //            return ResponseEntity.status(204).build();
 //        }
 //        return ResponseEntity.status(200).body(usuarios.get(2).getMaterias());
+//    }
+//
+//    @GetMapping("teste2")
+//    @SecurityRequirement(name = "Bearer")
+//    public ResponseEntity<List<Materia>> materias(){
+//        List<Materia> materias = materiaRepository.findAll();
+//        if(materias.isEmpty()){
+//            return ResponseEntity.status(204).build();
+//        }
+//        return ResponseEntity.status(200).body(materias);
 //    }
 
     @SecurityRequirement(name = "Bearer")
@@ -146,7 +154,7 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuários encontrados com sucesso")
     public ResponseEntity<ListaObj<UsuarioDto>> listarLogados(){
         ListaObj<UsuarioDto> usuariosLogadosDto = new ListaObj<>(usuariosLogados.size());
-        for (int i = 0; i < usuariosLogados.size(); i ++) {
+        for (int i = 0; i < usuariosLogados.size(); i++) {
             UsuarioDto usuarioDto = new UsuarioDto(usuariosLogados.get(i));
             usuariosLogadosDto.adiciona(usuarioDto);
         }
@@ -160,9 +168,9 @@ public class UsuarioController {
     @ApiResponse(responseCode = "404", description = "Professor requisitado não foi encontrado", content = @Content(schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "200", description = "Professor encontrado")
     public ResponseEntity<Boolean> isUsuarioProfessor(@RequestParam String nomeUsuario) {
-        if (usuarioRepository.existsByNomeIgnoreCase(nomeUsuario)) {
-            Usuario usuario = usuarioRepository.findByNomeIgnoreCase(nomeUsuario);
-            if (usuario.isProfessor()) {
+        if (usuarioService.existeNomeIgnoreCase(nomeUsuario)) {
+            Optional<Usuario> usuario = usuarioService.encontraPorNome(nomeUsuario);
+            if (usuario.get().isProfessor()) {
                 return ResponseEntity.status(200).body(true);
             }
             return ResponseEntity.status(200).body(false);
@@ -184,7 +192,7 @@ public class UsuarioController {
             }
         }
 
-        Optional<Usuario> usuario = usuarioRepository.findByEmailIgnoreCase(usuarioToken.getEmail());
+        Optional<Usuario> usuario = usuarioService.encontraPorEmail(usuarioToken.getEmail());
 
         usuariosLogados.adiciona(new UsuarioDto (usuario.get()));
 

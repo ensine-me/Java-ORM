@@ -16,6 +16,8 @@ import school.sptech.ensine.domain.ListaObj;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
+import school.sptech.ensine.service.usuario.AulaService;
+import school.sptech.ensine.service.usuario.UsuarioService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,21 +29,19 @@ import java.util.concurrent.SubmissionPublisher;
 @RestController
 @RequestMapping("/aulas")
 public class AulaController {
-
     @Autowired
-    private AulaRepository aulaRepository;
-
+    private AulaService aulaService;
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioService usuarioService;
 
     @GetMapping
     @Tag(name = "Listar aulas", description = "Lista as aulas cadastradas")
     @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "200", description = "Aulas recuperadas com sucesso")
     public ResponseEntity<ListaObj<Aula>> getAulas() {
-        int qtdAulas = (int) aulaRepository.count();
+        int qtdAulas = aulaService.qtdeAulas();
         ListaObj<Aula> aulas = new ListaObj<Aula>(qtdAulas);
-        aulas.adiciona(aulaRepository.findAll().toArray(new Aula[qtdAulas]));
+        aulas.adiciona(aulaService.aulas().toArray(new Aula[qtdAulas]));
         if (aulas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
@@ -53,7 +53,7 @@ public class AulaController {
     @ApiResponse(responseCode = "404", description = "Aula não encontrada", content = @Content(schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "200", description = "Aula recuperada com sucesso")
     public ResponseEntity<Aula> getAulaPorId(@RequestParam int id) {
-        return ResponseEntity.of(aulaRepository.findById(id));
+        return ResponseEntity.of(aulaService.encontraAulaId(id));
     }
 
     @GetMapping("busca-professor")
@@ -62,11 +62,11 @@ public class AulaController {
     @ApiResponse(responseCode = "200", description = "Aulas recuperadas com sucesso")
     @ApiResponse(responseCode = "404", description = "Professor não encontrado", content = @Content(schema = @Schema(hidden = true)))
     public ResponseEntity<ListaObj<Aula>> getAulasPorProfessor(@RequestParam String nomeProfessor) {
-        Usuario usuario = usuarioRepository.findByNomeIgnoreCase(nomeProfessor);
-        if (usuario.isProfessor()) {
-            int qtdAulas = Math.toIntExact(aulaRepository.countByProfessorNomeEqualsIgnoreCase(nomeProfessor));
+        Optional<Usuario> usuario = usuarioService.encontraPorNome(nomeProfessor);
+        if (usuario.get().isProfessor()) {
+            int qtdAulas = Math.toIntExact(aulaService.countProfessorNome(nomeProfessor));
             ListaObj<Aula> aulas = new ListaObj<Aula>(qtdAulas);
-            aulas.adiciona(aulaRepository.findAll().toArray(new Aula[qtdAulas]));
+            aulas.adiciona(aulaService.aulas().toArray(new Aula[qtdAulas]));
             if (aulas.isEmpty()) {
                 return ResponseEntity.status(204).build();
             }
@@ -79,10 +79,7 @@ public class AulaController {
     @Tag(name = "Cadastrar aula", description = "Cadastra uma nova aula")
     @ApiResponse(responseCode = "201", description = "Aula cadastrada com sucesso")
     public ResponseEntity<Aula> cadastrarAula(@RequestBody Aula newAula) {
-        Aula aulaCadastrada = aulaRepository.save(newAula);
-//        for (int i = 0; i < aulaCadastrada.getAlunos().size(); i++) { // for para adicionar cada aluno como um observador
-//            aulaCadastrada.addObserver(aulaCadastrada.getAlunos().get(i));
-//        }
+        Aula aulaCadastrada = aulaService.aulaNova(newAula);
         return ResponseEntity.status(201).body(aulaCadastrada);
     }
 
@@ -91,8 +88,8 @@ public class AulaController {
     @ApiResponse(responseCode = "200", description = "Aula iniciada com sucesso")
     @ApiResponse(responseCode = "404", description = "Aula não encontrada")
     public ResponseEntity<String> iniciarAula(@RequestParam int id) {
-        if (aulaRepository.existsById(id)) {
-            Aula aula = aulaRepository.getReferenceById(id);
+        if (aulaService.existePorId(id)) {
+            Aula aula = aulaService.referenciaId(id);
             aula.setStatus("Iniciada");
             return ResponseEntity.status(200).body("Aula iniciada");
         }
@@ -104,8 +101,8 @@ public class AulaController {
     @ApiResponse(responseCode = "200", description = "Aula finalizada com sucesso")
     @ApiResponse(responseCode = "404", description = "Aula não encontrada")
     public ResponseEntity<String> finalizarAula(@RequestParam int id) {
-        if (aulaRepository.existsById(id)) {
-            Aula aula = aulaRepository.getReferenceById(id);
+        if (aulaService.existePorId(id)) {
+            Aula aula = aulaService.referenciaId(id);
             aula.setStatus("Finalizada");
             return ResponseEntity.status(200).body("Aula finalizada");
         }

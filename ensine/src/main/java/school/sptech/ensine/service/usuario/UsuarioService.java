@@ -43,7 +43,26 @@ public class UsuarioService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
+    public Boolean existeNomeIgnoreCase(String nome){
+        boolean existe = usuarioRepository.existsByNomeIgnoreCase(nome);
+        return existe;
+    }
+    public Optional<Usuario> encontraPorNome(String nome){
+        Optional<Usuario> nomeEncontrado = usuarioRepository.findByNomeIgnoreCase(nome);
+        return nomeEncontrado;
+    }
+    public Optional<Usuario> encontraPorEmail(String email){
+        Optional<Usuario> emailEncontrado = usuarioRepository.findByEmailIgnoreCase(email);
+        return emailEncontrado;
+    }
+    public List<Usuario> todosUsuarios(){
+        List<Usuario> todos = usuarioRepository.findAll();
+        return todos;
+    }
+    public Integer qtdeUsuario(){
+        int qtd = Math.toIntExact(usuarioRepository.count());
+        return qtd;
+    }
     public ListaObj<Usuario> listar(){
         int qtdUsuarios = Math.toIntExact(usuarioRepository.count());
         ListaObj<Usuario> usuarios = new ListaObj<>(qtdUsuarios);
