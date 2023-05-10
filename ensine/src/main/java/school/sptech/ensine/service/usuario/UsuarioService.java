@@ -78,17 +78,20 @@ public class UsuarioService {
     public UsuarioCriacaoDto criarAluno(UsuarioCriacaoDto alunoNovo){
 
         alunoNovo.setProfessor(false);
+        List<String> materiasNome = new ArrayList<>();
+        alunoNovo.getMaterias().forEach(materia -> materiasNome.add(materia.getNome()));
+        alunoNovo.getMaterias().clear(); // salva vidas
+        for (int i = 0; i < materiasNome.size(); i++) {
+            Optional<Materia> materiaCorreta = materiaRepository.findByNomeContainingIgnoreCase(materiasNome.get(i));
 
-        List<String> materias = new ArrayList<>();
-        alunoNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
-        alunoNovo.getMaterias().clear();
-
+            alunoNovo.addMateria(materiaCorreta.get());
+        }
         String senhaCripto = passwordEncoder.encode(alunoNovo.getSenha());
         alunoNovo.setSenha(senhaCripto);
 
         Usuario aluno = usuarioRepository.save(UsuarioMapper.of(alunoNovo));
-        //adicionarMateriaUsuario(aluno.getId(), materias);
         return alunoNovo;
+
     }
     public ProfessorCriacaoDto criarProfessor(ProfessorCriacaoDto profNovo){
 
@@ -106,21 +109,7 @@ public class UsuarioService {
         return profNovo;
     }
 
-    public void adicionarMateriaUsuario(int id, List<String> nomesMaterias){
-        //List<Materia> materias = new ArrayList<>();
-        Optional<Usuario> usuarioTemp = usuarioRepository.findById(id);
-        Usuario usuario = usuarioTemp.get();
 
-        for(String nome: nomesMaterias){
-
-            Optional<Materia> materiaAtual = materiaRepository.findByNomeContainingIgnoreCase(nome);
-            Materia materia = materiaAtual.get();
-            usuario.getMaterias().add(materia);
-        }
-        //materias.forEach(materia -> usuario.getMaterias().add(materia));
-
-        usuarioRepository.save(usuario);
-    }
     public boolean existeEmail(String email) {
            return usuarioRepository.existsByEmailIgnoreCase(email);
     }

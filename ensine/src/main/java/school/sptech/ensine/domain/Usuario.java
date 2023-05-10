@@ -39,7 +39,10 @@ public class Usuario {
     @PastOrPresent
     private LocalDate dataNasc;
 
-    @OneToMany(mappedBy = "usuario")
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name = "usuario_materia",
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn)
     private List<Materia> materias;
 
 //    @ManyToMany(cascade=CascadeType.PERSIST)

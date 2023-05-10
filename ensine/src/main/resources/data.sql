@@ -2,7 +2,8 @@ INSERT INTO materia
 (nome)
 VALUES
 ('Matematica'),
-('Fisica');
+('Fisica'),
+('Portugues');
 
 INSERT INTO usuario
 (is_professor, nome, email, senha, data_nasc)

@@ -20,9 +20,8 @@ public class Materia {
     @Size(min = 4, max = 30)
     private String nome;
 
-    @ManyToOne
-    private Usuario usuario;
-
+    @ManyToMany(mappedBy = "materias")
+    private List<Usuario> usuarios;
     public int getId() {
         return id;
     }

@@ -80,5 +80,8 @@ public class UsuarioCriacaoDto {
     public void setMaterias(List<Materia> materias) {
         this.materias = materias;
     }
+    public void addMateria(Materia materia){
+        this.materias.add(materia);
+    }
 }
 
