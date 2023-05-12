@@ -5,17 +5,19 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
+import school.sptech.ensine.observer.ObserverInterface;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Usuario {
+public class Usuario implements ObserverInterface {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -117,4 +119,28 @@ public class Usuario {
         this.materias = materias;
     }
 
+    @Transient // Indica que o seguinte atributo não será utilizado no banco de dados
+    List<Usuario> observers = new ArrayList<>();
+    public List<Integer> notifyObservers(Aula aula, String message) { //O que vai fazer quando for ativado
+        observers.forEach(usuario -> notificar(message));
+        List<Integer> observersIds = new ArrayList<>();
+        for (Usuario observer : observers) {
+            observersIds.add(observer.getId());
+        }
+        return observersIds;
+    }
+
+    public void addObserver(Usuario observer) {
+        observers.add(observer);
+    }
+
+    public void removeObserver(Usuario observer) {
+        observers.remove(observer);
+    }
+
+
+    @Override
+    public void notificar(String message) {
+        System.out.println(message);
+    }
 }

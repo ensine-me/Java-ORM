@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.Aula;
+import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 
@@ -55,6 +56,9 @@ public class AulaService {
     }
     public Aula aulaNova(Aula aula){
         Aula novaAula = aulaRepository.save(aula);
+        var usuarioClass = new Usuario();
+        aula.getAlunos().forEach(usuarioClass::addObserver);
+        usuarioClass.notifyObservers(aula, "Uma aula que você tinha interesse foi agendada!");
         return novaAula;
     }
 }
