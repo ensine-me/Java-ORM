@@ -104,7 +104,6 @@ public class UsuarioController {
     }
 
 
-
     @GetMapping
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "Listar usuários", description = "Lista os usuários cadastrados")
@@ -146,6 +145,11 @@ public class UsuarioController {
         }
         return ResponseEntity.status(200).body(materias);
     }
+
+//    @GetMapping("/professor/informacao")
+//    public ResponseEntity<List<Professor>> professoresInformacao(){
+//        List<Professor> professoresEncontrados = usuarioService
+//    }
 
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "Listar usuários logados", description = "Lista os usuários atualmente logados no sistema")

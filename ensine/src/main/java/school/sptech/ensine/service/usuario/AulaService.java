@@ -46,6 +46,10 @@ public class AulaService {
         boolean existe = aulaRepository.existsById(id);
         return existe;
     }
+    public List<Aula> encontraAulaPeloIdAluno(int id){
+        List<Aula> aulasPeloIdAluno = aulaRepository.findByAlunosId(id);
+        return aulasPeloIdAluno;
+    }
     public Aula referenciaId(int id){
         Aula aula = aulaRepository.getReferenceById(id);
         return aula;

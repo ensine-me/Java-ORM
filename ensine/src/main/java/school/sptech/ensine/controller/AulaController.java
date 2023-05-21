@@ -48,6 +48,14 @@ public class AulaController {
         return ResponseEntity.status(200).body(aulas);
     }
 
+    @GetMapping("busca-id-usuario")
+    @Tag(name = "AulasIdUsuario", description = "Mostrar aulas apartir do id do usuario.")
+    @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "Aulas recuperadas com sucesso")
+    public ResponseEntity<List<Aula>> getAulasIdUsuario(@RequestParam int id){
+     return ResponseEntity.status(200).body(aulaService.encontraAulaPeloIdAluno(id));
+    }
+
     @GetMapping("busca-id")
     @Tag(name = "Pegar aula por id", description = "Devolve uma aula dado um id")
     @ApiResponse(responseCode = "404", description = "Aula não encontrada", content = @Content(schema = @Schema(hidden = true)))
