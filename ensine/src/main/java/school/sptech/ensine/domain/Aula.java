@@ -24,6 +24,8 @@ public class Aula {
 
     @OneToMany
     private List<Usuario> alunos;
+    @OneToMany
+    private List<Mensagem> mensagems;
 
     private String status; // se a aula está iniciada, programada ou finalizada
 
