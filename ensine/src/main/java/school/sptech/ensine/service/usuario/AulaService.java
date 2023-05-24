@@ -1,11 +1,13 @@
 package school.sptech.ensine.service.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.Aula;
+import school.sptech.ensine.domain.ListaObj;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
@@ -38,6 +40,11 @@ public class AulaService {
         List<Aula> aulas = aulaRepository.findAll();
         return aulas;
     }
+    public ListaObj<Aula> getAulasPorStatus(String status) {
+        ListaObj<Aula> listaObj = new ListaObj<>(Math.toIntExact(aulaRepository.countByStatus(status)));
+        listaObj.adiciona(aulaRepository.findByStatus(status));
+        return listaObj;
+    }
     public Optional<Aula> encontraAulaId(int id){
         Optional<Aula> aulaEncontrada = aulaRepository.findById(id);
         return aulaEncontrada;
@@ -64,5 +71,12 @@ public class AulaService {
         aula.getAlunos().forEach(usuarioClass::addObserver);
         usuarioClass.notifyObservers(aula, "Uma aula que você tinha interesse foi agendada!");
         return novaAula;
+    }
+
+    public Optional<Aula> atualizarStatusAula(int id, String status) {
+        Optional<Aula> aula = aulaRepository.findById(id);
+        aula.get().setStatus(status);
+        aulaRepository.save(aula.get());
+        return aula;
     }
 }
