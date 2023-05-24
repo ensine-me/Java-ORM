@@ -97,9 +97,15 @@ public class UsuarioService {
 
         profNovo.setProfessor(true);
 
-        List<String> materias = new ArrayList<>();
-        profNovo.getMaterias().forEach(materia -> materias.add(materia.getNome()));
-        profNovo.getMaterias().clear();
+        List<String> materiasNome = new ArrayList<>();
+        profNovo.getMaterias().forEach(materia -> materiasNome.add(materia.getNome()));
+        profNovo.getMaterias().clear(); // salva vidas2
+        for (int i = 0; i < materiasNome.size(); i++) {
+            Optional<Materia> materiaCorreta = materiaRepository.findByNomeContainingIgnoreCase(materiasNome.get(i));
+
+            profNovo.addMateria(materiaCorreta.get());
+        }
+
 
         String senhaCripto = passwordEncoder.encode(profNovo.getSenha());
         profNovo.setSenha(senhaCripto);
