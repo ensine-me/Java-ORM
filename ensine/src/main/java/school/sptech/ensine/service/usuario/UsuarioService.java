@@ -94,12 +94,12 @@ public class UsuarioService {
 
     }
     public ProfessorCriacaoDto criarProfessor(ProfessorCriacaoDto profNovo){
-
+        // arrumar aulas
         profNovo.setProfessor(true);
 
         List<String> materiasNome = new ArrayList<>();
         profNovo.getMaterias().forEach(materia -> materiasNome.add(materia.getNome()));
-        profNovo.getMaterias().clear(); // salva vidas2
+        profNovo.getMaterias().clear(); // salva vidas2 funcionando
         for (int i = 0; i < materiasNome.size(); i++) {
             Optional<Materia> materiaCorreta = materiaRepository.findByNomeContainingIgnoreCase(materiasNome.get(i));
 
