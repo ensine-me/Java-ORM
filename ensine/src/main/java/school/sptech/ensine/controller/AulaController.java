@@ -48,6 +48,15 @@ public class AulaController {
         return ResponseEntity.status(200).body(aulas);
     }
 
+    @GetMapping("/{status}")
+    public ResponseEntity<ListaObj<Aula>> getAulasByStatus(@PathVariable String status) {
+        ListaObj<Aula> aulas = aulaService.getAulasPorStatus(status);
+        if (aulas.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(aulas);
+    }
+
     @GetMapping("busca-id-usuario")
     @Tag(name = "AulasIdUsuario", description = "Mostrar aulas apartir do id do usuario.")
     @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))
@@ -115,5 +124,9 @@ public class AulaController {
             return ResponseEntity.status(200).body("Aula finalizada");
         }
         return ResponseEntity.status(404).body("Aula não encontrada");
+    }
+    @PatchMapping("/{id}/mudanca-status")
+    public ResponseEntity<Aula> mudarStatus(@PathVariable int id, @RequestParam String status) {
+        return ResponseEntity.of(aulaService.atualizarStatusAula(id, status));
     }
 }

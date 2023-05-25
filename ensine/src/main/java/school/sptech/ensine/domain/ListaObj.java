@@ -1,6 +1,7 @@
 package school.sptech.ensine.domain;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ListaObj<T> {
     private T[] vetor;
@@ -46,6 +47,11 @@ public class ListaObj<T> {
     }
 
     public void adiciona(T[] novosObjetos) {
+        for(T elem : novosObjetos) {
+            adiciona(elem);
+        }
+    }
+    public void adiciona(List<T> novosObjetos) {
         for(T elem : novosObjetos) {
             adiciona(elem);
         }

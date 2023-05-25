@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByProfessorNomeEqualsIgnoreCase(String nome);
+    List<Aula> findByStatus(String status);
+    Long countByStatus(String status);
     Long countByProfessorNomeEqualsIgnoreCase(String nome);
     List<Aula> findByAlunosId(int id);
 
