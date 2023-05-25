@@ -6,9 +6,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.Aula;
+import school.sptech.ensine.domain.Materia;
+import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
+import school.sptech.ensine.repository.UsuarioRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +25,9 @@ public class AulaService {
     private MateriaRepository materiaRepository;
 
     @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -31,8 +37,8 @@ public class AulaService {
     private AuthenticationManager authenticationManager;
 
     public int qtdeAulas(){
-      int qtd = (int) aulaRepository.count();
-      return qtd;
+        int qtd = (int) aulaRepository.count();
+        return qtd;
     }
     public List<Aula> aulas(){
         List<Aula> aulas = aulaRepository.findAll();
@@ -59,8 +65,20 @@ public class AulaService {
         return qtde;
     }
     public Aula aulaNova(Aula aula){
+        Integer idProfessorAula = aula.getProfessor().getId();
+        // Professor repository
+        Optional<Usuario> byId = usuarioRepository.findById(idProfessorAula);
+        String nome = aula.getMateria().getNome();
+        Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);
+        if(materia.isEmpty()){
+            throw new IllegalArgumentException("MATERIA NAO EXISTE!");
+        }
+//        aula.setProfessor(byId.get());
+        aula.setMateria(materia.get());
         Aula novaAula = aulaRepository.save(aula);
-        var usuarioClass = new Usuario();
+
+        var usuarioClass = new Professor();
+
         aula.getAlunos().forEach(usuarioClass::addObserver);
         usuarioClass.notifyObservers(aula, "Uma aula que você tinha interesse foi agendada!");
         return novaAula;

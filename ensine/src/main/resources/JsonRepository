@@ -21,9 +21,9 @@ CADASTRAR AULA
         "id": 1
     },
     "titulo": "tituloTeste",
-    "materias": [{
+    "materia": {
         "id": 1
-    }],
+    },
     "dataHora": "2023-06-10T17:09:42.411",
     "qtdAlunos": 5,
     "alunos": [{

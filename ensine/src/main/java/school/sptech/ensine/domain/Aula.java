@@ -10,8 +10,8 @@ public class Aula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
-    private Usuario professor;
+    @OneToOne(mappedBy = "aula")
+    private Professor professor;
 
     private String titulo;
 
@@ -38,11 +38,12 @@ public class Aula {
         this.id = id;
     }
 
-    public Usuario getProfessor() {
+    // Get e set professor aqui __________________________________________________
+    public Professor getProfessor() {
         return professor;
     }
 
-    public void setProfessor(Usuario professor) {
+    public void setProfessor(Professor professor) {
         this.professor = professor;
     }
 

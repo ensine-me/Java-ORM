@@ -1,0 +1,187 @@
+{
+	"info": {
+		"_postman_id": "7a65fc20-4ddb-4b25-b656-24b391f5c88e",
+		"name": "Ensine-me",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Senhor fera\",\r\n    \"email\": \"mrbeast1@email.com\",\r\n    \"senha\": \"senha1234\",\r\n    \"dataNasc\": \"2003-08-25\",\r\n    \"materias\": [{\r\n        \"nome\": \"matematica\"\r\n    },\r\n    {\r\n        \"nome\":\"fisica\"\r\n    }]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/cadastrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"cadastrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"mrbeast1@email.com\",\r\n    \"senha\":\"senha1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar usuarios",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar aula",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"professor\": {\r\n        \"id\": 4\r\n    },\r\n    \"titulo\": \"Algebra para leigos\",\r\n    \"materia\": {\r\n        \"nome\":\"matematica\"\r\n    },\r\n    \"dataHora\": \"2023-06-10T17:09:42.411\",\r\n    \"qtdAlunos\": 5,\r\n    \"alunos\": [{\r\n        \"id\": 2\r\n    }],\r\n    \"status\": \"Programada\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/aulas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aulas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Professor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Hugo hanashiro\",\r\n    \"email\": \"hugo@email.com\",\r\n    \"senha\": \"senha1234\",\r\n    \"dataNasc\": \"2003-08-25\",\r\n    \"materias\": [{\r\n        \"nome\": \"matematica\"\r\n    }],\r\n    \"descricao\":\"amo matematica demais ><\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/cadastrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"cadastrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar aula",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NzAwNDYsImV4cCI6MTY4ODU3MDA0Nn0.Db-sUPG_Z-pYUJIpS8VympO5_jbLuVGMahudcf1IK2BGt8oMnDX5ZWb7xkaWHA7zFQkUD-XknpHyQOjPs7LtoA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/aulas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aulas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
