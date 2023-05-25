@@ -6,6 +6,6 @@ import school.sptech.ensine.domain.Mensagem;
 import java.util.List;
 
 public interface MensagemRepository extends JpaRepository<Mensagem, Integer> {
-    List<Mensagem> findByAula_Id(int id);
+    List<Mensagem> findByChat_Id(int id);
     
 }

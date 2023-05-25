@@ -3,7 +3,6 @@ package school.sptech.ensine.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 
@@ -13,18 +12,19 @@ public class Mensagem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
-    private Aula aula;
+    private Chat chat;
     @ManyToOne
     private Usuario usuario;
     @Size(min = 1, max = 700)
-    private String texto;
+    private String conteudo;
     @CreationTimestamp
     LocalDateTime dataEnvio;
 
-    public Mensagem(Aula aula, Usuario usuario, String texto) {
-        this.aula = aula;
+
+    public Mensagem(Chat chat, Usuario usuario, String conteudo) {
+        this.chat = chat;
         this.usuario = usuario;
-        this.texto = texto;
+        this.conteudo = conteudo;
     }
 
     public Mensagem() {
@@ -38,12 +38,12 @@ public class Mensagem {
         this.id = id;
     }
 
-    public Aula getAula() {
-        return aula;
+    public Chat getChat() {
+        return chat;
     }
 
-    public void setAula(Aula aula) {
-        this.aula = aula;
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 
     public Usuario getUsuario() {
@@ -54,12 +54,12 @@ public class Mensagem {
         this.usuario = usuario;
     }
 
-    public String getTexto() {
-        return texto;
+    public String getConteudo() {
+        return conteudo;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void setConteudo(String conteudo) {
+        this.conteudo = conteudo;
     }
 
     public LocalDateTime getDataEnvio() {

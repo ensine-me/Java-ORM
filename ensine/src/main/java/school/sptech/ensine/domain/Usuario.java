@@ -50,6 +50,9 @@ public class Usuario implements ObserverInterface {
     @OneToMany
     private List<Mensagem> mensagens;
 
+    @ManyToMany(mappedBy = "participantes")
+    private List<Chat> chats;
+
 
 
 //    @ManyToMany(cascade=CascadeType.PERSIST)

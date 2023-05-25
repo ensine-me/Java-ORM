@@ -12,7 +12,7 @@ public class MensagemPresentationDto {
 
     public MensagemPresentationDto(Mensagem mensagem) {
         this.id = mensagem.getId();
-        this.texto = mensagem.getTexto();
+        this.texto = mensagem.getConteudo();
         this.nomeUsuario = mensagem.getUsuario().getNome();
         this.dataEnvio = mensagem.getDataEnvio();
     }
