@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import school.sptech.ensine.domain.Aula;
 import school.sptech.ensine.domain.ListaObj;
 import school.sptech.ensine.domain.Usuario;
+import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.AulaService;
@@ -107,7 +108,7 @@ public class AulaController {
     public ResponseEntity<String> iniciarAula(@RequestParam int id) {
         if (aulaService.existePorId(id)) {
             Aula aula = aulaService.referenciaId(id);
-            aula.setStatus("Iniciada");
+            aula.setStatus(Status.EM_PROGRESSO);
             return ResponseEntity.status(200).body("Aula iniciada");
         }
         return ResponseEntity.status(404).body("Aula não encontrada");
@@ -120,13 +121,13 @@ public class AulaController {
     public ResponseEntity<String> finalizarAula(@RequestParam int id) {
         if (aulaService.existePorId(id)) {
             Aula aula = aulaService.referenciaId(id);
-            aula.setStatus("Finalizada");
+            aula.setStatus(Status.CONCLUIDA);
             return ResponseEntity.status(200).body("Aula finalizada");
         }
         return ResponseEntity.status(404).body("Aula não encontrada");
     }
     @PatchMapping("/{id}/mudanca-status")
-    public ResponseEntity<Aula> mudarStatus(@PathVariable int id, @RequestParam String status) {
+    public ResponseEntity<Aula> mudarStatus(@PathVariable int id, @RequestParam Status status) {
         return ResponseEntity.of(aulaService.atualizarStatusAula(id, status));
     }
 }

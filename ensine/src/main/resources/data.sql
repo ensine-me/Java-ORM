@@ -6,10 +6,10 @@ VALUES
 ('Portugues');
 
 INSERT INTO usuario
-(is_professor, nome, email, senha, data_nasc)
+(is_professor, nome, email, senha, data_nasc, qtd_experiencia)
 VALUES
-(false, 'Pedro', 'pedro@email.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', '2000-07-07'),
-(true, 'Filipe', 'filipe@email.com', 'senha1234', '2000-07-07');
+(false, 'Pedro', 'pedro@email.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', '2000-07-07', 20),
+(true, 'Filipe', 'filipe@email.com', 'senha1234', '2000-07-07', 20);
 
 --INSERT INTO aula
 --(titulo, data_hora, qtd_alunos, status)

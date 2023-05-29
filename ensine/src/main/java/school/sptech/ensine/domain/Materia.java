@@ -4,9 +4,7 @@ package school.sptech.ensine.domain;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import school.sptech.ensine.enumeration.Disciplinas;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,7 +17,7 @@ public class Materia {
 
     @NotBlank
     @Size(min = 4, max = 30)
-    private Disciplinas nome;
+    private String nome;
 
     @ManyToMany(mappedBy = "materias")
     private List<Usuario> usuarios;
@@ -31,11 +29,11 @@ public class Materia {
         this.id = id;
     }
 
-    public Disciplinas getNome() {
+    public String getNome() {
         return nome;
     }
 
-    public void setNome(Disciplinas nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 

@@ -11,6 +11,7 @@ import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.ListaObj;
 import school.sptech.ensine.domain.Usuario;
+import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
@@ -91,7 +92,7 @@ public class AulaService {
         return novaAula;
     }
 
-    public Optional<Aula> atualizarStatusAula(int id, String status) {
+    public Optional<Aula> atualizarStatusAula(int id, Status status) {
         Optional<Aula> aula = aulaRepository.findById(id);
         aula.get().setStatus(status);
         aulaRepository.save(aula.get());
