@@ -76,6 +76,7 @@ public class AulaService {
         Integer idProfessorAula = aula.getProfessor().getId();
         Optional<Professor> byId = usuarioRepository.findProfessorById(idProfessorAula);
         aula.setProfessor(byId.get());
+//        String nome = aula.getMateria().getNome();
         String nome = aula.getMateria().getNome();
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);
         if(materia.isEmpty()){

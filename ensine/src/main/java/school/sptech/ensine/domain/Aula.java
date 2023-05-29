@@ -1,7 +1,6 @@
 package school.sptech.ensine.domain;
 
 import jakarta.persistence.*;
-import school.sptech.ensine.enumeration.Status;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,18 +21,15 @@ public class Aula {
 
     private LocalDateTime dataHora;
 
-    private int limiteParticipantes;
-
-    private String descricao;
-
-    private int duracaoSegundos;
+    // limiteParticipantes
+    private int qtdAlunos;
 
     @OneToMany
     private List<Usuario> alunos;
-
-    private Status status;
-
-    private Double preco;
+    @OneToMany
+    private List<Mensagem> mensagems;
+    // Status
+    private String status;
 
     @OneToOne
     private Chat chat;
@@ -78,13 +74,13 @@ public class Aula {
     public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
     }
-
-    public int getLimiteParticipantes() {
-        return limiteParticipantes;
+    // limiteParticipantes
+    public int getQtdAlunos() {
+        return qtdAlunos;
     }
-
-    public void setLimiteParticipantes(int limiteParticipantes) {
-        this.limiteParticipantes = limiteParticipantes;
+    // limiteParticipantes
+    public void setQtdAlunos(int qtdAlunos) {
+        this.qtdAlunos = qtdAlunos;
     }
 
     public void setAlunos(List<Usuario> alunos) {
@@ -94,37 +90,13 @@ public class Aula {
     public List<Usuario> getAlunos() {
         return alunos;
     }
-
-    public Status getStatus() {
+    // Status
+    public String getStatus() {
         return status;
     }
-
-    public void setStatus(Status status) {
+    // Status
+    public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public int getDuracaoSegundos() {
-        return duracaoSegundos;
-    }
-
-    public void setDuracaoSegundos(int duracaoSegundos) {
-        this.duracaoSegundos = duracaoSegundos;
-    }
-
-    public Double getPreco() {
-        return preco;
-    }
-
-    public void setPreco(Double preco) {
-        this.preco = preco;
     }
 
     public Chat getChat() {

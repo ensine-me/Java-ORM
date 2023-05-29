@@ -19,7 +19,8 @@ public class Materia {
 
     @NotBlank
     @Size(min = 4, max = 30)
-    private Disciplinas nome;
+    // Disciplinas
+    private String nome;
 
     @ManyToMany(mappedBy = "materias")
     private List<Usuario> usuarios;
@@ -31,11 +32,12 @@ public class Materia {
         this.id = id;
     }
 
-    public Disciplinas getNome() {
+    // Disciplinas
+    public String getNome() {
         return nome;
     }
-
-    public void setNome(Disciplinas nome) {
+    // Disciplinas
+    public void setNome(String nome) {
         this.nome = nome;
     }
 

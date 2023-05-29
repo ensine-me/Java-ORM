@@ -16,7 +16,6 @@ import java.util.List;
 @PrimaryKeyJoinColumn(name = "usuario_id")
 public class Professor extends Usuario {
 
-    @NotBlank
     @Size(max = 900)
     private String descricao;
 
