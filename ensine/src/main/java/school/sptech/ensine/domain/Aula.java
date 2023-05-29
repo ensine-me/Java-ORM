@@ -1,6 +1,8 @@
 package school.sptech.ensine.domain;
 
 import jakarta.persistence.*;
+import school.sptech.ensine.enumeration.Status;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,15 +22,21 @@ public class Aula {
 
     private LocalDateTime dataHora;
 
-    private int qtdAlunos;
+    private int limiteParticipantes;
+
+    private String descricao;
+
+    private int duracaoSegundos;
 
     @OneToMany
     private List<Usuario> alunos;
-    @OneToMany
-    private List<Mensagem> mensagems;
 
-    private String status; // se a aula está iniciada, programada ou finalizada
+    private Status status;
 
+    private Double preco;
+
+    @OneToOne
+    private Chat chat;
 
     public int getId() {
         return id;
@@ -71,12 +79,12 @@ public class Aula {
         this.dataHora = dataHora;
     }
 
-    public int getQtdAlunos() {
-        return qtdAlunos;
+    public int getLimiteParticipantes() {
+        return limiteParticipantes;
     }
 
-    public void setQtdAlunos(int qtdAlunos) {
-        this.qtdAlunos = qtdAlunos;
+    public void setLimiteParticipantes(int limiteParticipantes) {
+        this.limiteParticipantes = limiteParticipantes;
     }
 
     public void setAlunos(List<Usuario> alunos) {
@@ -87,11 +95,43 @@ public class Aula {
         return alunos;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public int getDuracaoSegundos() {
+        return duracaoSegundos;
+    }
+
+    public void setDuracaoSegundos(int duracaoSegundos) {
+        this.duracaoSegundos = duracaoSegundos;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 }
