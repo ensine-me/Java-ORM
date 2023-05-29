@@ -8,17 +8,20 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.ensine.DTO.UsuarioDto;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.ListaObj;
 import school.sptech.ensine.domain.Materia;
+import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
+import school.sptech.ensine.service.usuario.dto.ProfessorMapper;
 import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 import school.sptech.ensine.service.usuario.dto.UsuarioMapper;
 
@@ -93,7 +96,7 @@ public class UsuarioService {
         return alunoNovo;
 
     }
-    public ProfessorCriacaoDto criarProfessor(ProfessorCriacaoDto profNovo){
+    public ProfessorCriacaoDto criarProfessor(@RequestBody ProfessorCriacaoDto profNovo){
         // arrumar aulas
         profNovo.setProfessor(true);
 
@@ -110,7 +113,7 @@ public class UsuarioService {
         String senhaCripto = passwordEncoder.encode(profNovo.getSenha());
         profNovo.setSenha(senhaCripto);
 
-        Usuario professor = usuarioRepository.save(UsuarioMapper.of(profNovo));
+        Professor professor = usuarioRepository.save(ProfessorMapper.of(profNovo));
        // adicionarMateriaUsuario(professor.getId(), materias);
         return profNovo;
     }

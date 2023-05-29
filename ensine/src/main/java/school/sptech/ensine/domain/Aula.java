@@ -10,7 +10,7 @@ public class Aula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(mappedBy = "aula")
+    @OneToOne
     private Professor professor;
 
     private String titulo;

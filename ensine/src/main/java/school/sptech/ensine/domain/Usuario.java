@@ -17,7 +17,8 @@ import java.util.Observer;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Usuario implements ObserverInterface {
+public class Usuario implements ObserverInterface
+{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

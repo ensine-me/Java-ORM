@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 
 
 @Entity
-@PrimaryKeyJoinColumn()
+@PrimaryKeyJoinColumn(name = "usuario_id")
 public class Professor extends Usuario {
 
     @Size(max = 300)

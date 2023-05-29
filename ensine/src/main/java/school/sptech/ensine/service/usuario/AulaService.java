@@ -71,16 +71,16 @@ public class AulaService {
         Long qtde = aulaRepository.countByProfessorNomeEqualsIgnoreCase(nome);
         return qtde;
     }
+    //        aula.setProfessor(usuarioRepository.findProfessorById(idProfessorAula));
     public Aula aulaNova(Aula aula){
         Integer idProfessorAula = aula.getProfessor().getId();
-        // Professor repository
-        Optional<Usuario> byId = usuarioRepository.findById(idProfessorAula);
+        Optional<Professor> byId = usuarioRepository.findProfessorById(idProfessorAula);
+        aula.setProfessor(byId.get());
         String nome = aula.getMateria().getNome();
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);
         if(materia.isEmpty()){
             throw new IllegalArgumentException("MATERIA NAO EXISTE!");
         }
-//        aula.setProfessor(byId.get());
         aula.setMateria(materia.get());
         Aula novaAula = aulaRepository.save(aula);
 
