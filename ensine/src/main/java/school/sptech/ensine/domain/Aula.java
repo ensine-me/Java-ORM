@@ -1,6 +1,7 @@
 package school.sptech.ensine.domain;
 
 import jakarta.persistence.*;
+import school.sptech.ensine.enumeration.Status;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Aula {
     @OneToMany
     private List<Mensagem> mensagems;
     // Status
-    private String status;
+    private Status status;
 
     @OneToOne
     private Chat chat;
@@ -91,11 +92,11 @@ public class Aula {
         return alunos;
     }
     // Status
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
     // Status
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

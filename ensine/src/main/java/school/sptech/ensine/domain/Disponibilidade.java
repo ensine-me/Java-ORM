@@ -1,7 +1,6 @@
 package school.sptech.ensine.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import org.springframework.cglib.core.Local;
 import school.sptech.ensine.enumeration.DiasDaSemana;
 
@@ -9,11 +8,22 @@ import java.time.LocalTime;
 
 @Entity
 public class Disponibilidade {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @ManyToOne
     private Professor professor;
     private DiasDaSemana diaDaSemana;
     private LocalTime horarioInicio;
     private LocalTime horarioFim;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Professor getProfessor() {
         return professor;
