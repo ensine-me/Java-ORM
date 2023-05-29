@@ -53,7 +53,7 @@ public class Usuario implements ObserverInterface {
     @ManyToMany(mappedBy = "participantes")
     private List<Chat> chats;
 
-
+    private int qtdExperiencia;
 
 //    @ManyToMany(cascade=CascadeType.PERSIST)
 //    @JoinTable(name = "usuario_materia",
@@ -125,6 +125,14 @@ public class Usuario implements ObserverInterface {
     public void setMaterias(List<Materia> materias) {
 
         this.materias = materias;
+    }
+
+    public int getQtdExperiencia() {
+        return qtdExperiencia;
+    }
+
+    public void setQtdExperiencia(int qtdExperiencia) {
+        this.qtdExperiencia = qtdExperiencia;
     }
 
     @Transient // Indica que o seguinte atributo não será utilizado no banco de dados
