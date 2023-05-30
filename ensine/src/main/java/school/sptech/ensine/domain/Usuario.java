@@ -48,6 +48,13 @@ public class Usuario implements ObserverInterface
             inverseJoinColumns = @JoinColumn)
     private List<Materia> materias;
 
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(name = "usuario_aula",
+            joinColumns = @JoinColumn,
+            inverseJoinColumns = @JoinColumn)
+    private List<Aula> aulas;
+
+
     @OneToMany
     private List<Mensagem> mensagens;
 

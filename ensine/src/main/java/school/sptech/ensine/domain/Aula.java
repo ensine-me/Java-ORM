@@ -25,7 +25,7 @@ public class Aula {
     // limiteParticipantes
     private int qtdAlunos;
 
-    @OneToMany
+    @ManyToMany
     private List<Usuario> alunos;
     @OneToMany
     private List<Mensagem> mensagems;
