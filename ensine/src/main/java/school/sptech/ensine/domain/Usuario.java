@@ -151,4 +151,6 @@ public class Usuario implements ObserverInterface
     public void notificar(String message) {
         System.out.println(message);
     }
+
+
 }

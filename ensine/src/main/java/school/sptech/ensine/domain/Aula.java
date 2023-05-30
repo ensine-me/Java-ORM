@@ -12,7 +12,7 @@ public class Aula {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @ManyToOne
     private Professor professor;
 
     private String titulo;

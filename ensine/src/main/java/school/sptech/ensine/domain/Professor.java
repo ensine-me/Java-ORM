@@ -1,10 +1,7 @@
 package school.sptech.ensine.domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -19,8 +16,8 @@ public class Professor extends Usuario {
     @Size(max = 900)
     private String descricao;
 
-    @OneToOne
-    private Aula aula;
+    @OneToMany(mappedBy = "professor")
+    private List<Aula> aulas;
 
     private Double precoHoraAula;
 
@@ -44,13 +41,13 @@ public class Professor extends Usuario {
         this.descricao = descricao;
     }
 
-    public Aula getAula() {
-        return aula;
-    }
-
-    public void setAula(Aula aula) {
-        this.aula = aula;
-    }
+//    public List<Aula> getAulas() {
+//        return aulas;
+//    }
+//
+//    public void setAulas(List<Aula> aulas) {
+//        this.aulas = aulas;
+//    }
 
     public void setDisponibilidades(List<Disponibilidade> disponibilidades) {
         this.disponibilidades = disponibilidades;

@@ -14,6 +14,7 @@ public class ProfessorMapper{
         professor.setDataNasc(professorCriacaoDto.getDataNasc());
         professor.setProfessor(professorCriacaoDto.isProfessor());
         professor.setDescricao(professorCriacaoDto.getDescricao());
+        professor.setMaterias(professorCriacaoDto.getMaterias());
 
         return professor;
     }

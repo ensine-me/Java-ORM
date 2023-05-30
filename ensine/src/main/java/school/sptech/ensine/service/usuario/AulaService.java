@@ -79,6 +79,7 @@ public class AulaService {
         aula.setProfessor(byId.get());
 //        String nome = aula.getMateria().getNome();
         String nome = aula.getMateria().getNome();
+
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);
         if(materia.isEmpty()){
             throw new IllegalArgumentException("MATERIA NAO EXISTE!");
@@ -86,7 +87,7 @@ public class AulaService {
         aula.setMateria(materia.get());
         Aula novaAula = aulaRepository.save(aula);
 
-        var usuarioClass = new Professor();
+        var usuarioClass = new Usuario();
 
         aula.getAlunos().forEach(usuarioClass::addObserver);
         usuarioClass.notifyObservers(aula, "Uma aula que você tinha interesse foi agendada!");
