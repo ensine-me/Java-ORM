@@ -14,6 +14,7 @@ import school.sptech.ensine.DTO.UsuarioDto;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.domain.exception.EntidadeNaoEncontradaException;
+import school.sptech.ensine.repository.DisponibilidadeRepository;
 import school.sptech.ensine.repository.FormacaoRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
@@ -40,6 +41,9 @@ public class UsuarioService {
     private FormacaoRepository formacaoRepository;
 
     @Autowired
+    private DisponibilidadeRepository disponibilidadeRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -57,6 +61,18 @@ public class UsuarioService {
         formacao.setProfessor(professor);
         Formacao formacaoSalva = this.formacaoRepository.save(formacao);
         professor.addFormacao(formacaoSalva);
+        return this.usuarioRepository.save(professor);
+    }
+
+    public Professor cadastrarDisponibilidade(int idProfessor, Disponibilidade disponibilidade) {
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        if (professorOptional.isEmpty()){
+            throw new EntidadeNaoEncontradaException("Professor não encontrado");
+        }
+        Professor professor = professorOptional.get();
+        disponibilidade.setProfessor(professor);
+        Disponibilidade disponibilidadeSalva = this.disponibilidadeRepository.save(disponibilidade);
+        professor.addDisponibilidade(disponibilidadeSalva);
         return this.usuarioRepository.save(professor);
     }
 

@@ -21,7 +21,7 @@ public class Professor extends Usuario {
 
     private Double precoHoraAula;
 
-    @OneToMany
+    @OneToMany(mappedBy = "professor")
     private List<Disponibilidade> disponibilidades;
 
     @OneToMany(mappedBy = "professor")

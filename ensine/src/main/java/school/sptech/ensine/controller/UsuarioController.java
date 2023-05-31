@@ -52,6 +52,12 @@ public class UsuarioController {
         return ResponseEntity.created(null).body(professor);
     }
 
+    @PatchMapping("/professor/{idProfessor}/disponibilidade") //cadastra formação nova em um professor existente
+    public ResponseEntity<Professor> cadastrarDisponibilidade(@PathVariable int idProfessor, @RequestBody Disponibilidade disponibilidade) {
+        Professor professor = this.usuarioService.cadastrarDisponibilidade(idProfessor, disponibilidade);
+        return ResponseEntity.created(null).body(professor);
+    }
+
     @GetMapping("/materias")
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "Listar matérias", description = "Devolve uma lista de disciplinas")

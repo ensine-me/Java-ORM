@@ -3,7 +3,16 @@ INSERT INTO materia
 VALUES
 ('Matematica'),
 ('Fisica'),
-('Portugues');
+('Artes'),
+('Filosofia'),
+('Sociologia'),
+('Lingua Inglesa'),
+('Quimica'),
+('Biologia'),
+('Geografia'),
+('Historia'),
+('Lingua Portuguesa');
+
 
 INSERT INTO usuario
 (is_professor, nome, email, senha, data_nasc)
