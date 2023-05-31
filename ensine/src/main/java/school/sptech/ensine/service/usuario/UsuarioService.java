@@ -12,10 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.ensine.DTO.UsuarioDto;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
-import school.sptech.ensine.domain.ListaObj;
-import school.sptech.ensine.domain.Materia;
-import school.sptech.ensine.domain.Professor;
-import school.sptech.ensine.domain.Usuario;
+import school.sptech.ensine.domain.*;
+import school.sptech.ensine.domain.exception.EntidadeNaoEncontradaException;
+import school.sptech.ensine.repository.FormacaoRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
@@ -38,6 +37,9 @@ public class UsuarioService {
     private MateriaRepository materiaRepository;
 
     @Autowired
+    private FormacaoRepository formacaoRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -45,6 +47,18 @@ public class UsuarioService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    public Professor cadastrarFormacao(int idProfessor, Formacao formacao) {
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        if (professorOptional.isEmpty()){
+            throw new EntidadeNaoEncontradaException("Professor não encontrado");
+        }
+        Professor professor = professorOptional.get();
+        formacao.setProfessor(professor);
+        Formacao formacaoSalva = this.formacaoRepository.save(formacao);
+        professor.addFormacao(formacaoSalva);
+        return this.usuarioRepository.save(professor);
+    }
 
     public Boolean existeNomeIgnoreCase(String nome){
         boolean existe = usuarioRepository.existsByNomeIgnoreCase(nome);

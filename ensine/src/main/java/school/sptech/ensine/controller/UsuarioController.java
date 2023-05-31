@@ -46,6 +46,12 @@ public class UsuarioController {
     // TODO: desenvolver uma lógica para que isso não aconteça
     private ListaObj<UsuarioDto> usuariosLogados = new ListaObj<>();
 
+    @PatchMapping("/professor/{idProfessor}/formacao") //cadastra formação nova em um professor existente
+    public ResponseEntity<Professor> cadastrarFormacao(@PathVariable int idProfessor, @RequestBody Formacao formacao) {
+        Professor professor = this.usuarioService.cadastrarFormacao(idProfessor, formacao);
+        return ResponseEntity.created(null).body(professor);
+    }
+
     @GetMapping("/materias")
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "Listar matérias", description = "Devolve uma lista de disciplinas")

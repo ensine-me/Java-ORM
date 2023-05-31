@@ -24,7 +24,7 @@ public class Professor extends Usuario {
     @OneToMany
     private List<Disponibilidade> disponibilidades;
 
-    @OneToMany
+    @OneToMany(mappedBy = "professor")
     private List<Formacao> formacoes;
 
     @Override
