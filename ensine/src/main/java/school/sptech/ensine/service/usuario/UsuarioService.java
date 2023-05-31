@@ -1,7 +1,6 @@
 package school.sptech.ensine.service.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -10,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
-import school.sptech.ensine.DTO.UsuarioDto;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.domain.exception.EntidadeNaoEncontradaException;
@@ -20,10 +18,12 @@ import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
+import school.sptech.ensine.service.usuario.dto.FormacaoResumoDto;
 import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
-import school.sptech.ensine.service.usuario.dto.ProfessorMapper;
+import school.sptech.ensine.service.usuario.dto.mapper.FormacaoMapper;
+import school.sptech.ensine.service.usuario.dto.mapper.ProfessorMapper;
 import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
-import school.sptech.ensine.service.usuario.dto.UsuarioMapper;
+import school.sptech.ensine.service.usuario.dto.mapper.UsuarioMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +74,16 @@ public class UsuarioService {
         Disponibilidade disponibilidadeSalva = this.disponibilidadeRepository.save(disponibilidade);
         professor.addDisponibilidade(disponibilidadeSalva);
         return this.usuarioRepository.save(professor);
+    }
+
+    public List<FormacaoResumoDto> getFormacoes(int idProfessor) {
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        if (professorOptional.isEmpty()){
+            throw new EntidadeNaoEncontradaException("Professor não encontrado");
+        }
+        List<Formacao> formacoes = this.formacaoRepository.findByProfessorId(idProfessor);
+        List<FormacaoResumoDto> formacoesResumo = formacoes.stream().map(FormacaoMapper::mapFormacaoToFormacaoResumoDto).toList();
+        return formacoesResumo;
     }
 
     public Boolean existeNomeIgnoreCase(String nome){

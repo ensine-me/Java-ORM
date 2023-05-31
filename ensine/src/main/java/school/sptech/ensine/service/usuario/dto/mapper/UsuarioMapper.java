@@ -1,7 +1,8 @@
-package school.sptech.ensine.service.usuario.dto;
+package school.sptech.ensine.service.usuario.dto.mapper;
 
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
+import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 
 public class UsuarioMapper {
 
