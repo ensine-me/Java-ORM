@@ -14,7 +14,6 @@ public class FormacaoResumoDto {
     private String instituicao;
     private String nomeCurso;
     private TiposFormacao tipoFormacao;
-    @ManyToOne
     private ProfessorResumoDto professor;
 
     public FormacaoResumoDto() {

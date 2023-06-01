@@ -18,8 +18,10 @@ import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
+import school.sptech.ensine.service.usuario.dto.DisponibilidadeResumoDto;
 import school.sptech.ensine.service.usuario.dto.FormacaoResumoDto;
 import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
+import school.sptech.ensine.service.usuario.dto.mapper.DisponibilidadeMapper;
 import school.sptech.ensine.service.usuario.dto.mapper.FormacaoMapper;
 import school.sptech.ensine.service.usuario.dto.mapper.ProfessorMapper;
 import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
@@ -84,6 +86,19 @@ public class UsuarioService {
         List<Formacao> formacoes = this.formacaoRepository.findByProfessorId(idProfessor);
         List<FormacaoResumoDto> formacoesResumo = formacoes.stream().map(FormacaoMapper::mapFormacaoToFormacaoResumoDto).toList();
         return formacoesResumo;
+    }
+
+    public List<DisponibilidadeResumoDto> getDisponibilidades(int idProfessor) {
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        if (professorOptional.isEmpty()){
+            throw new EntidadeNaoEncontradaException("Professor não encontrado");
+        }
+        List<Disponibilidade> disponibilidades = this.disponibilidadeRepository.findByProfessorId(idProfessor);
+        List<DisponibilidadeResumoDto> disponibilidadesResumo = disponibilidades
+                .stream()
+                .map(DisponibilidadeMapper::mapDisponibilidadeToDisponibilidadeResumoDto)
+                .toList();
+        return disponibilidadesResumo;
     }
 
     public Boolean existeNomeIgnoreCase(String nome){
@@ -154,13 +169,13 @@ public class UsuarioService {
         profNovo.setSenha(senhaCripto);
 
         Professor professor = usuarioRepository.save(ProfessorMapper.of(profNovo));
-       // adicionarMateriaUsuario(professor.getId(), materias);
+        // adicionarMateriaUsuario(professor.getId(), materias);
         return profNovo;
     }
 
 
     public boolean existeEmail(String email) {
-           return usuarioRepository.existsByEmailIgnoreCase(email);
+        return usuarioRepository.existsByEmailIgnoreCase(email);
     }
 
     public UsuarioTokenDto autenticar(UsuarioLoginDto usuarioLoginDto) {

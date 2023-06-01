@@ -10,15 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import school.sptech.ensine.service.usuario.dto.FormacaoResumoDto;
-import school.sptech.ensine.service.usuario.dto.UsuarioDto;
+import school.sptech.ensine.service.usuario.dto.*;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.service.usuario.UsuarioService;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
-import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
-import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 
 
 import java.util.List;
@@ -62,6 +59,15 @@ public class UsuarioController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(formacoes);
+    }
+
+    @GetMapping("/professor/{idProfessor}/disponibilidades")
+    public ResponseEntity<List<DisponibilidadeResumoDto>> listarDisponibilidades(@PathVariable int idProfessor) {
+        List<DisponibilidadeResumoDto> disponibilidades = this.usuarioService.getDisponibilidades(idProfessor);
+        if(disponibilidades.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(disponibilidades);
     }
 
     @GetMapping("/materias")
