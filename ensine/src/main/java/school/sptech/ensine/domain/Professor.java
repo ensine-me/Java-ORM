@@ -1,6 +1,7 @@
 package school.sptech.ensine.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -51,6 +52,11 @@ public class Professor extends Usuario {
 
     public void setDisponibilidades(List<Disponibilidade> disponibilidades) {
         this.disponibilidades = disponibilidades;
+    }
+
+    @JsonIgnore
+    public List<Disponibilidade> getDisponibilidades() {
+        return disponibilidades;
     }
 
     public void setFormacoes(List<Formacao> formacoes) {

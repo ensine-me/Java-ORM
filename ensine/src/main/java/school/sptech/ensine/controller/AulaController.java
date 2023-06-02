@@ -11,17 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-import school.sptech.ensine.domain.Aula;
-import school.sptech.ensine.domain.ListaObj;
-import school.sptech.ensine.domain.Usuario;
+import school.sptech.ensine.domain.*;
+import school.sptech.ensine.domain.exception.ParametrosInvalidosException;
 import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.AulaService;
+import school.sptech.ensine.service.usuario.DisponibilidadeService;
 import school.sptech.ensine.service.usuario.UsuarioService;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.SubmissionPublisher;
@@ -35,6 +36,8 @@ public class AulaController {
     private AulaService aulaService;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private DisponibilidadeService disponibilidadeService;
 
     @GetMapping
     @Tag(name = "Listar aulas", description = "Lista as aulas cadastradas")
@@ -98,6 +101,30 @@ public class AulaController {
     @Tag(name = "Cadastrar aula", description = "Cadastra uma nova aula")
     @ApiResponse(responseCode = "201", description = "Aula cadastrada com sucesso")
     public ResponseEntity<Aula> cadastrarAula(@RequestBody Aula newAula) {
+        LocalTime horarioAula = newAula.getDataHora().toLocalTime();
+        LocalTime horarioAulaFim = horarioAula.plusSeconds(newAula.getDuracaoSegundos());
+
+        Professor professor = newAula.getProfessor();
+        List<Disponibilidade> disponibilidades = this.disponibilidadeService.getDisponibilidadesByProfessorId(professor.getId());
+
+        boolean estaDisponivel = false;
+
+        for (Disponibilidade disponibilidade : disponibilidades) {
+            if (disponibilidade.getDiaDaSemana().ordinal() == newAula.getDataHora().getDayOfWeek().ordinal()) {
+                if(horarioAula.isAfter(disponibilidade.getHorarioInicio()) ||
+                        horarioAula.equals(disponibilidade.getHorarioInicio()) &&
+                        horarioAulaFim.isBefore(disponibilidade.getHorarioFim()) ||
+                        horarioAulaFim.equals(disponibilidade.getHorarioFim())){
+                    estaDisponivel = true;
+                    break;
+                }
+            }
+        }
+
+        if(!estaDisponivel) {
+            throw new ParametrosInvalidosException("A aula não está dentro da disponibilidade do professor");
+        }
+
         Aula aulaCadastrada = aulaService.aulaNova(newAula);
         return ResponseEntity.status(201).body(aulaCadastrada);
     }
