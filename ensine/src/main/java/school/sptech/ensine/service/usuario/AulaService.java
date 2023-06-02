@@ -15,6 +15,7 @@ import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
+import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
 import java.util.List;
 import java.util.Optional;
@@ -99,5 +100,9 @@ public class AulaService {
         aula.get().setStatus(status);
         aulaRepository.save(aula.get());
         return aula;
+    }
+
+    public List<ContagemAula> contagemAulas(int idProfessor){
+       return aulaRepository.contagemAulas(idProfessor);
     }
 }

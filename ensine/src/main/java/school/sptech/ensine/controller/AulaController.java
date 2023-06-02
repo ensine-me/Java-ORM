@@ -19,6 +19,7 @@ import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.AulaService;
 import school.sptech.ensine.service.usuario.UsuarioService;
+import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -129,5 +130,10 @@ public class AulaController {
     @PatchMapping("/{id}/mudanca-status")
     public ResponseEntity<Aula> mudarStatus(@PathVariable int id, @RequestParam Status status) {
         return ResponseEntity.of(aulaService.atualizarStatusAula(id, status));
+    }
+
+    @GetMapping("contagem/{idProfessor}")
+    public List<ContagemAula> contagemAulas (@PathVariable int idProfessor){
+       return aulaService.contagemAulas(idProfessor);
     }
 }
