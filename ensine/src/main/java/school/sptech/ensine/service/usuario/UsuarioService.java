@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.*;
@@ -112,6 +113,15 @@ public class UsuarioService {
     public Optional<Usuario> encontraPorEmail(String email){
         Optional<Usuario> emailEncontrado = usuarioRepository.findByEmailIgnoreCase(email);
         return emailEncontrado;
+    }
+    public Optional<Professor> encontraProfessorID(Integer id){
+        Optional<Professor> professorEncontrado = usuarioRepository.findProfessorById(id);
+        if(professorEncontrado.isPresent()) {
+            return professorEncontrado;
+        } else {
+            throw new IllegalStateException("Professor não foi encontrado!");
+        }
+
     }
     public List<Usuario> todosUsuarios(){
         List<Usuario> todos = usuarioRepository.findAll();
