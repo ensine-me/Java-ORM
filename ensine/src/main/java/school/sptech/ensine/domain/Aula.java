@@ -17,13 +17,19 @@ public class Aula {
 
     private String titulo;
 
+    private String descricao;
+
+    private int duracaoSegundos;
+
+    private Double preco;
+
     @OneToOne
     private Materia materia;
 
     private LocalDateTime dataHora;
 
     // limiteParticipantes
-    private int qtdAlunos;
+    private int limiteParticipantes;
 
     @ManyToMany
     private List<Usuario> alunos;
@@ -76,12 +82,12 @@ public class Aula {
         this.dataHora = dataHora;
     }
     // limiteParticipantes
-    public int getQtdAlunos() {
-        return qtdAlunos;
+    public int getLimiteParticipantes() {
+        return limiteParticipantes;
     }
     // limiteParticipantes
-    public void setQtdAlunos(int qtdAlunos) {
-        this.qtdAlunos = qtdAlunos;
+    public void setLimiteParticipantes(int limiteParticipantes) {
+        this.limiteParticipantes = limiteParticipantes;
     }
 
     public void setAlunos(List<Usuario> alunos) {
@@ -106,5 +112,29 @@ public class Aula {
 
     public void setChat(Chat chat) {
         this.chat = chat;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public int getDuracaoSegundos() {
+        return duracaoSegundos;
+    }
+
+    public void setDuracaoSegundos(int duracaoSegundos) {
+        this.duracaoSegundos = duracaoSegundos;
+    }
+
+    public Double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 }
