@@ -70,6 +70,15 @@ public class UsuarioController {
         return ResponseEntity.ok(disponibilidades);
     }
 
+    @GetMapping("professor/busca")
+    @Tag(name = "Encontrar professor", description = "Devolve um professor pesquisado pelo id")
+    @ApiResponse(responseCode = "200", description = "Professor encontrado")
+    @ApiResponse(responseCode = "404", description = "Professor não existe!", content = @Content(schema = @Schema(hidden = true)))
+    public ResponseEntity<Optional<Professor>>buscarProfessor(@RequestParam Integer id){
+        Optional<Professor> prof = usuarioService.encontraProfessorID(id);
+        return ResponseEntity.status(200).body(prof);
+    }
+
     @GetMapping("/materias")
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "Listar matérias", description = "Devolve uma lista de disciplinas")
