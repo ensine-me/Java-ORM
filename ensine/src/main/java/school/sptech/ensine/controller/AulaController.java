@@ -39,6 +39,33 @@ public class AulaController {
     @Autowired
     private DisponibilidadeService disponibilidadeService;
 
+    @GetMapping("/busca-por-descricao")
+    public ResponseEntity<List<Aula>> buscarAulasPorDescricao(@RequestParam String termo) {
+        List<Aula> aulas = this.aulaService.getAulasPorDescricao(termo);
+        if(aulas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(aulas);
+    }
+
+    @GetMapping("/busca-por-titulo")
+    public ResponseEntity<List<Aula>> buscarAulasPorTitulo(@RequestParam String termo) {
+        List<Aula> aulas = this.aulaService.getAulasPorTitulo(termo);
+        if(aulas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(aulas);
+    }
+
+    @GetMapping("/busca-por-materia")
+    public ResponseEntity<List<Aula>> buscarAulasPorMateria(@RequestParam String termo) {
+        List<Aula> aulas = this.aulaService.getAulasPorMateria(termo);
+        if(aulas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(aulas);
+    }
+
     @GetMapping
     @Tag(name = "Listar aulas", description = "Lista as aulas cadastradas")
     @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))

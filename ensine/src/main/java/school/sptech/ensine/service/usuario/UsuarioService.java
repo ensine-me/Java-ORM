@@ -55,6 +55,18 @@ public class UsuarioService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    public List<Professor> getProfessoresByDescricao(String termoDeBusca) {
+        return this.usuarioRepository.findByDescricaoContainingIgnoreCase(termoDeBusca);
+    }
+
+    public List<Professor> getProfessoresByNome(String termoDeBusca) {
+        return this.usuarioRepository.findByNomeContainingIgnoreCase(termoDeBusca);
+    }
+
+    public List<Professor> getProfessoresByMateria(String termoDeBusca) {
+        return this.usuarioRepository.findByMateriaContainingIgnoreCaseAndNormalize(termoDeBusca);
+    }
+
     public Professor cadastrarFormacao(int idProfessor, Formacao formacao) {
         Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
         if (professorOptional.isEmpty()){

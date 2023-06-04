@@ -40,6 +40,34 @@ public class UsuarioController {
     // TODO: desenvolver uma lógica para que isso não aconteça
     private ListaObj<UsuarioDto> usuariosLogados = new ListaObj<>();
 
+
+    @GetMapping("/professor/busca-por-descricao")
+    public ResponseEntity<List<Professor>> buscarProfessoresPorDescricao(@RequestParam String termo) {
+        List<Professor> professores = this.usuarioService.getProfessoresByDescricao(termo);
+        if(professores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(professores);
+    }
+
+    @GetMapping("/professor/busca-por-nome")
+    public ResponseEntity<List<Professor>> buscarProfessoresPorNome(@RequestParam String termo) {
+        List<Professor> professores = this.usuarioService.getProfessoresByNome(termo);
+        if(professores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(professores);
+    }
+
+    @GetMapping("/professor/busca-por-materia")
+    public ResponseEntity<List<Professor>> buscarProfessoresPorMateria(@RequestParam String termo) {
+        List<Professor> professores = this.usuarioService.getProfessoresByMateria(termo);
+        if(professores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok().body(professores);
+    }
+
     @PatchMapping("/professor/{idProfessor}/formacao") //cadastra formação nova em um professor existente
     public ResponseEntity<Professor> cadastrarFormacao(@PathVariable int idProfessor, @RequestBody Formacao formacao) {
         Professor professor = this.usuarioService.cadastrarFormacao(idProfessor, formacao);

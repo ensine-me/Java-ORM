@@ -41,6 +41,18 @@ public class AulaService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    public List<Aula> getAulasPorDescricao(String termoDeBusca) {
+        return this.aulaRepository.findByDescricaoContainingIgnoreCaseAndNormalize(termoDeBusca);
+    }
+
+    public List<Aula> getAulasPorTitulo(String termoDeBusca) {
+        return this.aulaRepository.findByTituloContainingIgnoreCaseAndNormalize(termoDeBusca);
+    }
+
+    public List<Aula> getAulasPorMateria(String termoDeBusca) {
+        return this.aulaRepository.findByMateriaContainingIgnoreCaseAndNormalize(termoDeBusca);
+    }
+
     public int qtdeAulas(){
         int qtd = (int) aulaRepository.count();
         return qtd;
