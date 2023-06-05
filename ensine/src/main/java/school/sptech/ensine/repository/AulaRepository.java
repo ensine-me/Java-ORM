@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import school.sptech.ensine.domain.Aula;
 import school.sptech.ensine.domain.Professor;
+import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
 import java.time.LocalDateTime;
@@ -28,4 +29,8 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByMateriaContainingIgnoreCaseAndNormalize(@Param("materia") String materia);
     @Query("SELECT a FROM Aula a WHERE LOWER(TRANSLATE(a.titulo, 'áàãâäéèẽêëíìĩîïóòõôöúùũûüçÁÀÃÂÄÉÈẼÊËÍÌĨÎÏÓÒÕÔÖÚÙŨÛÜÇ', 'aaaaaeeeeiiiiiooooouuuuucAAAAAEEEEIIIIIOOOOOUUUUUC')) LIKE LOWER(CONCAT('%', TRANSLATE(:titulo, 'áàãâäéèẽêëíìĩîïóòõôöúùũûüçÁÀÃÂÄÉÈẼÊËÍÌĨÎÏÓÒÕÔÖÚÙŨÛÜÇ', 'aaaaaeeeeiiiiiooooouuuuucAAAAAEEEEIIIIIOOOOOUUUUUC'), '%'))")
     List<Aula> findByTituloContainingIgnoreCaseAndNormalize(@Param("titulo") String titulo);
+    @Query("SELECT a FROM Aula a WHERE :usuario MEMBER OF a.alunos " +
+            "AND a.professor = :professor AND a.status = school.sptech.ensine.enumeration.Status.CONCLUIDA")
+    List<Aula> findByUsuarioAndProfessorAndStatusConcluida(@Param("usuario") Usuario usuario,
+                                                  @Param("professor") Professor professor);
 }

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.ensine.domain.exception.EntidadeNaoEncontradaException;
+import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.dto.*;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.repository.MateriaRepository;
@@ -19,6 +21,7 @@ import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
 
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Tag(name = "Usuário", description = "Requisições relacionadas aos usuários")
@@ -37,9 +40,19 @@ public class UsuarioController {
 
     //pode ocorrer um bug na lista de usuariosLogados ao tentar cadastrar um novo usuário e logá-lo
     //logo em seguida, porque o limite da lista será o de número de usuários cadastrados anteriormente.
-    // TODO: desenvolver uma lógica para que isso não aconteça
     private ListaObj<UsuarioDto> usuariosLogados = new ListaObj<>();
 
+
+    @GetMapping("/{idUsuario}/professores-recomendados/")
+    public List<Professor> listarProfessoresRecomendados(@PathVariable int idUsuario) {
+        Optional<Usuario> usuario = this.usuarioService.encontraUsuarioId(idUsuario);
+        if(usuario.isEmpty()){
+            throw new EntidadeNaoEncontradaException("Usuário não encontrado");
+        }
+        List<Materia> materias = this.materiaRepository.findMateriaByUsuariosContains(usuario.get());
+        usuario.get().setMaterias(materias);
+        return this.usuarioService.getProfessoresRecomendados(usuario.get().getMaterias());
+    }
 
     @GetMapping("/professor/busca-por-descricao")
     public ResponseEntity<List<Professor>> buscarProfessoresPorDescricao(@RequestParam String termo) {

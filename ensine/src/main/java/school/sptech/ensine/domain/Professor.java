@@ -27,6 +27,8 @@ public class Professor extends Usuario {
 
     @OneToMany(mappedBy = "professor")
     private List<Formacao> formacoes;
+    @OneToMany(mappedBy = "professor")
+    private List<Avaliacao> avaliacoes;
 
     @Override
     public int getId() {
@@ -83,5 +85,9 @@ public class Professor extends Usuario {
 
     public void setPrecoHoraAula(Double precoHoraAula) {
         this.precoHoraAula = precoHoraAula;
+    }
+
+    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+        this.avaliacoes = avaliacoes;
     }
 }
