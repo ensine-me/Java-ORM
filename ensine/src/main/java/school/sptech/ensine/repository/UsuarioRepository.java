@@ -3,6 +3,7 @@ package school.sptech.ensine.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
@@ -22,5 +23,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     List<Professor> findByDescricaoContainingIgnoreCase(@Param("descricao") String descricao);
     @Query("SELECT p FROM Professor p JOIN p.materias m WHERE LOWER(TRANSLATE(m.nome, 'áàãâäéèẽêëíìĩîïóòõôöúùũûüçÁÀÃÂÄÉÈẼÊËÍÌĨÎÏÓÒÕÔÖÚÙŨÛÜÇ', 'aaaaaeeeeiiiiiooooouuuuucAAAAAEEEEIIIIIOOOOOUUUUUC')) LIKE LOWER(CONCAT('%', TRANSLATE(:materiaNome, 'áàãâäéèẽêëíìĩîïóòõôöúùũûüçÁÀÃÂÄÉÈẼÊËÍÌĨÎÏÓÒÕÔÖÚÙŨÛÜÇ', 'aaaaaeeeeiiiiiooooouuuuucAAAAAEEEEIIIIIOOOOOUUUUUC'), '%'))")
     List<Professor> findByMateriaContainingIgnoreCaseAndNormalize(@Param("materiaNome") String materiaNome);
-
+    @Query("SELECT DISTINCT p FROM Professor p JOIN p.materias m WHERE (SELECT AVG(a.nota) FROM Avaliacao a WHERE a.professor = p) >= 4.0 AND m IN :usuarioMaterias")
+    List<Professor> findAProfessoresRecomendados(@Param("usuarioMaterias") List<Materia> usuarioMaterias);
 }

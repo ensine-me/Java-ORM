@@ -124,6 +124,40 @@
 			"response": []
 		},
 		{
+			"name": "Criar aula concluída",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"professor\": {\r\n        \"id\": 4\r\n    },\r\n    \"titulo\": \"Algebra para medianos\",\r\n    \"descricao\" : \"minha mãe é topissima\",\r\n    \"materia\": {\r\n        \"nome\":\"matematica\"\r\n    },\r\n    \"dataHora\": \"2023-06-10T17:09:42.411\",\r\n    \"qtdAlunos\": 5,\r\n    \"alunos\": [{\r\n        \"id\": 2\r\n    }],\r\n    \"status\": \"CONCLUIDA\",\r\n    \"duracaoSegundos\" : \"1800\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/aulas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"aulas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Cadastrar Professor",
 			"request": {
 				"method": "POST",
@@ -529,6 +563,70 @@
 							"key": "termo",
 							"value": "Matemática"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar avaliacao",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nota\" : 5.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/avaliacoes/2/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"avaliacoes",
+						"2",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar professores recomendados",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODU5Mjg4ODQsImV4cCI6MTY4OTUyODg4NH0.xmklrWIDYQvF0-o2cxciXz0-nwCGpRaHH7QhOKFosA-jO9f86DYpw1Sf4CDmEzyotROqyuftHKih-8dz3iI-BA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/6/professores-recomendados/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"6",
+						"professores-recomendados",
+						""
 					]
 				}
 			},

@@ -61,6 +61,9 @@ public class Usuario implements ObserverInterface
     @ManyToMany(mappedBy = "participantes")
     private List<Chat> chats;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Avaliacao> avaliacoes;
+
 
 //    @ManyToMany(cascade=CascadeType.PERSIST)
 //    @JoinTable(name = "usuario_materia",
@@ -157,6 +160,10 @@ public class Usuario implements ObserverInterface
     @Override
     public void notificar(String message) {
         System.out.println(message);
+    }
+
+    public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+        this.avaliacoes = avaliacoes;
     }
 
 

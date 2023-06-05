@@ -55,6 +55,10 @@ public class UsuarioService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    public List<Professor> getProfessoresRecomendados(List<Materia> materias) {
+        return this.usuarioRepository.findAProfessoresRecomendados(materias);
+    }
+
     public List<Professor> getProfessoresByDescricao(String termoDeBusca) {
         return this.usuarioRepository.findByDescricaoContainingIgnoreCase(termoDeBusca);
     }
@@ -134,6 +138,15 @@ public class UsuarioService {
             throw new IllegalStateException("Professor não foi encontrado!");
         }
 
+    }
+
+    public Optional<Usuario> encontraUsuarioId(Integer id) {
+        Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(id);
+        if(usuarioEncontrado.isPresent()) {
+            return usuarioEncontrado;
+        } else {
+            throw new IllegalStateException("Usuário não foi encontrado!");
+        }
     }
     public List<Usuario> todosUsuarios(){
         List<Usuario> todos = usuarioRepository.findAll();
