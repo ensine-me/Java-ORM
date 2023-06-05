@@ -17,7 +17,7 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
     Long countByStatus(String status);
     Long countByProfessorNomeEqualsIgnoreCase(String nome);
     List<Aula> findByAlunosId(int id);
-    @Query("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAula(a.materia.nome, COUNT(a)) " +
+    @Query("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAula(a.materia.nome, COUNT(a), MONTH(a.dataHora)) " +
             "FROM Aula a " +
             "WHERE a.professor = :professor " +
             "GROUP BY a.materia.nome")
