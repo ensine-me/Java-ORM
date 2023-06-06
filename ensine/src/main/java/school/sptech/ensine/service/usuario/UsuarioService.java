@@ -214,8 +214,8 @@ public class UsuarioService {
         String senhaCripto = passwordEncoder.encode(profNovo.getSenha());
         profNovo.setSenha(senhaCripto);
 
-        // Professor professor = usuarioRepository.save(ProfessorMapper.of(profNovo));
-        // adicionarMateriaUsuario(professor.getId(), materias);
+        Professor professor = usuarioRepository.save(ProfessorMapper.of(profNovo));
+        //adicionarMateriaUsuario(professor.getId(), materias);
         return profNovo;
     }
 
