@@ -1,5 +1,6 @@
 package school.sptech.ensine.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.springframework.cglib.core.Local;
 import school.sptech.ensine.enumeration.DiasDaSemana;
@@ -12,6 +13,7 @@ public class Disponibilidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
+    @JsonBackReference
     private Professor professor;
     private DiasDaSemana diaDaSemana;
     private LocalTime horarioInicio;

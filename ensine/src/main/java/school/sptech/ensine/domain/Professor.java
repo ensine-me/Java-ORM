@@ -2,9 +2,12 @@ package school.sptech.ensine.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.beans.factory.annotation.Autowired;
+import school.sptech.ensine.service.usuario.AvaliacaoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +26,11 @@ public class Professor extends Usuario {
     private Double precoHoraAula;
 
     @OneToMany(mappedBy = "professor")
+    @JsonManagedReference
     private List<Disponibilidade> disponibilidades;
 
     @OneToMany(mappedBy = "professor")
+    @JsonManagedReference
     private List<Formacao> formacoes;
     @OneToMany(mappedBy = "professor")
     private List<Avaliacao> avaliacoes;
@@ -44,19 +49,10 @@ public class Professor extends Usuario {
         this.descricao = descricao;
     }
 
-//    public List<Aula> getAulas() {
-//        return aulas;
-//    }
-//
-//    public void setAulas(List<Aula> aulas) {
-//        this.aulas = aulas;
-//    }
-
     public void setDisponibilidades(List<Disponibilidade> disponibilidades) {
         this.disponibilidades = disponibilidades;
     }
 
-    @JsonIgnore
     public List<Disponibilidade> getDisponibilidades() {
         return disponibilidades;
     }
@@ -89,5 +85,9 @@ public class Professor extends Usuario {
 
     public void setAvaliacoes(List<Avaliacao> avaliacoes) {
         this.avaliacoes = avaliacoes;
+    }
+
+    public List<Formacao> getFormacoes() {
+        return formacoes;
     }
 }

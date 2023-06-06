@@ -193,37 +193,6 @@ public class UsuarioController {
         }
         return ResponseEntity.status(200).body(usuarios);
     }
-// NAO APAGAR ATÉ A RESOLUÇÃO DO PROBLEMA DE MATÉRIAS
-    @GetMapping("teste")
-    @SecurityRequirement(name = "Bearer")
-    @Tag(name = "Cadastrar professor", description = "Cadastra um professor")
-    @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
-    @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso")
-    @ApiResponse(responseCode = "406", description = "Erro: o professor informado não respeita as validações", content = @Content(schema = @Schema(hidden = true)))
-    @ApiResponse(responseCode = "409", description = "Erro: o e-mail informado já possui cadastro", content = @Content(schema = @Schema(hidden = true)))
-    public ResponseEntity<List<Materia>> listarMateria(){
-        List<Usuario> usuarios = usuarioService.todosUsuarios();
-
-        if(usuarios.isEmpty()){
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.status(200).body(usuarios.get(2).getMaterias());
-    }
-
-    @GetMapping("teste2")
-    @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<List<Materia>> materias(){
-        List<Materia> materias = materiaRepository.findAll();
-        if(materias.isEmpty()){
-            return ResponseEntity.status(204).build();
-        }
-        return ResponseEntity.status(200).body(materias);
-    }
-
-//    @GetMapping("/professor/informacao")
-//    public ResponseEntity<List<Professor>> professoresInformacao(){
-//        List<Professor> professoresEncontrados = usuarioService
-//    }
 
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "Listar usuários logados", description = "Lista os usuários atualmente logados no sistema")

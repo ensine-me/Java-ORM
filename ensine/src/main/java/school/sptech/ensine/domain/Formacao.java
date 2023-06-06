@@ -1,5 +1,6 @@
 package school.sptech.ensine.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import school.sptech.ensine.enumeration.TiposFormacao;
 
@@ -18,6 +19,7 @@ public class Formacao {
     private String nomeCurso;
     private TiposFormacao tipoFormacao;
     @ManyToOne
+    @JsonBackReference
     private Professor professor;
 
     public int getId() {
