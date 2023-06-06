@@ -54,7 +54,6 @@ public class Usuario implements ObserverInterface
             inverseJoinColumns = @JoinColumn)
     private List<Aula> aulas;
 
-
     @OneToMany
     private List<Mensagem> mensagens;
 
@@ -135,6 +134,18 @@ public class Usuario implements ObserverInterface
     public void setMaterias(List<Materia> materias) {
 
         this.materias = materias;
+    }
+
+    public void setAulas(List<Aula> aulas) {
+        this.aulas = aulas;
+    }
+
+    public void setMensagens(List<Mensagem> mensagens) {
+        this.mensagens = mensagens;
+    }
+
+    public void setChats(List<Chat> chats) {
+        this.chats = chats;
     }
 
     @Transient // Indica que o seguinte atributo não será utilizado no banco de dados

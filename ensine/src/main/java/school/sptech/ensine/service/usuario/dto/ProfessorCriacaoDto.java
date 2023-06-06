@@ -4,6 +4,13 @@ public class ProfessorCriacaoDto extends UsuarioCriacaoDto{
 
     private String descricao;
 
+    public ProfessorCriacaoDto(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public ProfessorCriacaoDto() {
+    }
+
     public String getDescricao() {
         return descricao;
     }

@@ -124,10 +124,21 @@ public class UsuarioService {
     }
     public Optional<Usuario> encontraPorNome(String nome){
         Optional<Usuario> nomeEncontrado = usuarioRepository.findByNomeIgnoreCase(nome);
+
+        if (nomeEncontrado.isEmpty()){
+
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
         return nomeEncontrado;
     }
     public Optional<Usuario> encontraPorEmail(String email){
         Optional<Usuario> emailEncontrado = usuarioRepository.findByEmailIgnoreCase(email);
+
+        if (emailEncontrado.isEmpty()){
+
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
+
         return emailEncontrado;
     }
     public Optional<Professor> encontraProfessorID(Integer id){
@@ -203,7 +214,7 @@ public class UsuarioService {
         String senhaCripto = passwordEncoder.encode(profNovo.getSenha());
         profNovo.setSenha(senhaCripto);
 
-        Professor professor = usuarioRepository.save(ProfessorMapper.of(profNovo));
+        // Professor professor = usuarioRepository.save(ProfessorMapper.of(profNovo));
         // adicionarMateriaUsuario(professor.getId(), materias);
         return profNovo;
     }

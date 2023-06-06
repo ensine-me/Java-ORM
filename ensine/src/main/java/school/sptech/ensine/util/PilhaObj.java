@@ -32,7 +32,7 @@ public class PilhaObj <T>{
     // 05) MÃ©todo push
     public void push(T info) {
         if(isFull()){
-            throw new IllegalStateException();
+            throw new IllegalStateException("Pilha Cheia!");
         }else{
             pilha[++topo] = info;
         }
