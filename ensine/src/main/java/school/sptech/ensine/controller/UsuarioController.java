@@ -230,13 +230,13 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuarioToken);
     }
 
-    @DeleteMapping("/logoff")
+    @DeleteMapping("/logoff/{email}")
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "LogOff", description = "Desautentica os usuários no sistema")
     @ApiResponse(responseCode = "404", description = "Usuário não existe ou não está logado")
     @ApiResponse(responseCode = "200", description = "Usuário deslogado com sucesso")
     @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
-    public ResponseEntity<String> logoff(@RequestBody String email){
+    public ResponseEntity<String> logoff(@PathVariable String email){
 
         int tamanho = usuariosLogados.size();
 

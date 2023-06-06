@@ -64,7 +64,8 @@ public class FilaObj<T> {
     /* Método exibe() - exibe o conteúdo da fila */
     public void exibe() {
         if (isEmpty()) {
-            System.out.println("Fila vazia!");
+
+            throw new IllegalArgumentException("Fila vazia!");
         }
         else {
             System.out.println("Conteúdo da fila:");

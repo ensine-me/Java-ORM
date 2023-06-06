@@ -24,6 +24,9 @@ public class MensagemPresentationDto {
         this.dataEnvio = dataEnvio;
     }
 
+    public MensagemPresentationDto() {
+    }
+
     public Integer getId() {
         return id;
     }

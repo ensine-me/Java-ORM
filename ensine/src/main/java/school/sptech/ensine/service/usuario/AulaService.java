@@ -72,6 +72,12 @@ public class AulaService {
     }
     public Optional<Aula> encontraAulaId(int id){
         Optional<Aula> aulaEncontrada = aulaRepository.findById(id);
+
+        if (aulaEncontrada.isEmpty()){
+
+            throw new IllegalArgumentException("Essa aula não existe");
+        }
+
         return aulaEncontrada;
     }
     public Boolean existePorId(int id){
@@ -114,6 +120,11 @@ public class AulaService {
 
     public Optional<Aula> atualizarStatusAula(int id, Status status) {
         Optional<Aula> aula = aulaRepository.findById(id);
+
+        if (aula.isEmpty()){
+
+            throw new IllegalArgumentException("Essa aula não existe");
+        }
         aula.get().setStatus(status);
         aulaRepository.save(aula.get());
         return aula;

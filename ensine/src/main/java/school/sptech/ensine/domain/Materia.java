@@ -17,7 +17,6 @@ public class Materia {
 
     @NotBlank
     @Size(min = 4, max = 30)
-
     private String nome;
 
     @ManyToMany(mappedBy = "materias")
@@ -40,12 +39,7 @@ public class Materia {
         this.nome = nome;
     }
 
-//    public Usuario getUsuario() {
-//        return usuario;
-//    }
-//
-//    public void setUsuario(Usuario usuario) {
-//        this.usuario = usuario;
-//    }
-
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
 }

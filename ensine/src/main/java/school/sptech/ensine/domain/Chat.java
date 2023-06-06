@@ -45,4 +45,20 @@ public class Chat {
     public List<Usuario> getParticipantes() {
         return participantes;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setMensagens(List<Mensagem> mensagens) {
+        this.mensagens = mensagens;
+    }
+
+    public void setAula(Aula aula) {
+        this.aula = aula;
+    }
+
+    public void setParticipantes(List<Usuario> participantes) {
+        this.participantes = participantes;
+    }
 }
