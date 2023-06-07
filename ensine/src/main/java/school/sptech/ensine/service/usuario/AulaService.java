@@ -58,12 +58,10 @@ public class AulaService {
     }
 
     public int qtdeAulas(){
-        int qtd = (int) aulaRepository.count();
-        return qtd;
+        return (int) aulaRepository.count();
     }
     public List<Aula> aulas(){
-        List<Aula> aulas = aulaRepository.findAll();
-        return aulas;
+        return aulaRepository.findAll();
     }
     public ListaObj<Aula> getAulasPorStatus(String status) {
         ListaObj<Aula> listaObj = new ListaObj<>(Math.toIntExact(aulaRepository.countByStatus(status)));
@@ -81,27 +79,20 @@ public class AulaService {
         return aulaEncontrada;
     }
     public Boolean existePorId(int id){
-        boolean existe = aulaRepository.existsById(id);
-        return existe;
+        return aulaRepository.existsById(id);
     }
     public List<Aula> encontraAulaPeloIdAluno(int id){
-        List<Aula> aulasPeloIdAluno = aulaRepository.findByAlunosId(id);
-        return aulasPeloIdAluno;
+        return aulaRepository.findByAlunosId(id);
     }
     public Aula referenciaId(int id){
-        Aula aula = aulaRepository.getReferenceById(id);
-        return aula;
+        return aulaRepository.getReferenceById(id);
     }
     public Long countProfessorNome(String nome){
-        Long qtde = aulaRepository.countByProfessorNomeEqualsIgnoreCase(nome);
-        return qtde;
+        return aulaRepository.countByProfessorNomeEqualsIgnoreCase(nome);
     }
-    //        aula.setProfessor(usuarioRepository.findProfessorById(idProfessorAula));
+
     public Aula aulaNova(Aula aula){
-        Integer idProfessorAula = aula.getProfessor().getId();
-        Optional<Professor> byId = usuarioRepository.findProfessorById(idProfessorAula);
-        aula.setProfessor(byId.get());
-//        String nome = aula.getMateria().getNome();
+        aula.setProfessor(usuarioRepository.findProfessorById(aula.getProfessor().getId()).get());
         String nome = aula.getMateria().getNome();
 
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);
@@ -114,7 +105,7 @@ public class AulaService {
         var usuarioClass = new Usuario();
 
         aula.getAlunos().forEach(usuarioClass::addObserver);
-        usuarioClass.notifyObservers(aula, "Uma aula que você tinha interesse foi agendada!");
+        usuarioClass.notifyObservers(aula, "Olá, uma aula que você tinha interesse foi agendada!");
         return novaAula;
     }
 
@@ -122,18 +113,15 @@ public class AulaService {
         Optional<Aula> aula = aulaRepository.findById(id);
 
         if (aula.isEmpty()){
-
             throw new IllegalArgumentException("Essa aula não existe");
         }
         aula.get().setStatus(status);
         aulaRepository.save(aula.get());
         return aula;
     }
-//List<Object[]>
+
     public List<ContagemAula> contagemAulas(int idProfessor){
-
         Optional<Professor> professor = usuarioRepository.findProfessorById(idProfessor);
-
        return aulaRepository.contagemAulas(professor.get());
     }
 }

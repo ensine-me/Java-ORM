@@ -150,11 +150,12 @@ public class Usuario implements ObserverInterface
 
     @Transient // Indica que o seguinte atributo não será utilizado no banco de dados
     List<Usuario> observers = new ArrayList<>();
-    public List<Integer> notifyObservers(Aula aula, String message) { //O que vai fazer quando for ativado
+    public List<Usuario> notifyObservers(Aula aula, String message) { //O que vai fazer quando for ativado
         observers.forEach(usuario -> notificar(message));
-        List<Integer> observersIds = new ArrayList<>();
+        List<Usuario> observersIds = new ArrayList<>();
         for (Usuario observer : observers) {
-            observersIds.add(observer.getId());
+            observersIds.add(observer);
+            System.out.println("Notificando o usuário de ID " + observer.getId() + " sobre a aula " + aula.getTitulo());
         }
         return observersIds;
     }
