@@ -35,6 +35,8 @@ public class Aula {
     private List<Usuario> alunos;
     @OneToMany
     private List<Mensagem> mensagems;
+    @ManyToMany
+    private List<Avaliacao> avaliacoes;
     // Status
     private Status status;
 
