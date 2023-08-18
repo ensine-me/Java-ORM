@@ -14,7 +14,11 @@ public class AvaliacaoService {
     AvaliacaoRepository avaliacaoRepository;
 
     public Avaliacao criarAvaliacao(@Valid Avaliacao avaliacao) {
-        return this.avaliacaoRepository.save(avaliacao);
+        if (avaliacaoRepository.findByIdAndAula_Alunos_Id(avaliacao.getAula().getId(),
+                avaliacao.getUsuario().getId()).isEmpty()) {
+            return this.avaliacaoRepository.save(avaliacao);
+        }
+        throw new IllegalStateException("Aluno já avaliou esta aula");
     }
 
     public Double getNotaByProfessor(Professor professor) {
