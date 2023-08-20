@@ -54,7 +54,7 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/usuarios/professor/cadastrar"),
             new AntPathRequestMatcher("/usuarios/login"),
             new AntPathRequestMatcher("/professor/busca"),
-
+            new AntPathRequestMatcher("/usuarios/existe-por-email")
 
     };
 
