@@ -63,7 +63,6 @@ public class Usuario implements ObserverInterface
     @OneToMany(mappedBy = "usuario")
     private List<Avaliacao> avaliacoes;
 
-
 //    @ManyToMany(cascade=CascadeType.PERSIST)
 //    @JoinTable(name = "usuario_materia",
 //        joinColumns = @JoinColumn,

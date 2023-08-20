@@ -12,10 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.domain.exception.EntidadeNaoEncontradaException;
-import school.sptech.ensine.repository.DisponibilidadeRepository;
-import school.sptech.ensine.repository.FormacaoRepository;
-import school.sptech.ensine.repository.MateriaRepository;
-import school.sptech.ensine.repository.UsuarioRepository;
+import school.sptech.ensine.repository.*;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.ensine.service.usuario.dto.DisponibilidadeResumoDto;
@@ -27,9 +24,7 @@ import school.sptech.ensine.service.usuario.dto.mapper.ProfessorMapper;
 import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 import school.sptech.ensine.service.usuario.dto.mapper.UsuarioMapper;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UsuarioService {
@@ -41,6 +36,9 @@ public class UsuarioService {
 
     @Autowired
     private FormacaoRepository formacaoRepository;
+
+    @Autowired
+    private AvaliacaoRepository avaliacaoRepository;
 
     @Autowired
     private DisponibilidadeRepository disponibilidadeRepository;
@@ -241,6 +239,23 @@ public class UsuarioService {
         final String token = gerenciadorTokenJwt.generateToken(authentication);
 
         return UsuarioMapper.of(usuarioAutenticado, token);
+    }
+
+    public Map<Avaliacao.Insignia, Integer> countInsigniasProfessor(Integer idProfessor) {
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByProfessor_Id(idProfessor);
+        Map<Avaliacao.Insignia, Integer> insigniaMap = new HashMap<>();
+        for (Avaliacao.Insignia insignia:
+                Avaliacao.Insignia.values()) {
+            insigniaMap.put(insignia, 0);
+        }
+        for (Avaliacao avaliacao:
+             avaliacoes) {
+            for (Avaliacao.Insignia insignia:
+                 avaliacao.getInsignias()) {
+                insigniaMap.replace(insignia, insigniaMap.get(insignia) + 1);
+            }
+        }
+        return insigniaMap;
     }
 
 }

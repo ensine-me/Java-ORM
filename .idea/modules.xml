@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Java-ORM.iml" filepath="$PROJECT_DIR$/.idea/Java-ORM.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ensine/ensine.iml" filepath="$PROJECT_DIR$/ensine/ensine.iml" />
     </modules>
   </component>
 </project>
