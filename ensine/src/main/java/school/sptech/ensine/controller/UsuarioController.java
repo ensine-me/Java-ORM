@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.ensine.domain.exception.EntidadeNaoEncontradaException;
-import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.dto.*;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.repository.MateriaRepository;
@@ -43,6 +42,10 @@ public class UsuarioController {
     //logo em seguida, porque o limite da lista será o de número de usuários cadastrados anteriormente.
     private ListaObj<UsuarioDto> usuariosLogados = new ListaObj<>();
 
+    @GetMapping("/existe-por-email")
+    public ResponseEntity<Boolean> existePorEmail(@RequestParam String emailUsuario) {
+        return ResponseEntity.ok(usuarioService.existePorEmail(emailUsuario));
+    }
 
     @GetMapping("/{idUsuario}/professores-recomendados/")
     public List<Professor> listarProfessoresRecomendados(@PathVariable int idUsuario) {
@@ -88,7 +91,7 @@ public class UsuarioController {
         return ResponseEntity.created(null).body(professor);
     }
 
-    @PatchMapping("/professor/{idProfessor}/disponibilidade") //cadastra formação nova em um professor existente
+    @PatchMapping("/professor/{idProfessor}/disponibilidade") //cadastra disponibilidade nova em um professor existente
     public ResponseEntity<Professor> cadastrarDisponibilidade(@PathVariable int idProfessor, @RequestBody Disponibilidade disponibilidade) {
         Professor professor = this.usuarioService.cadastrarDisponibilidade(idProfessor, disponibilidade);
         return ResponseEntity.created(null).body(professor);
@@ -116,7 +119,7 @@ public class UsuarioController {
     @Tag(name = "Encontrar professor", description = "Devolve um professor pesquisado pelo id")
     @ApiResponse(responseCode = "200", description = "Professor encontrado")
     @ApiResponse(responseCode = "404", description = "Professor não existe!", content = @Content(schema = @Schema(hidden = true)))
-    public ResponseEntity<Optional<Professor>>buscarProfessor(@RequestParam Integer id){
+    public ResponseEntity<Optional<Professor>> buscarProfessor(@RequestParam Integer id){
         Optional<Professor> prof = usuarioService.encontraProfessorID(id);
         return ResponseEntity.status(200).body(prof);
     }
@@ -149,7 +152,7 @@ public class UsuarioController {
             System.out.println("ERRO(CADASTRO) >>> O ALUNO NÃO RESPEITA AS VALIDAÇÕES");
             return ResponseEntity.status(406).build();
         }
-        if (usuarioService.existeEmail(alunoNovo.getEmail())) {
+        if (usuarioService.existePorEmail(alunoNovo.getEmail())) {
             System.out.println("ERRO(CADASTRO) >>> ALUNO COM EMAIL JÁ CADASTRADO");
             return ResponseEntity.status(409).build();
         }
@@ -169,7 +172,7 @@ public class UsuarioController {
             System.out.println("ERRO(CADASTRO) >>> O PROFESSOR NÃO RESPEITA AS VALIDAÇÕES");
             return ResponseEntity.status(406).build();
         }
-        if (usuarioService.existeEmail(professorNovo.getEmail())) {
+        if (usuarioService.existePorEmail(professorNovo.getEmail())) {
             System.out.println("ERRO(CADASTRO) >>> PROFESSOR COM EMAIL JÁ CADASTRADO");
             return ResponseEntity.status(409).build();
         }

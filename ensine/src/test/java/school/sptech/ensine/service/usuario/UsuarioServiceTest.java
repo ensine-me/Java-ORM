@@ -1,13 +1,11 @@
 package school.sptech.ensine.service.usuario;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -273,7 +271,7 @@ public class UsuarioServiceTest {
         Mockito.when(repository.existsByEmailIgnoreCase(emailInexistente)).thenReturn(false);
 
         // then
-        Boolean resultado = service.existeEmail(emailInexistente);
+        Boolean resultado = service.existePorEmail(emailInexistente);
 
         // assert
         assertFalse(resultado);
@@ -290,7 +288,7 @@ public class UsuarioServiceTest {
         Mockito.when(repository.existsByEmailIgnoreCase(usuario.getEmail())).thenReturn(true);
 
         // then
-        Boolean resultado = service.existeEmail(usuario.getEmail());
+        Boolean resultado = service.existePorEmail(usuario.getEmail());
 
         // assert
         assertTrue(resultado);
