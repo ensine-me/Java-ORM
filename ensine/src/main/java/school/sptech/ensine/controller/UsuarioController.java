@@ -21,6 +21,7 @@ import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -253,6 +254,17 @@ public class UsuarioController {
             return ResponseEntity.status(404).body("Usuario não está logado");
         }
         return ResponseEntity.status(200).body("Usuario deslogado com sucesso");
+    }
+
+    @GetMapping("/professor/insignia/{idProfessor}")
+    public ResponseEntity<Map<Avaliacao.Insignia, Integer>> countInsigniasProfessor(@PathVariable Integer idProfessor) {
+        Optional<Professor> professor = this.usuarioService.encontraProfessorID(idProfessor);
+        if (professor.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Professor não encontrado");
+        }
+        Map<Avaliacao.Insignia, Integer> insignias = usuarioService.countInsigniasProfessor(idProfessor);
+
+        return ResponseEntity.ok(insignias);
     }
 
 }

@@ -15,6 +15,7 @@ import school.sptech.ensine.service.usuario.AvaliacaoService;
 import school.sptech.ensine.service.usuario.UsuarioService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -56,4 +57,36 @@ public class AvaliacaoController {
             throw new IllegalStateException("Aluno não pertence a essa aula");
         }
     }
+
+    @GetMapping("/aula/{idAula}")
+    public ResponseEntity<List<Avaliacao>> listAvaliacaoByAulaId(@PathVariable Integer idAula) {
+        Optional<Aula> aula = this.aulaService.encontraAulaId(idAula);
+        if (aula.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Aula não encontrada");
+        }
+        List<Avaliacao> avaliacoes = avaliacaoService.listAvaliacaoByAulaId(idAula);
+        return ResponseEntity.ok(avaliacoes);
+    }
+
+    @GetMapping("/professor/{idProfessor}")
+    public ResponseEntity<List<Avaliacao>> listAvaliacaoByProfessorId(@PathVariable Integer idProfessor) {
+        Optional<Professor> professor = this.usuarioService.encontraProfessorID(idProfessor);
+        if (professor.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Professor não encontrado");
+        }
+        List<Avaliacao> avaliacoes = avaliacaoService.listAvaliacaoByProfessorId(idProfessor);
+        return ResponseEntity.ok(avaliacoes);
+    }
+
+    @GetMapping("/aluno/{idAluno}")
+    public ResponseEntity<List<Avaliacao>> listAvaliacaoByidAlunoId(@PathVariable Integer idAluno) {
+        Optional<Usuario> aluno = this.usuarioService.encontraUsuarioId(idAluno);
+        if (aluno.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Aluno não encontrado");
+        }
+        List<Avaliacao> avaliacoes = avaliacaoService.listAvaliacaoByAlunoId(idAluno);
+        return ResponseEntity.ok(avaliacoes);
+    }
+
+
 }
