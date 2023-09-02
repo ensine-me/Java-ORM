@@ -20,6 +20,7 @@ public class Professor extends Usuario {
     @Size(max = 900)
     private String descricao;
 
+
     @OneToMany(mappedBy = "professor")
     private List<Aula> aulas;
 
@@ -90,4 +91,6 @@ public class Professor extends Usuario {
     public List<Formacao> getFormacoes() {
         return formacoes;
     }
+
+
 }

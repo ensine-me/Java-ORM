@@ -17,6 +17,7 @@ import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.service.usuario.UsuarioService;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
+import school.sptech.ensine.util.TabelaHashProfessor;
 
 
 import java.util.List;
@@ -29,7 +30,7 @@ import java.util.Optional;
 @RequestMapping("usuarios")
 public class UsuarioController {
 
-//    private List<UsuarioDto> usuariosLogados = new ArrayList<>();
+//  private List<UsuarioDto> usuariosLogados = new ArrayList<>();
 
     @Autowired
     UsuarioService usuarioService;
@@ -41,7 +42,7 @@ public class UsuarioController {
     //pode ocorrer um bug na lista de usuariosLogados ao tentar cadastrar um novo usuário e logá-lo
     //logo em seguida, porque o limite da lista será o de número de usuários cadastrados anteriormente.
     private ListaObj<UsuarioDto> usuariosLogados = new ListaObj<>();
-
+    private TabelaHashProfessor tabelaHashProfessor = new TabelaHashProfessor(3);
     @GetMapping("/existe-por-email")
     public ResponseEntity<Boolean> existePorEmail(@RequestParam String emailUsuario) {
         return ResponseEntity.ok(usuarioService.existePorEmail(emailUsuario));
@@ -124,6 +125,28 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(prof);
     }
 
+
+    @GetMapping("professor/busca/lista")
+    @Tag(name = "Encontrar professor", description = "Devolve um professor pesquisado pelo id")
+    @ApiResponse(responseCode = "200", description = "Professor encontrado")
+    @ApiResponse(responseCode = "404", description = "Professor não existe!", content = @Content(schema = @Schema(hidden = true)))
+    public ResponseEntity<List<Professor>> buscarListaProfessor(@RequestParam String nome){
+        //Todo no front fazer a regra de 3 letras, usar o onchange;
+        TabelaHashProfessor prof = usuarioService.buscarListaProfessor(nome);
+        List<Professor> list = prof.listAll();
+        popularTabelaHash(list);
+        return ResponseEntity.status(200).body(list);
+    }
+
+    //Todo chamar esse endpoint a cada letra digitada na barra de pesquisa
+    @GetMapping("professor/busca/lista/letra")
+    @Tag(name = "Encontrar professor", description = "Devolve um professor pesquisado pelo id")
+    @ApiResponse(responseCode = "200", description = "Professor encontrado")
+    @ApiResponse(responseCode = "404", description = "Professor não existe!", content = @Content(schema = @Schema(hidden = true)))
+    public ResponseEntity<List<Professor>> buscarListaProfessorPorLetra(@RequestParam String nome){
+        List<Professor> professors = tabelaHashProfessor.buscaLista(nome);
+        return ResponseEntity.status(200).body(professors);
+    }
     @GetMapping("/materias")
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "Listar matérias", description = "Devolve uma lista de disciplinas")
@@ -268,6 +291,14 @@ public class UsuarioController {
         Map<Avaliacao.Insignia, Integer> insignias = usuarioService.countInsigniasProfessor(idProfessor);
 
         return ResponseEntity.ok(insignias);
+    }
+
+    private void popularTabelaHash(List<Professor> professores) {
+        tabelaHashProfessor = new TabelaHashProfessor(2);
+        for (Professor profesor:
+                professores) {
+            tabelaHashProfessor.insere(profesor);
+        }
     }
 
 }
