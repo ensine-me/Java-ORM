@@ -178,4 +178,8 @@ public class Usuario implements ObserverInterface
     }
 
 
+    @Override
+    public String toString() {
+        return nome;
+    }
 }

@@ -25,4 +25,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     List<Professor> findByMateriaContainingIgnoreCaseAndNormalize(@Param("materiaNome") String materiaNome);
     @Query("SELECT DISTINCT p FROM Professor p JOIN p.materias m WHERE (SELECT AVG(a.nota) FROM Avaliacao a WHERE a.professor = p) >= 4.0 AND m IN :usuarioMaterias")
     List<Professor> findAProfessoresRecomendados(@Param("usuarioMaterias") List<Materia> usuarioMaterias);
+
+    List<Professor> findByIsProfessorAndNomeStartsWithIgnoreCase(boolean isProfessor, String nome);
+
+
+
 }

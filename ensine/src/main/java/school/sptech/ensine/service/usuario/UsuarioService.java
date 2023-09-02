@@ -23,6 +23,7 @@ import school.sptech.ensine.service.usuario.dto.mapper.FormacaoMapper;
 import school.sptech.ensine.service.usuario.dto.mapper.ProfessorMapper;
 import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 import school.sptech.ensine.service.usuario.dto.mapper.UsuarioMapper;
+import school.sptech.ensine.util.TabelaHashProfessor;
 
 import java.util.*;
 
@@ -51,6 +52,7 @@ public class UsuarioService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
 
     public List<Professor> getProfessoresRecomendados(List<Materia> materias) {
         return this.usuarioRepository.findAProfessoresRecomendados(materias);
@@ -258,4 +260,18 @@ public class UsuarioService {
         return insigniaMap;
     }
 
+    public TabelaHashProfessor buscarListaProfessor(String nome){
+        List<Professor> professores = usuarioRepository.findByIsProfessorAndNomeStartsWithIgnoreCase(true,nome);
+
+        TabelaHashProfessor tabelaHashProfessor = new TabelaHashProfessor(3);
+        for (Professor profesor:
+                professores) {
+            tabelaHashProfessor.insere(profesor);
+        }
+        return tabelaHashProfessor;
+    }
+
+    private void popularTabelaHash(List<Professor> professores) {
+
+    }
 }
