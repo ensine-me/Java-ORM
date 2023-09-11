@@ -242,11 +242,8 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso")
     public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLogar){
 
-        System.out.println("############# CHEGUEI");
-
         UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLogar);
 
-        System.out.println("############# oieeeeeeeeeeeeeeeeeeeee");
         for(int i = 0; i < usuariosLogados.size(); i++){
             if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
                 return ResponseEntity.status(409).build();
