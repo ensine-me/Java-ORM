@@ -178,7 +178,7 @@ public class UsuarioService {
         return usuarios;
     }
 
-    public UsuarioCriacaoDto criarAluno(UsuarioCriacaoDto alunoNovo){
+    public Usuario criarAluno(UsuarioCriacaoDto alunoNovo){
 
         alunoNovo.setProfessor(false);
         List<String> materiasNome = new ArrayList<>();
@@ -193,7 +193,7 @@ public class UsuarioService {
         alunoNovo.setSenha(senhaCripto);
 
         Usuario aluno = usuarioRepository.save(UsuarioMapper.of(alunoNovo));
-        return alunoNovo;
+        return aluno;
 
     }
     public ProfessorCriacaoDto criarProfessor(@RequestBody ProfessorCriacaoDto profNovo){

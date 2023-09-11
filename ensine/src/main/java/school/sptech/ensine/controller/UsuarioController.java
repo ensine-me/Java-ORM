@@ -170,7 +170,7 @@ public class UsuarioController {
     @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso")
     @ApiResponse(responseCode = "406", description = "Erro: o aluno informado não respeita as validações", content = @Content(schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "409", description = "Erro: o e-mail informado já possui cadastro", content = @Content(schema = @Schema(hidden = true)))
-    public ResponseEntity<UsuarioCriacaoDto> adicionaAluno(@RequestBody @Valid UsuarioCriacaoDto alunoNovo, BindingResult result){
+    public ResponseEntity<Usuario> adicionaAluno(@RequestBody @Valid UsuarioCriacaoDto alunoNovo, BindingResult result){
         if (result.hasErrors()) {
             System.out.println("ERRO(CADASTRO) >>> O ALUNO NÃO RESPEITA AS VALIDAÇÕES");
             return ResponseEntity.status(406).build();
@@ -242,8 +242,11 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Usuário logado com sucesso")
     public ResponseEntity<UsuarioTokenDto> login(@RequestBody UsuarioLoginDto usuarioLogar){
 
+        System.out.println("############# CHEGUEI");
+
         UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLogar);
 
+        System.out.println("############# oieeeeeeeeeeeeeeeeeeeee");
         for(int i = 0; i < usuariosLogados.size(); i++){
             if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
                 return ResponseEntity.status(409).build();
