@@ -20,10 +20,7 @@ import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.ensine.util.TabelaHashProfessor;
 
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Tag(name = "Usuário", description = "Requisições relacionadas aos usuários")
 @RestController
@@ -48,16 +45,32 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.existePorEmail(emailUsuario));
     }
 
-    @GetMapping("/{idUsuario}/professores-recomendados/")
-    public List<Professor> listarProfessoresRecomendados(@PathVariable int idUsuario) {
-        Optional<Usuario> usuario = this.usuarioService.encontraUsuarioId(idUsuario);
-        if(usuario.isEmpty()){
-            throw new EntidadeNaoEncontradaException("Usuário não encontrado");
+    @GetMapping("/professores-recomendados")
+    public ResponseEntity<List<Professor>> listarProfessoresRecomendados(@RequestParam("disciplinas") List<String> disciplinas) {
+        Set<Professor> professores = new HashSet<>(); // Use a Set to automatically remove duplicates
+
+        for (String disciplina : disciplinas) {
+            List<Professor> professoresEncontrados = this.usuarioService.getProfessoresByMateria(disciplina);
+            professores.addAll(professoresEncontrados); // Use addAll to add all professors at once
         }
-        List<Materia> materias = this.materiaRepository.findMateriaByUsuariosContains(usuario.get());
-        usuario.get().setMaterias(materias);
-        return this.usuarioService.getProfessoresRecomendados(usuario.get().getMaterias());
+
+        if (professores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(new ArrayList<>(professores)); // Convert Set to List for response
     }
+
+//    @GetMapping("/{idUsuario}/professores-recomendados/")
+//    public List<Professor> listarProfessoresRecomendados(@PathVariable int idUsuario) {
+//        Optional<Usuario> usuario = this.usuarioService.encontraUsuarioId(idUsuario);
+//        if(usuario.isEmpty()){
+//            throw new EntidadeNaoEncontradaException("Usuário não encontrado");
+//        }
+//        List<Materia> materias = this.materiaRepository.findMateriaByUsuariosContains(usuario.get());
+//        usuario.get().setMaterias(materias);
+//        return this.usuarioService.getProfessoresRecomendados(usuario.get().getMaterias());
+//    }
 
     @GetMapping("/professor/busca-por-descricao")
     public ResponseEntity<List<Professor>> buscarProfessoresPorDescricao(@RequestParam String termo) {
@@ -221,6 +234,14 @@ public class UsuarioController {
         return ResponseEntity.status(200).body(usuarios);
     }
 
+    @GetMapping("/buscar-por-id")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<Usuario> listarPorId(@RequestParam int id){
+        Optional<Usuario> usuario = usuarioService.encontraUsuarioId(id);
+
+        return usuario.map(value -> ResponseEntity.status(200).body(value)).orElseGet(() -> ResponseEntity.status(400).build());
+    }
+
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "Listar usuários logados", description = "Lista os usuários atualmente logados no sistema")
     @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
@@ -244,15 +265,15 @@ public class UsuarioController {
 
         UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLogar);
 
-        for(int i = 0; i < usuariosLogados.size(); i++){
-            if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
-                return ResponseEntity.status(409).build();
-            }
-        }
+//        for(int i = 0; i < usuariosLogados.size(); i++){
+//            if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
+//                return ResponseEntity.status(409).build();
+//            }
+//        }
 
         Optional<Usuario> usuario = usuarioService.encontraPorEmail(usuarioToken.getEmail());
 
-        usuariosLogados.adiciona(new UsuarioDto (usuario.get()));
+//        usuariosLogados.adiciona(new UsuarioDto (usuario.get()));
 
         return ResponseEntity.status(200).body(usuarioToken);
     }
