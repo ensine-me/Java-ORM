@@ -17,7 +17,7 @@ VALUES
 INSERT INTO usuario
 (is_professor, nome, email, senha, foto)
 VALUES
-(true, 'Alessandra Almeida', 'teste@email.com', '12345', 'https://img.freepik.com/fotos-gratis/jovem-de-camisa-lilas-sobre-fundo-branco-em-oculos-para-visao-alegre-positiva-de-bom-humor_343596-8162.jpg?w=740&t=st=1694653411~exp=1694654011~hmac=857b032d6693c7eb6573a19032909abc862122308a2ddb43a2b6e323a07522f9'),
+(true, 'Filipe Guiraldini', 'guiraldinifilipe@gmail.com', '12345', 'https://i.imgur.com/r4EPYsb.jpg'),
 (true, 'Alessandra Ribeiro', 'teste1@email.com', '12345', 'https://img.freepik.com/fotos-gratis/jovem-empresaria-afro-americana-sorrindo_74855-4088.jpg?w=740&t=st=1694654957~exp=1694655557~hmac=2909dc5b886365e520fbbace1d5decf774436c4e478fbe5164c7708a85c835e6'),
 (true, 'Alessandra Moura', 'teste2@email.com', '12345', 'https://img.freepik.com/fotos-gratis/jovem-professora-de-retrato_23-2148635365.jpg?w=740&t=st=1694654813~exp=1694655413~hmac=7af75ae6784032cf5a2c482e1d4d7ffbee11374f71891f6b4e906dfdb1953bbf'),
 (true, 'Alessandro Oliveira', 'teste3@email.com', '12345', 'https://img.freepik.com/fotos-gratis/closeup-retrato-de-uma-professora-caucasiana-feliz-de-oculos_74855-9736.jpg?w=740&t=st=1694654846~exp=1694655446~hmac=b2aa97bd25a7f5a705ef448f67ed7b17b4ae198404a50b7233e438ac5ac7e0fa'),
@@ -31,7 +31,7 @@ VALUES
 INSERT INTO professor
 (descricao, preco_hora_aula, usuario_id)
 VALUES
-('Gosto de ensinar', 20.00, 1),
+('Gosto de ensinar e ajudar alunos a atingir seus objetivos', 20.00, 1),
 ('Gosto de ensinar', 15.00, 2),
 ('Gosto de ensinar', 29.00, 3),
 ('Gosto de ensinar', 38.00, 4),
@@ -52,6 +52,7 @@ VALUES
 (4, 2),
 (5, 3),
 (6, 5),
+(6, 10),
 (7, 4),
 (8, 3),
 (9, 1),
@@ -62,6 +63,8 @@ INSERT INTO disponibilidade
 (dia_da_semana, horario_fim, horario_inicio, professor_usuario_id)
 VALUES
 (5, '23:59:59', '00:00:00', 1),
+(1, '23:59:59', '00:00:00', 1),
+(2, '23:59:59', '00:00:00', 1),
 (5, '23:59:59', '00:00:00', 2),
 (5, '23:59:59', '00:00:00', 3),
 (5, '23:59:59', '00:00:00', 4),
@@ -71,6 +74,27 @@ VALUES
 (5, '23:59:59', '00:00:00', 8),
 (5, '23:59:59', '00:00:00', 9),
 (5, '23:59:59', '00:00:00', 10);
+
+
+INSERT INTO aula
+(data_hora, descricao, duracao_segundos, limite_participantes, privacidade, titulo, materia_id, professor_usuario_id)
+VALUES
+('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Logaritmo', 1, 1),
+('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Trigonometria', 1, 2),
+('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Algebra', 1, 3),
+('2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Equação 2º Grau', 1, 9),
+('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Karl Marx', 4, 2),
+('2023-09-16 17:39:01', 'descricao', 3600, 3, 0, 'Mais Valia', 5, 3),
+('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
+('2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
+('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10);
+
+INSERT INTO formacao
+(dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
+VALUES
+('2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
+('1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1);
+
 
 
 --INSERT INTO aula
