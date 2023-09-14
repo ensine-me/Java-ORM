@@ -1,6 +1,7 @@
 package school.sptech.ensine.domain;
 
 import jakarta.persistence.*;
+import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
 
 import java.time.LocalDateTime;
@@ -39,6 +40,8 @@ public class Aula {
     private List<Avaliacao> avaliacoes;
     // Status
     private Status status;
+
+    private Privacidade privacidade;
 
     @OneToOne
     private Chat chat;
@@ -138,5 +141,13 @@ public class Aula {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    public Privacidade getPrivacidade() {
+        return privacidade;
+    }
+
+    public void setPrivacidade(Privacidade privacidade) {
+        this.privacidade = privacidade;
     }
 }

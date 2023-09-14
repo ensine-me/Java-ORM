@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import school.sptech.ensine.domain.Aula;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
+import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
 import java.time.LocalDateTime;
@@ -15,6 +16,7 @@ import java.util.Objects;
 public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByProfessorNomeEqualsIgnoreCase(String nome);
     List<Aula> findByStatus(String status);
+    List<Aula> findByPrivacidade(Privacidade privacidade);
     Long countByStatus(String status);
     Long countByProfessorNomeEqualsIgnoreCase(String nome);
     List<Aula> findByAlunosId(int id);

@@ -11,6 +11,7 @@ import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.ListaObj;
 import school.sptech.ensine.domain.Usuario;
+import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
@@ -67,6 +68,10 @@ public class AulaService {
         ListaObj<Aula> listaObj = new ListaObj<>(Math.toIntExact(aulaRepository.countByStatus(status)));
         listaObj.adiciona(aulaRepository.findByStatus(status));
         return listaObj;
+    }
+    public List<Aula> getAulasPorPrivacidade(Privacidade privacidade) {
+        List<Aula> aulas = aulaRepository.findByPrivacidade(privacidade);
+        return aulas;
     }
     public Optional<Aula> encontraAulaId(int id){
         Optional<Aula> aulaEncontrada = aulaRepository.findById(id);

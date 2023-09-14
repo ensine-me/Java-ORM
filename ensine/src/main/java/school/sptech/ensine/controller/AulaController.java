@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.domain.exception.ParametrosInvalidosException;
+import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
@@ -83,6 +84,15 @@ public class AulaController {
     @GetMapping("/{status}")
     public ResponseEntity<ListaObj<Aula>> getAulasByStatus(@PathVariable String status) {
         ListaObj<Aula> aulas = aulaService.getAulasPorStatus(status);
+        if (aulas.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+        return ResponseEntity.status(200).body(aulas);
+    }
+
+    @GetMapping("/privacidade/{privacidade}")
+    public ResponseEntity<List<Aula>> getAulasByPrivacidade(@PathVariable Privacidade privacidade) {
+        List<Aula> aulas = aulaService.getAulasPorPrivacidade(privacidade);
         if (aulas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
