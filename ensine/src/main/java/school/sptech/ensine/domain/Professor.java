@@ -92,5 +92,4 @@ public class Professor extends Usuario {
         return formacoes;
     }
 
-
 }

@@ -33,6 +33,8 @@ public class UsuarioCriacaoDto {
 
     private List<Materia> materias;
 
+    private String foto;
+
     public boolean isProfessor() {
         return isProfessor;
     }
@@ -82,6 +84,14 @@ public class UsuarioCriacaoDto {
     }
     public void addMateria(Materia materia){
         this.materias.add(materia);
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }
 

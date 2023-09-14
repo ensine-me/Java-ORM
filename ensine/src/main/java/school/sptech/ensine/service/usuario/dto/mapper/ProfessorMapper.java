@@ -19,6 +19,8 @@ public class ProfessorMapper{
         professor.setProfessor(professorCriacaoDto.isProfessor());
         professor.setDescricao(professorCriacaoDto.getDescricao());
         professor.setMaterias(professorCriacaoDto.getMaterias());
+        professor.setFoto(professorCriacaoDto.getFoto());
+        professor.setPrecoHoraAula(professorCriacaoDto.getPrecoHoraAula());
 
         return professor;
     }

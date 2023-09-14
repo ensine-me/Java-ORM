@@ -144,14 +144,12 @@ public class UsuarioController {
     @ApiResponse(responseCode = "200", description = "Professor encontrado")
     @ApiResponse(responseCode = "404", description = "Professor não existe!", content = @Content(schema = @Schema(hidden = true)))
     public ResponseEntity<List<Professor>> buscarListaProfessor(@RequestParam String nome){
-        //Todo no front fazer a regra de 3 letras, usar o onchange;
         TabelaHashProfessor prof = usuarioService.buscarListaProfessor(nome);
         List<Professor> list = prof.listAll();
         popularTabelaHash(list);
         return ResponseEntity.status(200).body(list);
     }
 
-    //Todo chamar esse endpoint a cada letra digitada na barra de pesquisa
     @GetMapping("professor/busca/lista/letra")
     @Tag(name = "Encontrar professor", description = "Devolve um professor pesquisado pelo id")
     @ApiResponse(responseCode = "200", description = "Professor encontrado")

@@ -4,6 +4,8 @@ public class ProfessorCriacaoDto extends UsuarioCriacaoDto{
 
     private String descricao;
 
+    private Double precoHoraAula;
+
     public ProfessorCriacaoDto(String descricao) {
         this.descricao = descricao;
     }
@@ -17,5 +19,13 @@ public class ProfessorCriacaoDto extends UsuarioCriacaoDto{
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Double getPrecoHoraAula() {
+        return precoHoraAula;
+    }
+
+    public void setPrecoHoraAula(Double precoHoraAula) {
+        this.precoHoraAula = precoHoraAula;
     }
 }

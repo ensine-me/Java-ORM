@@ -5,6 +5,7 @@ public class UsuarioTokenDto {
     private String nome;
     private String email;
     private String token;
+    private String foto;
 
     public Long getUserId() {
         return userId;
@@ -36,5 +37,13 @@ public class UsuarioTokenDto {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 }

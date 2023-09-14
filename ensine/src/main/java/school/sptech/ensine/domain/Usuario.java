@@ -63,6 +63,8 @@ public class Usuario implements ObserverInterface
     @OneToMany(mappedBy = "usuario")
     private List<Avaliacao> avaliacoes;
 
+    private String foto;
+
 //    @ManyToMany(cascade=CascadeType.PERSIST)
 //    @JoinTable(name = "usuario_materia",
 //        joinColumns = @JoinColumn,
@@ -177,6 +179,13 @@ public class Usuario implements ObserverInterface
         this.avaliacoes = avaliacoes;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
 
     @Override
     public String toString() {
