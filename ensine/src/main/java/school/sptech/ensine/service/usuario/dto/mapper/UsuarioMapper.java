@@ -27,6 +27,7 @@ public class UsuarioMapper {
         usuarioTokenDto.setNome(usuario.getNome());
         usuarioTokenDto.setToken(token);
         usuarioTokenDto.setFoto(usuario.getFoto());
+        usuarioTokenDto.setDisciplinas(usuario.getMaterias());
 
         return usuarioTokenDto;
     }

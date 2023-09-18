@@ -269,7 +269,7 @@ public class UsuarioController {
 //            }
 //        }
 
-        Optional<Usuario> usuario = usuarioService.encontraPorEmail(usuarioToken.getEmail());
+//        Optional<Usuario> usuario = usuarioService.encontraPorEmail(usuarioToken.getEmail());
 
 //        usuariosLogados.adiciona(new UsuarioDto (usuario.get()));
 
