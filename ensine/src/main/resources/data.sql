@@ -17,7 +17,7 @@ VALUES
 INSERT INTO usuario
 (is_professor, nome, email, senha, foto)
 VALUES
-(true, 'Filipe Guiraldini', 'guiraldinifilipe@gmail.com', '12345', 'https://i.imgur.com/r4EPYsb.jpg'),
+(true, 'Filipe Filipus', 'filipe.guiraldini@gmail.com', '12345', 'https://i.imgur.com/r4EPYsb.jpg'),
 (true, 'Alessandra Ribeiro', 'teste1@email.com', '12345', 'https://img.freepik.com/fotos-gratis/jovem-empresaria-afro-americana-sorrindo_74855-4088.jpg?w=740&t=st=1694654957~exp=1694655557~hmac=2909dc5b886365e520fbbace1d5decf774436c4e478fbe5164c7708a85c835e6'),
 (true, 'Alessandra Moura', 'teste2@email.com', '12345', 'https://img.freepik.com/fotos-gratis/jovem-professora-de-retrato_23-2148635365.jpg?w=740&t=st=1694654813~exp=1694655413~hmac=7af75ae6784032cf5a2c482e1d4d7ffbee11374f71891f6b4e906dfdb1953bbf'),
 (true, 'Alessandro Oliveira', 'teste3@email.com', '12345', 'https://img.freepik.com/fotos-gratis/closeup-retrato-de-uma-professora-caucasiana-feliz-de-oculos_74855-9736.jpg?w=740&t=st=1694654846~exp=1694655446~hmac=b2aa97bd25a7f5a705ef448f67ed7b17b4ae198404a50b7233e438ac5ac7e0fa'),
