@@ -70,7 +70,7 @@ public class AulaService {
         return listaObj;
     }
     public List<Aula> getAulasPorPrivacidade(Privacidade privacidade) {
-        List<Aula> aulas = aulaRepository.findByPrivacidade(privacidade);
+        List<Aula> aulas = aulaRepository.findByPrivacidadeAndStatus(privacidade, Status.AGENDADO);
         return aulas;
     }
     public Optional<Aula> encontraAulaId(int id){

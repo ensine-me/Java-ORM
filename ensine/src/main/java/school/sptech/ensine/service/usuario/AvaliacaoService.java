@@ -8,6 +8,7 @@ import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.repository.AvaliacaoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AvaliacaoService {
@@ -38,5 +39,7 @@ public class AvaliacaoService {
         return this.avaliacaoRepository.findByUsuario_Id(idAluno);
     }
 
-
+    public Double getMediaByProfessorId(Professor professor) {
+        return this.avaliacaoRepository.findMeanNotaByProfessor(professor);
+    }
 }
