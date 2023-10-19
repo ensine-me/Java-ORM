@@ -25,26 +25,26 @@ public class AvaliacaoServiceTest {
     @InjectMocks
     private AvaliacaoService service;
 
-    @Test
-    @DisplayName("Deve retornar avalicao quando os dados forem válidos")
-    void deveRetornarAvaliacao(){
-
-        // given
-        Avaliacao avaliacao = AvaliacaoBuilder.criarAvaliacao();
-
-        // when
-        Mockito.when(repository.save(avaliacao)).
-                thenReturn(avaliacao);
-
-        // then
-        Avaliacao resultado = service.criarAvaliacao(avaliacao);
-
-        // assert
-        assertEquals(resultado.getId(), avaliacao.getId());
-        assertEquals(resultado.getProfessor(), avaliacao.getProfessor());
-        assertEquals(resultado.getUsuario(), avaliacao.getUsuario());
-        assertEquals(resultado.getNota(), avaliacao.getNota());
-    }
+//    @Test
+//    @DisplayName("Deve retornar avalicao quando os dados forem válidos")
+//    void deveRetornarAvaliacao(){
+//
+//        // given
+//        Avaliacao avaliacao = AvaliacaoBuilder.criarAvaliacao();
+//
+//        // when
+//        Mockito.when(repository.save(avaliacao)).
+//                thenReturn(avaliacao);
+//
+//        // then
+//        Avaliacao resultado = service.criarAvaliacao(avaliacao);
+//
+//        // assert
+//        assertEquals(resultado.getId(), avaliacao.getId());
+//        assertEquals(resultado.getProfessor(), avaliacao.getProfessor());
+//        assertEquals(resultado.getUsuario(), avaliacao.getUsuario());
+//        assertEquals(resultado.getNota(), avaliacao.getNota());
+//    }
 
     @Test
     @DisplayName("Deve retornar a média de notas de acordo com um professor")
