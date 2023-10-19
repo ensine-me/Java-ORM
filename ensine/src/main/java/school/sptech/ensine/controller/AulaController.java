@@ -27,6 +27,8 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.SubmissionPublisher;
+import school.sptech.ensine.util.TabelaHashAula;
+import school.sptech.ensine.util.TabelaHashProfessor;
 
 @Tag(name = "Aula", description = "Requisições relacionada às aulas")
 @SecurityRequirement(name = "Bearer")
@@ -39,6 +41,8 @@ public class AulaController {
     private UsuarioService usuarioService;
     @Autowired
     private DisponibilidadeService disponibilidadeService;
+
+    private TabelaHashAula tabelaHashAula = new TabelaHashAula(3);
 
     @GetMapping("/busca-por-descricao")
     public ResponseEntity<List<Aula>> buscarAulasPorDescricao(@RequestParam String termo) {
@@ -65,6 +69,26 @@ public class AulaController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok().body(aulas);
+    }
+
+    @GetMapping("/busca/lista")
+    @Tag(name = "Encontrar professor", description = "Devolve um professor pesquisado pelo id")
+    @ApiResponse(responseCode = "200", description = "Professor encontrado")
+    @ApiResponse(responseCode = "404", description = "Professor não existe!", content = @Content(schema = @Schema(hidden = true)))
+    public ResponseEntity<List<Aula>> buscarListaAula(@RequestParam String titulo){
+        TabelaHashAula aula = aulaService.buscarListaAula(titulo);
+        List<Aula> list = aula.listAll();
+        popularTabelaHash(list);
+        return ResponseEntity.status(200).body(list);
+    }
+
+    @GetMapping("/busca/lista/letra")
+    @Tag(name = "Encontrar aula", description = "Devolve aula pesquisada pela letra")
+    @ApiResponse(responseCode = "200", description = "Aula encontrada")
+    @ApiResponse(responseCode = "404", description = "Aula não existe!", content = @Content(schema = @Schema(hidden = true)))
+    public ResponseEntity<List<Aula>> buscarListaAulaPorLetra(@RequestParam String titulo){
+        List<Aula> aulas = tabelaHashAula.buscaLista(titulo);
+        return ResponseEntity.status(200).body(aulas);
     }
 
     @GetMapping
@@ -199,5 +223,13 @@ public class AulaController {
     @GetMapping("contagem/{idProfessor}")
     public List<ContagemAula> contagemAulas (@PathVariable int idProfessor){
        return aulaService.contagemAulas(idProfessor);
+    }
+
+    private void popularTabelaHash(List<Aula> aulas) {
+        tabelaHashAula = new TabelaHashAula(2);
+        for (Aula aula:
+                aulas) {
+            tabelaHashAula.insere(aula);
+        }
     }
 }

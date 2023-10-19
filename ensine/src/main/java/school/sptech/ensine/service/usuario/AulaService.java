@@ -21,6 +21,8 @@ import school.sptech.ensine.service.usuario.dto.ContagemAula;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import school.sptech.ensine.util.TabelaHashAula;
+import school.sptech.ensine.util.TabelaHashProfessor;
 
 @Service
 public class AulaService {
@@ -128,5 +130,19 @@ public class AulaService {
     public List<ContagemAula> contagemAulas(int idProfessor){
         Optional<Professor> professor = usuarioRepository.findProfessorById(idProfessor);
        return aulaRepository.contagemAulas(professor.get());
+    }
+
+    public TabelaHashAula buscarListaAula(String titulo){
+        List<Aula> aulas = aulaRepository.findByTituloStartsWithIgnoreCase(titulo);
+        TabelaHashAula tabelaHashAula = new TabelaHashAula(3);
+        for (Aula aula:
+                aulas) {
+            tabelaHashAula.insere(aula);
+        }
+        return tabelaHashAula;
+    }
+
+    private void popularTabelaHash(List<Aula> aulas) {
+
     }
 }
