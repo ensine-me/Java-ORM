@@ -3,6 +3,7 @@ package school.sptech.ensine.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
@@ -10,7 +11,7 @@ import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
 import java.util.List;
 import java.util.Optional;
-
+@Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     boolean existsByEmailIgnoreCase(String email);
     boolean existsByNomeIgnoreCase(String nome);
