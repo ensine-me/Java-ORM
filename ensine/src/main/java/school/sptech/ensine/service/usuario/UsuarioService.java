@@ -59,15 +59,15 @@ public class UsuarioService {
     }
 
     public List<Professor> getProfessoresByDescricao(String termoDeBusca) {
-        return this.usuarioRepository.findByDescricaoContainingIgnoreCase(termoDeBusca);
+        return this.usuarioRepository.findByDescricaoContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
     public List<Professor> getProfessoresByNome(String termoDeBusca) {
-        return this.usuarioRepository.findByNomeContainingIgnoreCase(termoDeBusca);
+        return this.usuarioRepository.findByNomeContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
     public List<Professor> getProfessoresByMateria(String termoDeBusca) {
-        return this.usuarioRepository.findByMateriasContainingIgnoreCase(termoDeBusca);
+        return this.usuarioRepository.findByMateriasContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
     public Professor cadastrarFormacao(int idProfessor, Formacao formacao) {
