@@ -9,7 +9,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import school.sptech.ensine.domain.Aula;
 import school.sptech.ensine.domain.ListaObj;
-import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
@@ -263,7 +262,7 @@ public class AulaServiceTest {
         Aula aula = AulaBuilder.criarAula();
 
         // when
-        Mockito.when(usuarioRepository.findProfessorById(aula.getProfessor().getId())).
+        Mockito.when(usuarioRepository.findProfessorById(aula.getProfessor().getId_usuario())).
                 thenReturn(Optional.of(aula.getProfessor()));
 
         Mockito.when(materiaRepository.findByNomeContainingIgnoreCase(aula.getMateria().getNome())).

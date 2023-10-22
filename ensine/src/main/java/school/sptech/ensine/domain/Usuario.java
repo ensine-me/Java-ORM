@@ -8,12 +8,9 @@ import jakarta.validation.constraints.Size;
 import school.sptech.ensine.observer.ObserverInterface;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -22,7 +19,7 @@ public class Usuario implements ObserverInterface
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id_usuario;
 
     private boolean isProfessor;
 
@@ -79,12 +76,12 @@ public class Usuario implements ObserverInterface
     }
 
 
-    public int getId() {
-        return id;
+    public int getId_usuario() {
+        return id_usuario;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_usuario(int id) {
+        this.id_usuario = id;
     }
 
     public boolean isProfessor() {
@@ -156,7 +153,7 @@ public class Usuario implements ObserverInterface
         List<Usuario> observersIds = new ArrayList<>();
         for (Usuario observer : observers) {
             observersIds.add(observer);
-            System.out.println("Notificando o usuário de ID " + observer.getId() + " sobre a aula " + aula.getTitulo());
+            System.out.println("Notificando o usuário de ID " + observer.getId_usuario() + " sobre a aula " + aula.getTitulo());
         }
         return observersIds;
     }

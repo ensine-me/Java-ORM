@@ -16,7 +16,7 @@ public class AvaliacaoService {
 
     public Avaliacao criarAvaliacao(@Valid Avaliacao avaliacao) {
         if (avaliacaoRepository.findByIdAndAula_Alunos_Id(avaliacao.getAula().getId(),
-                avaliacao.getUsuario().getId()).isEmpty()) {
+                avaliacao.getUsuario().getId_usuario()).isEmpty()) {
             return this.avaliacaoRepository.save(avaliacao);
         }
         throw new IllegalStateException("Aluno já avaliou esta aula");

@@ -2,7 +2,6 @@ package school.sptech.ensine.service.usuario.builder;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import school.sptech.ensine.domain.Avaliacao;
-import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.service.aula.builder.AulaBuilder;
@@ -52,7 +51,7 @@ public class UsuarioBuilder {
 
         Usuario usuario = new Usuario();
 
-        usuario.setId(10);
+        usuario.setId_usuario(10);
         usuario.setProfessor(false);
         usuario.setNome("Aluno");
         usuario.setEmail("usuario@gmail.com");
@@ -80,7 +79,7 @@ public class UsuarioBuilder {
 
         Professor professor = new Professor();
 
-        professor.setId(10);
+        professor.setId_usuario(10);
         professor.setProfessor(true);
         professor.setNome("Professor");
         professor.setEmail("usuario@gmail.com");

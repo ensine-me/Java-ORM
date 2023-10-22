@@ -1,7 +1,6 @@
 package school.sptech.ensine.controller;
 
 
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,24 +8,19 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.domain.exception.ParametrosInvalidosException;
 import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
-import school.sptech.ensine.repository.AulaRepository;
-import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.AulaService;
 import school.sptech.ensine.service.usuario.DisponibilidadeService;
 import school.sptech.ensine.service.usuario.UsuarioService;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.SubmissionPublisher;
 
 @Tag(name = "Aula", description = "Requisições relacionada às aulas")
 @SecurityRequirement(name = "Bearer")
@@ -142,7 +136,7 @@ public class AulaController {
         LocalTime horarioAulaFim = horarioAula.plusSeconds(newAula.getDuracaoSegundos());
 
         Professor professor = newAula.getProfessor();
-        List<Disponibilidade> disponibilidades = this.disponibilidadeService.getDisponibilidadesByProfessorId(professor.getId());
+        List<Disponibilidade> disponibilidades = this.disponibilidadeService.getDisponibilidadesByProfessorId(professor.getId_usuario());
 
         boolean estaDisponivel = false;
 

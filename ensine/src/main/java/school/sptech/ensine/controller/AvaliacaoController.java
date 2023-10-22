@@ -15,7 +15,6 @@ import school.sptech.ensine.service.usuario.AvaliacaoService;
 import school.sptech.ensine.service.usuario.UsuarioService;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -45,7 +44,7 @@ public class AvaliacaoController {
         } else {
             for (Usuario aluno:
                  aula.get().getAlunos()) {
-                if(aluno.getId() == idAluno) {
+                if(aluno.getId_usuario() == idAluno) {
                     if (aula.get().getStatus() != Status.CONCLUIDA) {
                         throw new IllegalStateException("Aula não concluída");
                     }

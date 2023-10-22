@@ -1,7 +1,6 @@
 package school.sptech.ensine.service.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -97,7 +95,7 @@ public class AulaService {
     }
 
     public Aula aulaNova(Aula aula){
-        aula.setProfessor(usuarioRepository.findProfessorById(aula.getProfessor().getId()).get());
+        aula.setProfessor(usuarioRepository.findProfessorById(aula.getProfessor().getId_usuario()).get());
         String nome = aula.getMateria().getNome();
 
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);

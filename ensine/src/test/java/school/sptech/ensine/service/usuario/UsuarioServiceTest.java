@@ -19,7 +19,6 @@ import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioLoginDto;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
 import school.sptech.ensine.service.usuario.builder.UsuarioBuilder;
 import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
-import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -106,7 +105,7 @@ public class UsuarioServiceTest {
 
         // assert
         assertNotNull(resultado);
-        assertEquals(usuario.getId(), resultado.get().getId());
+        assertEquals(usuario.getId_usuario(), resultado.get().getId_usuario());
         assertEquals(usuario.getNome(), resultado.get().getNome());
         assertEquals(usuario.getEmail(), resultado.get().getEmail());
         assertEquals(usuario.getSenha(), resultado.get().getSenha());
@@ -147,7 +146,7 @@ public class UsuarioServiceTest {
 
         // assert
         assertNotNull(resultado);
-        assertEquals(usuario.getId(), resultado.get().getId());
+        assertEquals(usuario.getId_usuario(), resultado.get().getId_usuario());
         assertEquals(usuario.getNome(), resultado.get().getNome());
         assertEquals(usuario.getEmail(), resultado.get().getEmail());
         assertEquals(usuario.getSenha(), resultado.get().getSenha());
