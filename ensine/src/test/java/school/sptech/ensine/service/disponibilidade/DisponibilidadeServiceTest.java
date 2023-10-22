@@ -32,7 +32,7 @@ public class DisponibilidadeServiceTest {
         Disponibilidade disponibilidade = DisponibilidadeBuilder.criarDisponibilidade();
 
         // when
-        Mockito.when(repository.findByProfessorId(10)).
+        Mockito.when(repository.findByProfessorIdUsuario(10)).
                 thenReturn(List.of(disponibilidade));
 
         // then

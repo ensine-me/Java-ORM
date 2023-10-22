@@ -31,7 +31,7 @@ public class AvaliacaoService {
     }
 
     public List<Avaliacao> listAvaliacaoByProfessorId(Integer idProfessor) {
-        return this.avaliacaoRepository.findByProfessor_Id(idProfessor);
+        return this.avaliacaoRepository.findByProfessor_IdUsuario(idProfessor);
     }
 
     public List<Avaliacao> listAvaliacaoByAlunoId(Integer idAluno) {

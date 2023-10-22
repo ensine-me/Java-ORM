@@ -99,7 +99,7 @@ public class UsuarioService {
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
-        List<Formacao> formacoes = this.formacaoRepository.findByProfessorId(idProfessor);
+        List<Formacao> formacoes = this.formacaoRepository.findByProfessorIdUsuario(idProfessor);
         List<FormacaoResumoDto> formacoesResumo = formacoes.stream().map(FormacaoMapper::mapFormacaoToFormacaoResumoDto).toList();
         return formacoesResumo;
     }
@@ -109,7 +109,7 @@ public class UsuarioService {
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
-        List<Disponibilidade> disponibilidades = this.disponibilidadeRepository.findByProfessorId(idProfessor);
+        List<Disponibilidade> disponibilidades = this.disponibilidadeRepository.findByProfessorIdUsuario(idProfessor);
         List<DisponibilidadeResumoDto> disponibilidadesResumo = disponibilidades
                 .stream()
                 .map(DisponibilidadeMapper::mapDisponibilidadeToDisponibilidadeResumoDto)
@@ -244,7 +244,7 @@ public class UsuarioService {
     }
 
     public Map<Avaliacao.Insignia, Integer> countInsigniasProfessor(Integer idProfessor) {
-        List<Avaliacao> avaliacoes = avaliacaoRepository.findByProfessor_Id(idProfessor);
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByProfessor_IdUsuario(idProfessor);
         Map<Avaliacao.Insignia, Integer> insigniaMap = new HashMap<>();
         for (Avaliacao.Insignia insignia:
                 Avaliacao.Insignia.values()) {
