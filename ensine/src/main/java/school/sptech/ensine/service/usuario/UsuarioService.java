@@ -71,7 +71,7 @@ public class UsuarioService {
     }
 
     public Professor cadastrarFormacao(int idProfessor, Formacao formacao) {
-        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorByIdProfessor(idProfessor);
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
@@ -83,7 +83,7 @@ public class UsuarioService {
     }
 
     public Professor cadastrarDisponibilidade(int idProfessor, Disponibilidade disponibilidade) {
-        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorByIdProfessor(idProfessor);
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
@@ -95,7 +95,7 @@ public class UsuarioService {
     }
 
     public List<FormacaoResumoDto> getFormacoes(int idProfessor) {
-        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorByIdProfessor(idProfessor);
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
@@ -105,7 +105,7 @@ public class UsuarioService {
     }
 
     public List<DisponibilidadeResumoDto> getDisponibilidades(int idProfessor) {
-        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorByIdProfessor(idProfessor);
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
@@ -141,7 +141,7 @@ public class UsuarioService {
         return emailEncontrado;
     }
     public Optional<Professor> encontraProfessorID(Integer id){
-        Optional<Professor> professorEncontrado = usuarioRepository.findProfessorById(id);
+        Optional<Professor> professorEncontrado = usuarioRepository.findProfessorByIdProfessor(id);
         if(professorEncontrado.isPresent()) {
             return professorEncontrado;
         } else {

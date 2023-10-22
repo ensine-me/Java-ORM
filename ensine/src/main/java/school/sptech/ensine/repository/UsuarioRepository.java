@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
-import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +15,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     boolean existsByEmailIgnoreCase(String email);
     boolean existsByNomeIgnoreCase(String nome);
     Optional<Usuario> findByEmailIgnoreCase(String email);
-    Optional<Professor> findProfessorById(Integer id);
+    Optional<Professor> findProfessorByIdProfessor(Integer id);
     Optional<Usuario> findByNomeIgnoreCase(String nome);
 
 //    @Query("SELECT p FROM Usuario p WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")
