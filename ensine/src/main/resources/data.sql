@@ -11,8 +11,7 @@ VALUES
 ('Biologia'),
 ('Geografia'),
 ('Historia'),
-('Lingua Portuguesa')
-ON CONFLICT (nome) DO NOTHING;
+('Lingua Portuguesa');
 
 INSERT INTO usuario
 (id_usuario, is_professor, nome, email, senha, foto)
