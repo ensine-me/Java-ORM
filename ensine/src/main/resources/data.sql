@@ -57,8 +57,7 @@ VALUES
 (8, 3),
 (9, 1),
 (9, 2),
-(10, 4)
-ON CONFLICT (usuarios_id_usuario, materias_id) DO NOTHING;
+(10, 4);
 
 INSERT INTO disponibilidade
 (dia_da_semana, horario_fim, horario_inicio, professor_usuario_id)
