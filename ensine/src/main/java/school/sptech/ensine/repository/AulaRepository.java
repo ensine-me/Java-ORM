@@ -9,9 +9,7 @@ import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByProfessorNomeEqualsIgnoreCase(String nome);
@@ -19,7 +17,7 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByPrivacidade(Privacidade privacidade);
     Long countByStatus(String status);
     Long countByProfessorNomeEqualsIgnoreCase(String nome);
-    List<Aula> findByAlunosId(int id);
+    List<Aula> findByAlunosIdUsuario(int id);
     @Query("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAula(a.materia.nome, COUNT(a), MONTH(a.dataHora)) " +
             "FROM Aula a " +
             "WHERE a.professor = :professor " +

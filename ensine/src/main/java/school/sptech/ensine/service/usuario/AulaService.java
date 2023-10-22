@@ -85,7 +85,7 @@ public class AulaService {
         return aulaRepository.existsById(id);
     }
     public List<Aula> encontraAulaPeloIdAluno(int id){
-        return aulaRepository.findByAlunosId(id);
+        return aulaRepository.findByAlunosIdUsuario(id);
     }
     public Aula referenciaId(int id){
         return aulaRepository.getReferenceById(id);

@@ -205,7 +205,7 @@ public class AulaServiceTest {
         int qtdAulas = 2;
 
         // when
-        Mockito.when(repository.findByAlunosId(10)).thenReturn(listaAulas);
+        Mockito.when(repository.findByAlunosIdUsuario(10)).thenReturn(listaAulas);
 
         // then
         List<Aula> resultado = service.encontraAulaPeloIdAluno(10);
@@ -226,7 +226,7 @@ public class AulaServiceTest {
         int qtdAulas = 0;
 
         // when
-        Mockito.when(repository.findByAlunosId(99)).thenReturn(new ArrayList<>());
+        Mockito.when(repository.findByAlunosIdUsuario(99)).thenReturn(new ArrayList<>());
 
         // then
         List<Aula> resultado = service.encontraAulaPeloIdAluno(99);
