@@ -29,13 +29,13 @@ public class ProfessorMapper{
         if(Objects.isNull(professor)) {
             return null;
         }
-        return new ProfessorResumoDto(professor.getId_usuario(), professor.getNome(), professor.getEmail());
+        return new ProfessorResumoDto(professor.getIdUsuario(), professor.getNome(), professor.getEmail());
     }
 
     public static UsuarioTokenDto of(Usuario usuario, String token) {
         UsuarioTokenDto usuarioTokenDto = new UsuarioTokenDto();
 
-        usuarioTokenDto.setUserId((long) usuario.getId_usuario());
+        usuarioTokenDto.setUserId((long) usuario.getIdUsuario());
         usuarioTokenDto.setEmail(usuario.getEmail());
         usuarioTokenDto.setNome(usuario.getNome());
         usuarioTokenDto.setToken(token);

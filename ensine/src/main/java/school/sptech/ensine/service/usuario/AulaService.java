@@ -95,7 +95,7 @@ public class AulaService {
     }
 
     public Aula aulaNova(Aula aula){
-        aula.setProfessor(usuarioRepository.findProfessorByIdProfessor(aula.getProfessor().getId_usuario()).get());
+        aula.setProfessor(usuarioRepository.findProfessorByIdUsuario(aula.getProfessor().getIdUsuario()).get());
         String nome = aula.getMateria().getNome();
 
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);
@@ -124,7 +124,7 @@ public class AulaService {
     }
 
     public List<ContagemAula> contagemAulas(int idProfessor){
-        Optional<Professor> professor = usuarioRepository.findProfessorByIdProfessor(idProfessor);
+        Optional<Professor> professor = usuarioRepository.findProfessorByIdUsuario(idProfessor);
        return aulaRepository.contagemAulas(professor.get());
     }
 }

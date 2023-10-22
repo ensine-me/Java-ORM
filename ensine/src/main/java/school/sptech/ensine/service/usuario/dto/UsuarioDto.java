@@ -5,7 +5,7 @@ import school.sptech.ensine.domain.Usuario;
 public class UsuarioDto {
 
     public UsuarioDto(Usuario usuario) {
-        this.id = usuario.getId_usuario();
+        this.id = usuario.getIdUsuario();
         this.nome = usuario.getNome();
         this.email = usuario.getEmail();
     }

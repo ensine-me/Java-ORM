@@ -15,7 +15,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     boolean existsByEmailIgnoreCase(String email);
     boolean existsByNomeIgnoreCase(String nome);
     Optional<Usuario> findByEmailIgnoreCase(String email);
-    Optional<Professor> findProfessorByIdProfessor(Integer id);
+    Optional<Professor> findProfessorByIdUsuario(Integer id);
     Optional<Usuario> findByNomeIgnoreCase(String nome);
 
 //    @Query("SELECT p FROM Usuario p WHERE LOWER(p.nome) LIKE LOWER(CONCAT('%', :nome, '%'))")

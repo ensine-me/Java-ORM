@@ -136,7 +136,7 @@ public class AulaController {
         LocalTime horarioAulaFim = horarioAula.plusSeconds(newAula.getDuracaoSegundos());
 
         Professor professor = newAula.getProfessor();
-        List<Disponibilidade> disponibilidades = this.disponibilidadeService.getDisponibilidadesByProfessorId(professor.getId_usuario());
+        List<Disponibilidade> disponibilidades = this.disponibilidadeService.getDisponibilidadesByProfessorId(professor.getIdUsuario());
 
         boolean estaDisponivel = false;
 

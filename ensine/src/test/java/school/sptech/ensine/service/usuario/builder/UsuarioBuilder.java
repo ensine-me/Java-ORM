@@ -51,7 +51,7 @@ public class UsuarioBuilder {
 
         Usuario usuario = new Usuario();
 
-        usuario.setId_usuario(10);
+        usuario.setIdUsuario(10);
         usuario.setProfessor(false);
         usuario.setNome("Aluno");
         usuario.setEmail("usuario@gmail.com");
@@ -79,7 +79,7 @@ public class UsuarioBuilder {
 
         Professor professor = new Professor();
 
-        professor.setId_usuario(10);
+        professor.setIdUsuario(10);
         professor.setProfessor(true);
         professor.setNome("Professor");
         professor.setEmail("usuario@gmail.com");

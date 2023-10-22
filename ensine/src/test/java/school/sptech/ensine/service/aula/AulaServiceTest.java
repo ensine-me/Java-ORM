@@ -262,7 +262,7 @@ public class AulaServiceTest {
         Aula aula = AulaBuilder.criarAula();
 
         // when
-        Mockito.when(usuarioRepository.findProfessorByIdProfessor(aula.getProfessor().getId_usuario())).
+        Mockito.when(usuarioRepository.findProfessorByIdUsuario(aula.getProfessor().getIdUsuario())).
                 thenReturn(Optional.of(aula.getProfessor()));
 
         Mockito.when(materiaRepository.findByNomeContainingIgnoreCase(aula.getMateria().getNome())).

@@ -44,7 +44,7 @@ public class AvaliacaoController {
         } else {
             for (Usuario aluno:
                  aula.get().getAlunos()) {
-                if(aluno.getId_usuario() == idAluno) {
+                if(aluno.getIdUsuario() == idAluno) {
                     if (aula.get().getStatus() != Status.CONCLUIDA) {
                         throw new IllegalStateException("Aula não concluída");
                     }

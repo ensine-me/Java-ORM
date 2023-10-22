@@ -19,7 +19,7 @@ public class Usuario implements ObserverInterface
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_usuario;
+    private int idUsuario;
 
     private boolean isProfessor;
 
@@ -76,12 +76,12 @@ public class Usuario implements ObserverInterface
     }
 
 
-    public int getId_usuario() {
-        return id_usuario;
+    public int getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId_usuario(int id) {
-        this.id_usuario = id;
+    public void setIdUsuario(int id) {
+        this.idUsuario = id;
     }
 
     public boolean isProfessor() {
@@ -153,7 +153,7 @@ public class Usuario implements ObserverInterface
         List<Usuario> observersIds = new ArrayList<>();
         for (Usuario observer : observers) {
             observersIds.add(observer);
-            System.out.println("Notificando o usuário de ID " + observer.getId_usuario() + " sobre a aula " + aula.getTitulo());
+            System.out.println("Notificando o usuário de ID " + observer.getIdUsuario() + " sobre a aula " + aula.getTitulo());
         }
         return observersIds;
     }

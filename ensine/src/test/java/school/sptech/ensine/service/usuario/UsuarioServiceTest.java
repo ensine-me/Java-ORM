@@ -105,7 +105,7 @@ public class UsuarioServiceTest {
 
         // assert
         assertNotNull(resultado);
-        assertEquals(usuario.getId_usuario(), resultado.get().getId_usuario());
+        assertEquals(usuario.getIdUsuario(), resultado.get().getIdUsuario());
         assertEquals(usuario.getNome(), resultado.get().getNome());
         assertEquals(usuario.getEmail(), resultado.get().getEmail());
         assertEquals(usuario.getSenha(), resultado.get().getSenha());
@@ -146,7 +146,7 @@ public class UsuarioServiceTest {
 
         // assert
         assertNotNull(resultado);
-        assertEquals(usuario.getId_usuario(), resultado.get().getId_usuario());
+        assertEquals(usuario.getIdUsuario(), resultado.get().getIdUsuario());
         assertEquals(usuario.getNome(), resultado.get().getNome());
         assertEquals(usuario.getEmail(), resultado.get().getEmail());
         assertEquals(usuario.getSenha(), resultado.get().getSenha());
