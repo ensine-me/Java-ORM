@@ -11,8 +11,8 @@ VALUES
 ('Biologia'),
 ('Geografia'),
 ('Historia'),
-('Lingua Portuguesa');
-
+('Lingua Portuguesa')
+ON CONFLICT (nome) DO NOTHING;
 
 INSERT INTO usuario
 (id_usuario, is_professor, nome, email, senha, foto)
@@ -26,7 +26,8 @@ VALUES
 (7, true, 'Mathilda Cruz', 'teste6@email.com', '12345', 'https://img.freepik.com/fotos-gratis/mulher-de-negocios-no-retrato-dos-vidros_1262-1461.jpg?w=740&t=st=1694654831~exp=1694655431~hmac=ef298914d6aded06e77c17b4d14bd0f001532604c60f3323bc9e7bd9200289a0'),
 (8, true, 'Matheus Rodrigues', 'teste7@email.com', '12345', 'https://img.freepik.com/fotos-gratis/homem-usando-oculos-redondos-e-camiseta-casual_273609-19641.jpg?w=740&t=st=1694655076~exp=1694655676~hmac=d1edee50e02f8ea4694c100ed8a3ede4ef36ab3cc6fa8ba4102986101f697357'),
 (9, true, 'Matheus Callegari', 'teste8@email.com', '12345', 'https://img.freepik.com/fotos-gratis/gerente-de-negocios-maduros-no-escritorio_1098-21368.jpg?w=360&t=st=1694654913~exp=1694655513~hmac=121c852a37ef487d8c9334b99d73270e2f0fa1e48a0067d983a5ec5cf9a345d9'),
-(10, true, 'Carlos Roberto', 'teste9@email.com', '12345', 'https://img.freepik.com/fotos-gratis/cara-de-mundoface-japones-em-um-fundo-branco_53876-31202.jpg?w=740&t=st=1694655100~exp=1694655700~hmac=164f83dcf4e045f1396b4f63dff4ce50112b17d71a7eb16aa86f74b221b79553');
+(10, true, 'Carlos Roberto', 'teste9@email.com', '12345', 'https://img.freepik.com/fotos-gratis/cara-de-mundoface-japones-em-um-fundo-branco_53876-31202.jpg?w=740&t=st=1694655100~exp=1694655700~hmac=164f83dcf4e045f1396b4f63dff4ce50112b17d71a7eb16aa86f74b221b79553')
+ON CONFLICT (id_usuario) DO NOTHING;
 
 INSERT INTO professor
 (descricao, preco_hora_aula, usuario_id)
@@ -40,7 +41,8 @@ VALUES
 ('Gosto de ensinar', 31.00, 7),
 ('Gosto de ensinar', 12.00, 8),
 ('Gosto de ensinar', 28.00, 9),
-('Gosto de ensinar', 37.00, 10);
+('Gosto de ensinar', 37.00, 10)
+ON CONFLICT (usuario_id) DO NOTHING;
 
 INSERT INTO usuario_materia
 (usuarios_id_usuario, materias_id)
@@ -57,7 +59,8 @@ VALUES
 (8, 3),
 (9, 1),
 (9, 2),
-(10, 4);
+(10, 4)
+ON CONFLICT (usuarios_id_usuario, materias_id) DO NOTHING;
 
 INSERT INTO disponibilidade
 (dia_da_semana, horario_fim, horario_inicio, professor_usuario_id)
@@ -86,10 +89,12 @@ VALUES
 (6, '2023-09-16 17:39:01', 'descricao', 3600, 3, 0, 'Mais Valia', 5, 3),
 (7, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
 (8, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
-(9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10);
+(9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10)
+ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO formacao
 (id, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
 VALUES
 (1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
-(2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1);
+(2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1)
+ON CONFLICT (id) DO NOTHING;
