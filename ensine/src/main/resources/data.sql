@@ -40,8 +40,7 @@ VALUES
 ('Gosto de ensinar', 31.00, 7),
 ('Gosto de ensinar', 12.00, 8),
 ('Gosto de ensinar', 28.00, 9),
-('Gosto de ensinar', 37.00, 10)
-ON CONFLICT (usuario_id) DO NOTHING;
+('Gosto de ensinar', 37.00, 10);
 
 INSERT INTO usuario_materia
 (usuarios_id_usuario, materias_id)
