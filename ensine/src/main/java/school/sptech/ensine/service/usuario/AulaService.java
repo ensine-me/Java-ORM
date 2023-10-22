@@ -55,7 +55,7 @@ public class AulaService {
     }
 
     public List<Aula> getAulasPorMateria(String termoDeBusca) {
-        return this.aulaRepository.findByMateriaContainingIgnoreCase(termoDeBusca);
+        return this.aulaRepository.findByMateriaNomeContainingIgnoreCase(termoDeBusca);
     }
 
     public int qtdeAulas(){
