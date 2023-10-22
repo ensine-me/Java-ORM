@@ -15,7 +15,7 @@ public class AvaliacaoService {
     AvaliacaoRepository avaliacaoRepository;
 
     public Avaliacao criarAvaliacao(@Valid Avaliacao avaliacao) {
-        if (avaliacaoRepository.findByIdAndAula_Alunos_Id(avaliacao.getAula().getId(),
+        if (avaliacaoRepository.findByIdAndAula_Alunos_IdUsuario(avaliacao.getAula().getId(),
                 avaliacao.getUsuario().getIdUsuario()).isEmpty()) {
             return this.avaliacaoRepository.save(avaliacao);
         }
