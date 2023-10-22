@@ -89,26 +89,7 @@ VALUES
 (9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10);
 
 INSERT INTO formacao
-(dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
+(id, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
 VALUES
-('2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
-('1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1);
-
-
-
---INSERT INTO aula
---(titulo, data_hora, qtd_alunos, status)
---values
---('Aula1', '2023-08-25', 5, 'programada');
-
-
-
-
-
-INSERT INTO usuario
-(is_professor, nome, email, senha, data_nasc)
-VALUES
-
-(false, 'Pedro', 'pedro@email.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', '2000-07-07'),
---(false, 'Hugo', 'hugohanashirogaldino@gmail.com', '$2a$10$MjqSf1.DF7Uezy80wyget.AUt6z53KPAiuv7.zgryAiIbCAayve3K', '2000-07-07'),
-(false, 'Filipe', 'filipe@email.com', '$2a$10$MjqSf1.DF7Uezy80wyget.AUt6z53KPAiuv7.zgryAiIbCAayve3K', '2000-07-07');
+(1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
+(2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1);
