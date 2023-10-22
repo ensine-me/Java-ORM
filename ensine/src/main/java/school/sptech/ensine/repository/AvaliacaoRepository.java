@@ -19,6 +19,6 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Integer> {
 
     List<Avaliacao> findByProfessor_IdUsuario(int id);
 
-    List<Avaliacao> findByUsuario_Id(int id);
+    List<Avaliacao> findByUsuario_IdUsuario(int id);
 
 }
