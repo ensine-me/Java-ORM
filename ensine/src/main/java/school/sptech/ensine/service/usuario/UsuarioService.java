@@ -67,7 +67,7 @@ public class UsuarioService {
     }
 
     public List<Professor> getProfessoresByMateria(String termoDeBusca) {
-        return this.usuarioRepository.findByMateriaContainingIgnoreCase(termoDeBusca);
+        return this.usuarioRepository.findByMateriasContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
     public Professor cadastrarFormacao(int idProfessor, Formacao formacao) {
