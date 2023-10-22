@@ -29,7 +29,7 @@ VALUES
 (true, 'Carlos Roberto', 'teste9@email.com', '12345', 'https://img.freepik.com/fotos-gratis/cara-de-mundoface-japones-em-um-fundo-branco_53876-31202.jpg?w=740&t=st=1694655100~exp=1694655700~hmac=164f83dcf4e045f1396b4f63dff4ce50112b17d71a7eb16aa86f74b221b79553');
 
 INSERT INTO professor
-(descricao, preco_hora_aula, id)
+(descricao, preco_hora_aula, id_usuario)
 VALUES
 ('Gosto de ensinar e ajudar alunos a atingir seus objetivos', 20.00, 1),
 ('Gosto de ensinar', 15.00, 2),
@@ -43,7 +43,7 @@ VALUES
 ('Gosto de ensinar', 37.00, 10);
 
 INSERT INTO usuario_materia
-(usuarios_id, materias_id)
+(usuarios_id_usuario, materias_id)
 VALUES
 (1, 1),
 (2, 1),
