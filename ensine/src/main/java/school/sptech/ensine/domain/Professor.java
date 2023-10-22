@@ -33,7 +33,7 @@ public class Professor extends Usuario {
     private List<Avaliacao> avaliacoes;
 
     @Override
-    public int getId() {
+    public int getId_usuario() {
         return super.getId_usuario();
     }
 
