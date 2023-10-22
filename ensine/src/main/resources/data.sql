@@ -75,19 +75,18 @@ VALUES
 (5, '23:59:59', '00:00:00', 9),
 (5, '23:59:59', '00:00:00', 10);
 
-
 INSERT INTO aula
-(data_hora, descricao, duracao_segundos, limite_participantes, privacidade, titulo, materia_id, professor_usuario_id)
+(id, data_hora, descricao, duracao_segundos, limite_participantes, privacidade, titulo, materia_id, professor_usuario_id)
 VALUES
-('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Logaritmo', 1, 1),
-('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Trigonometria', 1, 2),
-('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Algebra', 1, 3),
-('2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Equação 2º Grau', 1, 9),
-('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Karl Marx', 4, 2),
-('2023-09-16 17:39:01', 'descricao', 3600, 3, 0, 'Mais Valia', 5, 3),
-('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
-('2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
-('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10);
+(1, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Logaritmo', 1, 1),
+(2, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Trigonometria', 1, 2),
+(3, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Algebra', 1, 3),
+(4, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Equação 2º Grau', 1, 9),
+(5, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Karl Marx', 4, 2),
+(6, '2023-09-16 17:39:01', 'descricao', 3600, 3, 0, 'Mais Valia', 5, 3),
+(7, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
+(8, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
+(9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10);
 
 INSERT INTO formacao
 (dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
