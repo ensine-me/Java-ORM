@@ -27,7 +27,7 @@ VALUES
 (8, true, 'Matheus Rodrigues', 'teste7@email.com', '12345', 'https://img.freepik.com/fotos-gratis/homem-usando-oculos-redondos-e-camiseta-casual_273609-19641.jpg?w=740&t=st=1694655076~exp=1694655676~hmac=d1edee50e02f8ea4694c100ed8a3ede4ef36ab3cc6fa8ba4102986101f697357'),
 (9, true, 'Matheus Callegari', 'teste8@email.com', '12345', 'https://img.freepik.com/fotos-gratis/gerente-de-negocios-maduros-no-escritorio_1098-21368.jpg?w=360&t=st=1694654913~exp=1694655513~hmac=121c852a37ef487d8c9334b99d73270e2f0fa1e48a0067d983a5ec5cf9a345d9'),
 (10, true, 'Carlos Roberto', 'teste9@email.com', '12345', 'https://img.freepik.com/fotos-gratis/cara-de-mundoface-japones-em-um-fundo-branco_53876-31202.jpg?w=740&t=st=1694655100~exp=1694655700~hmac=164f83dcf4e045f1396b4f63dff4ce50112b17d71a7eb16aa86f74b221b79553')
-ON CONFLICT (id_usuario, email) DO NOTHING;
+ON CONFLICT (id_usuario) DO NOTHING;
 
 INSERT INTO professor
 (descricao, preco_hora_aula, usuario_id)
