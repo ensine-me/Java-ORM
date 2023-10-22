@@ -43,7 +43,7 @@ VALUES
 ('Gosto de ensinar', 37.00, 10);
 
 INSERT INTO usuario_materia
-(usuarios_id, materias_id)
+(usuarios_id_usuario, materias_id)
 VALUES
 (1, 1),
 (2, 1),
