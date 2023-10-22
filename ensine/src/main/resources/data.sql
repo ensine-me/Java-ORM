@@ -76,7 +76,7 @@ VALUES
 (5, '23:59:59', '00:00:00', 10);
 
 INSERT INTO aula
-(id, data_hora, descricao, duracao_segundos, limite_participantes, privacidade, titulo, materia_id, professor_usuario_id)
+(id_aula, data_hora, descricao, duracao_segundos, limite_participantes, privacidade, titulo, materia_id, professor_usuario_id)
 VALUES
 (1, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Logaritmo', 1, 1),
 (2, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Trigonometria', 1, 2),
@@ -87,11 +87,11 @@ VALUES
 (7, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
 (8, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
 (9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10)
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id_aula) DO NOTHING;
 
 INSERT INTO formacao
-(id, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
+(id_formacao, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
 VALUES
 (1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
 (2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1)
-ON CONFLICT (id) DO NOTHING;
+ON CONFLICT (id_formacao) DO NOTHING;
