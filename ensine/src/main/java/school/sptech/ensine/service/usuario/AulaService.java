@@ -47,15 +47,15 @@ public class AulaService {
     }
 
     public List<Aula> getAulasPorDescricao(String termoDeBusca) {
-        return this.aulaRepository.findByDescricaoContainingIgnoreCaseAndNormalize(termoDeBusca);
+        return this.aulaRepository.findByDescricaoContainingIgnoreCase(termoDeBusca);
     }
 
     public List<Aula> getAulasPorTitulo(String termoDeBusca) {
-        return this.aulaRepository.findByTituloContainingIgnoreCaseAndNormalize(termoDeBusca);
+        return this.aulaRepository.findByTituloContainingIgnoreCase(termoDeBusca);
     }
 
     public List<Aula> getAulasPorMateria(String termoDeBusca) {
-        return this.aulaRepository.findByMateriaContainingIgnoreCaseAndNormalize(termoDeBusca);
+        return this.aulaRepository.findByMateriaContainingIgnoreCase(termoDeBusca);
     }
 
     public int qtdeAulas(){
