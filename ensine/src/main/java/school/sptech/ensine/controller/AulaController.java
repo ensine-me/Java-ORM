@@ -115,6 +115,31 @@ public class AulaController {
         return ResponseEntity.of(aulaService.encontraAulaId(id));
     }
 
+    @GetMapping("conta-aulas-professor-id")
+    @Tag(name = "conta aula por id", description = "devolve int qtd aulas")
+    @ApiResponse(responseCode = "404", description = "qtd de Aula não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "qtd de Aula recuperada com sucesso")
+    public ResponseEntity<Long> countAulaProfessorPorId(@RequestParam int id) {
+        Long qtdAulas = aulaService.countProfessorId(id);
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("conta-aulas-professorid-concluida")
+    @ApiResponse(responseCode = "404", description = "qtd de Aula não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "qtd de Aula recuperada com sucesso")
+    public ResponseEntity<Long> countAulaProfessorConcluidaPorId(@RequestParam int id) {
+        Long qtdAulas = aulaService.countProfessorIdConcluida(id);
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("conta-aulas-professorid-agendada")
+    @ApiResponse(responseCode = "404", description = "qtd de Aulas agendadas não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "qtd de Aulas agendadas recuperada com sucesso")
+    public ResponseEntity<Long> countAulaProfessorAgendadaPorId(@RequestParam int id) {
+        Long qtdAulas = aulaService.countProfessorIdAgendada(id);
+        return ResponseEntity.ok(qtdAulas);
+    }
+
     @GetMapping("busca-professor")
     @Tag(name = "Pegar aulas por professor", description = "Devolve uma aula dado o nome de um professor")
     @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))

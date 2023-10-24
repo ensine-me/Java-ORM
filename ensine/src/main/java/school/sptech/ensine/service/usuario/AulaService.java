@@ -61,6 +61,7 @@ public class AulaService {
     public int qtdeAulas(){
         return (int) aulaRepository.count();
     }
+
     public List<Aula> aulas(){
         return aulaRepository.findAll();
     }
@@ -89,13 +90,16 @@ public class AulaService {
     public List<Aula> encontraAulaPeloIdAluno(int id){
         return aulaRepository.findByAlunosId(id);
     }
+//    public List<Aula> encontraAulaPeloIdProfessor(int id) {return aulaRepos}
     public Aula referenciaId(int id){
         return aulaRepository.getReferenceById(id);
     }
     public Long countProfessorNome(String nome){
         return aulaRepository.countByProfessorNomeEqualsIgnoreCase(nome);
     }
-
+    public Long countProfessorId(int id) {return aulaRepository.countByProfessorId(id);}
+    public Long countProfessorIdConcluida(int id) {return aulaRepository.countConcluidasByProfessorId(id);}
+    public Long countProfessorIdAgendada(int id) {return aulaRepository.countAgendadasByProfessorId(id);}
     public Aula aulaNova(Aula aula){
         aula.setProfessor(usuarioRepository.findProfessorById(aula.getProfessor().getId()).get());
         String nome = aula.getMateria().getNome();
