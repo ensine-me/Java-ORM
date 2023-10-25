@@ -125,6 +125,13 @@ public class AulaService {
         return aula;
     }
 
+    public Optional<Aula> adicionarAluno(Aula aula, Usuario usuario) {
+        List<Usuario> alunos = aula.getAlunos();
+        alunos.add(usuario);
+        aula.setAlunos(alunos);
+        return Optional.of(aulaRepository.save(aula));
+    }
+
     public List<ContagemAula> contagemAulas(int idProfessor){
         Optional<Professor> professor = usuarioRepository.findProfessorById(idProfessor);
        return aulaRepository.contagemAulas(professor.get());

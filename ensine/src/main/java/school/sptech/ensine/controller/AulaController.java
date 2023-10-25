@@ -40,6 +40,20 @@ public class AulaController {
     @Autowired
     private DisponibilidadeService disponibilidadeService;
 
+    @PutMapping("/{id}/adicionar-aluno")
+    public ResponseEntity<Aula> adicionarAluno(@PathVariable int id, @RequestParam String email) {
+        Optional<Usuario> usuarioOptional = usuarioService.encontraPorEmail(email);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Optional<Aula> aulaOptional = aulaService.encontraAulaId(id);
+        if (aulaOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Optional<Aula> aulaModificada = aulaService.adicionarAluno(aulaOptional.get(), usuarioOptional.get());
+        return ResponseEntity.ok(aulaModificada.get());
+    }
+
     @GetMapping("/busca-por-descricao")
     public ResponseEntity<List<Aula>> buscarAulasPorDescricao(@RequestParam String termo) {
         List<Aula> aulas = this.aulaService.getAulasPorDescricao(termo);
