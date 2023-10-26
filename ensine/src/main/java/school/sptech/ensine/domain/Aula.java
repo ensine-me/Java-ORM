@@ -150,4 +150,13 @@ public class Aula {
     public void setPrivacidade(Privacidade privacidade) {
         this.privacidade = privacidade;
     }
+
+
+    @Override
+    public String toString() {
+        return "Aula{" +
+                "id=" + id +
+                ", alunos=" + alunos +
+                '}';
+    }
 }

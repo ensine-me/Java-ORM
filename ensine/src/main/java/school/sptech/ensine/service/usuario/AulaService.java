@@ -1,5 +1,6 @@
 package school.sptech.ensine.service.usuario;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,6 +26,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import school.sptech.ensine.util.Arvore;
+import school.sptech.ensine.util.NodeArvore;
 
 @Service
 public class AulaService {
@@ -66,6 +69,11 @@ public class AulaService {
         return this.aulaRepository.findByMateriaContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
+
+//    public List<Aula> getAulaPorSubMateria(String subMateria){
+//
+//    }
+
     public int qtdeAulas(){
         return (int) aulaRepository.count();
     }
@@ -95,10 +103,31 @@ public class AulaService {
     public Boolean existePorId(int id){
         return aulaRepository.existsById(id);
     }
-    public List<Aula> encontraAulaPeloIdAluno(int id){
-        return aulaRepository.findByAlunosId(id);
+    public List<Aula> encontraAulaPeloIdAluno(int id) {
+
+        List<Aula> aulas = aulaRepository.findAll();
+
+        Arvore arvore = new Arvore();
+
+        for (Aula aula : aulas) {
+            for (Usuario aluno : aula.getAlunos()) {
+                System.out.println("ALUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUNO "+aluno.getId());
+                arvore.adicionar(aluno.getId(), aula);
+            }
+        }
+        arvore.exibe(null);
+
+
+
+
+
+        NodeArvore nodeAula = arvore.procura(id, null);
+
+//        Aula aulaAtual = aulaRepository.getById(aula.getIdAula());
+
+        return nodeAula.getAulas();
     }
-//    public List<Aula> encontraAulaPeloIdProfessor(int id) {return aulaRepos}
+
     public Aula referenciaId(int id){
         return aulaRepository.getReferenceById(id);
     }
@@ -110,6 +139,7 @@ public class AulaService {
     public Long countProfessorIdAgendada(int id) {return aulaRepository.countAgendadasByProfessorId(id);}
     public Aula aulaNova(Aula aula){
         aula.setProfessor(usuarioRepository.findProfessorById(aula.getProfessor().getId()).get());
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "+aula.getMateria());
         String nome = aula.getMateria().getNome();
 
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);
