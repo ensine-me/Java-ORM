@@ -3,7 +3,7 @@
 sudo docker stop ensine-backend-container
 sudo docker rm ensine-backend-container
 
-sudo rm -rf ./target
+#sudo rm -rf ./target
 
 echo ""
 echo "Container removido"
