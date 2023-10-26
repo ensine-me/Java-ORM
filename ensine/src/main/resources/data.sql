@@ -97,4 +97,4 @@ VALUES
 ON CONFLICT (id) DO NOTHING;
 
 insert into aula_alunos (aula_id, alunos_id_usuario) values (4, 2), (4,3), (4,4);
-insert into avaliacao (nota, aula_id, professor_usuario_id, usuario_id) values (4, 4, 9, 2), (5,4,9,3);
+--insert into avaliacao (nota, aula_id, professor_usuario_id, usuario_id) values (4, 4, 9, 2), (5,4,9,3);
