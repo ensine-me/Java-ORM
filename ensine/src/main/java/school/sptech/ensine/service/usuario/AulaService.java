@@ -140,7 +140,7 @@ public class AulaService {
     }
 
     public List<Aula> listAulasByProfessorId (int idProfessor){
-        List<Aula> aulas = aulaRepository.findByProfessor_Usuario_Idusuario(idProfessor);
+        List<Aula> aulas = aulaRepository.findByProfessor_Idusuario(idProfessor);
         LocalDateTime agora = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmmss");
         String dataFormatada = agora.format(formatter);
@@ -154,7 +154,7 @@ public class AulaService {
         } catch (Exception e) {
 
         }
-        return aulaRepository.findByProfessor_Usuario_Idusuario(idProfessor);
+        return aulaRepository.findByProfessor_Idusuario(idProfessor);
     }
 
     public List<Aula> listAulasByAlunoId (int idAluno){

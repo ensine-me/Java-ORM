@@ -47,7 +47,7 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByUsuarioAndProfessorAndStatusConcluida(@Param("usuario") Usuario usuario,
                                                   @Param("professor") Professor professor);
 
-    List<Aula> findByProfessor_Usuario_Idusuario(int id);
+    List<Aula> findByProfessor_Idusuario(int id);
 
     List<Aula> findByAlunos_IdUsuario(int id);
 
