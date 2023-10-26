@@ -51,6 +51,7 @@ public class AvaliacaoController {
                     }
                     avaliacao.setProfessor(professor);
                     avaliacao.setUsuario(usuario.get());
+                    avaliacao.setAula(aula.get());
                     return ResponseEntity.ok(this.avaliacaoService.criarAvaliacao(avaliacao));
                 }
             }
@@ -76,6 +77,16 @@ public class AvaliacaoController {
         }
         List<Avaliacao> avaliacoes = avaliacaoService.listAvaliacaoByProfessorId(idProfessor);
         return ResponseEntity.ok(avaliacoes);
+    }
+
+    @GetMapping("/professor/{idProfessor}/media")
+    public ResponseEntity<Double> getMediaByProfessorId(@PathVariable Integer idProfessor) {
+        Optional<Professor> professor = this.usuarioService.encontraProfessorID(idProfessor);
+        if (professor.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Professor não encontrado");
+        }
+        Double mediaProfessor = avaliacaoService.getMediaByProfessorId(professor.get());
+        return ResponseEntity.ok(2.2);
     }
 
     @GetMapping("/aluno/{idAluno}")
