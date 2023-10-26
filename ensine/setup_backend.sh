@@ -26,10 +26,10 @@ fi
 
 echo "Verificando se o arquivo JAR existe..."
 sleep 1
-if [ ! -d "./target" ] || [ -z "$(find ./target/ -type f -name '*.jar')" ]; then
-    echo "Arquivo JAR não encontrado, gerando arquivo JAR..."
+#if [ ! -d "./target" ] || [ -z "$(find ./target/ -type f -name '*.jar')" ]; then
+#    echo "Arquivo JAR não encontrado, gerando arquivo JAR..."
     mvn -f ~/Java-ORM/ensine/pom.xml clean install
-fi
+#fi
 
 
 echo "Construindo imagem docker..."
