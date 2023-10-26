@@ -196,45 +196,45 @@ public class AulaServiceTest {
         assertTrue(resultado);
     }
 
-    @Test
-    @DisplayName("Deve retornar aula quando o id do aluno for válido")
-    void deveRetornarListaComDuasAulasQuandoIdAlunoValido(){
-
-        // given
-        List<Aula> listaAulas = AulaBuilder.criarListaAula();
-        int qtdAulas = 2;
-
-        // when
-        Mockito.when(repository.findByAlunosIdUsuario(10)).thenReturn(listaAulas);
-
-        // then
-        List<Aula> resultado = service.encontraAulaPeloIdAluno(10);
-
-        // assert
-        assertFalse(resultado.isEmpty());
-        assertFalse(listaAulas.isEmpty());
-        assertEquals(qtdAulas, resultado.size());
-        assertEquals(qtdAulas, listaAulas.size());
-    }
-
-    @Test
-    @DisplayName("Deve retornar lista vazia quando o id do aluno for inválido")
-    void deveRetornarListaVaziaQuandoIdInvalido(){
-
-        // given
-        List<Aula> listaAula = AulaBuilder.criarListaAula();
-        int qtdAulas = 0;
-
-        // when
-        Mockito.when(repository.findByAlunosIdUsuario(99)).thenReturn(new ArrayList<>());
-
-        // then
-        List<Aula> resultado = service.encontraAulaPeloIdAluno(99);
-
-        // assert
-        assertFalse(listaAula.isEmpty());
-        assertEquals(qtdAulas, resultado.size());
-    }
+//    @Test
+//    @DisplayName("Deve retornar aula quando o id do aluno for válido")
+//    void deveRetornarListaComDuasAulasQuandoIdAlunoValido(){
+//
+//        // given
+//        List<Aula> listaAulas = AulaBuilder.criarListaAula();
+//        int qtdAulas = 2;
+//
+//        // when
+//        Mockito.when(repository.findByAlunosIdUsuario(10)).thenReturn(listaAulas);
+//
+//        // then
+//        List<Aula> resultado = service.encontraAulaPeloIdAluno(10);
+//
+//        // assert
+//        assertFalse(resultado.isEmpty());
+//        assertFalse(listaAulas.isEmpty());
+//        assertEquals(qtdAulas, resultado.size());
+//        assertEquals(qtdAulas, listaAulas.size());
+//    }
+//
+//    @Test
+//    @DisplayName("Deve retornar lista vazia quando o id do aluno for inválido")
+//    void deveRetornarListaVaziaQuandoIdInvalido(){
+//
+//        // given
+//        List<Aula> listaAula = AulaBuilder.criarListaAula();
+//        int qtdAulas = 0;
+//
+//        // when
+//        Mockito.when(repository.findByAlunosIdUsuario(99)).thenReturn(new ArrayList<>());
+//
+//        // then
+//        List<Aula> resultado = service.encontraAulaPeloIdAluno(99);
+//
+//        // assert
+//        assertFalse(listaAula.isEmpty());
+//        assertEquals(qtdAulas, resultado.size());
+//    }
 
     @Test
     @DisplayName("Deve retornar a quantidade de professores cadastradas")

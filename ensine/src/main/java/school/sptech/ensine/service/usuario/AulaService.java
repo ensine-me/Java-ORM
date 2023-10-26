@@ -115,10 +115,6 @@ public class AulaService {
         }
         arvore.exibe(null);
 
-
-
-
-
         NodeArvore nodeAula = arvore.procura(id, null);
 
 //        Aula aulaAtual = aulaRepository.getById(aula.getIdAula());
