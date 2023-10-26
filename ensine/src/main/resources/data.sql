@@ -89,7 +89,7 @@ VALUES
 (9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10)
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO formacaogi
+INSERT INTO formacao
 (id, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
 VALUES
 (1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
