@@ -80,7 +80,7 @@ INSERT INTO formacao
 VALUES
 (1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
 (2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1)
-ON CONFLICT (id_formacao) DO NOTHING;
+ON CONFLICT (id) DO NOTHING;
 
 insert into aula_alunos (aula_id, alunos_id) values (4, 2), (4,3), (4,4)
 insert into aula_alunos (aula_id, alunos_id) values (4, 2), (4,3), (4,4);
