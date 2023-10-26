@@ -158,7 +158,7 @@ public class AulaService {
     }
 
     public List<Aula> listAulasByAlunoId (int idAluno){
-        return aulaRepository.findByAlunos_Id(idAluno);
+        return aulaRepository.findByAlunos_IdUsuario(idAluno);
     }
 
 }

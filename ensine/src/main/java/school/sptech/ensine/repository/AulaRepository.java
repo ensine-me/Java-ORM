@@ -49,7 +49,7 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
 
     List<Aula> findByProfessor_Usuario_Idusuario(int id);
 
-    List<Aula> findByAlunos_Id(int id);
+    List<Aula> findByAlunos_IdUsuario(int id);
 
 
 
