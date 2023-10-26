@@ -42,6 +42,10 @@ public class AulaService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    public List<Aula> getProfessorIdSolicitado(int id){
+        return this.aulaRepository.findByProfessorIdSolicitado(id);
+    }
+
     public List<Aula> getAulasConcluidasPorProfessorAndUsuario(Usuario aluno, Professor professor) {
         return this.aulaRepository.findByUsuarioAndProfessorAndStatusConcluida(aluno, professor);
     }

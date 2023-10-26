@@ -20,6 +20,8 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
     Long countByStatus(String status);
     Long countByProfessorNomeEqualsIgnoreCase(String nome);
     Long countByProfessorId(int id);
+    @Query("SELECT a FROM Aula a WHERE a.professor.id = :professorId AND a.status = 0")
+    List<Aula> findByProfessorIdSolicitado(int professorId);
     @Query("SELECT COUNT(a) FROM Aula a WHERE a.professor.id = :professorId AND a.status = 4")
     Long countConcluidasByProfessorId(int professorId);
     @Query("SELECT COUNT(a) FROM Aula a WHERE a.professor.id = :professorId AND a.status = 2")

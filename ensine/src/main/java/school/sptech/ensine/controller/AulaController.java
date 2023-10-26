@@ -159,6 +159,20 @@ public class AulaController {
         return ResponseEntity.status(404).build();
     }
 
+    @GetMapping("busca-professor-id-solicitado")
+    @Tag(name = "Pegar aulas por professorid solicitado", description = "Devolve uma aula dado o nome de um professor id solicitado")
+    @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "Aulas recuperadas com sucesso")
+    @ApiResponse(responseCode = "404", description = "Professor não encontrado", content = @Content(schema = @Schema(hidden = true)))
+    public ResponseEntity<List<Aula>> getProfessorIdSolicitado(@RequestParam int id) {
+        List<Aula> aulas = aulaService.getProfessorIdSolicitado(id);
+        if(aulas.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        } else {
+            return ResponseEntity.ok(aulas);
+        }
+    }
+
     @PostMapping
     @Tag(name = "Cadastrar aula", description = "Cadastra uma nova aula")
     @ApiResponse(responseCode = "201", description = "Aula cadastrada com sucesso")
