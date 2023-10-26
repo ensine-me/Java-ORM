@@ -96,3 +96,21 @@ VALUES
 --(2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1)
 --ON CONFLICT (id_formacao) DO NOTHING;
 
+<<<<<<< HEAD
+=======
+INSERT INTO formacao
+(id_formacao, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
+VALUES
+(1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
+(2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1)
+ON CONFLICT (id_formacao) DO NOTHING;
+
+--INSERT INTO aula
+--(titulo, data_hora, qtd_alunos, status)
+--values
+--('Aula1', '2023-08-25', 5, 'programada');
+
+-- insert into aula_alunos (aula_id, alunos_id) values (4, 2), (4,3), (4,4)
+insert into aula_alunos (aula_id, alunos_id) values (4, 2), (4,3), (4,4);
+insert into avaliacao (nota, aula_id, professor_usuario_id, usuario_id) values (4, 4, 9, 2), (5,4,9,3);
+>>>>>>> 07a505c0f7d39fce093747b73abb18138d75cf5b
