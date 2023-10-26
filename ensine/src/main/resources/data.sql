@@ -76,7 +76,7 @@ VALUES
 (5, '23:59:59', '00:00:00', 10);
 
 INSERT INTO formacao
-(id_formacao, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
+(id, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
 VALUES
 (1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
 (2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1)
