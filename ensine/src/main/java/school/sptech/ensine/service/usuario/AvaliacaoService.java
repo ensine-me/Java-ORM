@@ -16,8 +16,8 @@ public class AvaliacaoService {
     AvaliacaoRepository avaliacaoRepository;
 
     public Avaliacao criarAvaliacao(@Valid Avaliacao avaliacao) {
-        if (avaliacaoRepository.findByAula_IdAndUsuario_Id(avaliacao.getAula().getId(),
-                avaliacao.getUsuario().getId()).isEmpty()) {
+        if (avaliacaoRepository.findByIdAndAula_Alunos_IdUsuario(avaliacao.getAula().getId(),
+                avaliacao.getUsuario().getIdUsuario()).isEmpty()) {
             return this.avaliacaoRepository.save(avaliacao);
         }
         throw new IllegalStateException("Aluno já avaliou esta aula");
@@ -32,11 +32,11 @@ public class AvaliacaoService {
     }
 
     public List<Avaliacao> listAvaliacaoByProfessorId(Integer idProfessor) {
-        return this.avaliacaoRepository.findByProfessor_Id(idProfessor);
+        return this.avaliacaoRepository.findByProfessor_IdUsuario(idProfessor);
     }
 
     public List<Avaliacao> listAvaliacaoByAlunoId(Integer idAluno) {
-        return this.avaliacaoRepository.findByUsuario_Id(idAluno);
+        return this.avaliacaoRepository.findByUsuario_IdUsuario(idAluno);
     }
 
     public Double getMediaByProfessorId(Professor professor) {

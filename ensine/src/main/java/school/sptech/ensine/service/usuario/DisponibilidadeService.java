@@ -14,7 +14,7 @@ public class DisponibilidadeService {
     private DisponibilidadeRepository disponibilidadeRepository;
 
     public List<Disponibilidade> getDisponibilidadesByProfessorId(int idProfessor) {
-        return this.disponibilidadeRepository.findByProfessorId(idProfessor);
+        return this.disponibilidadeRepository.findByProfessorIdUsuario(idProfessor);
     }
 
 }

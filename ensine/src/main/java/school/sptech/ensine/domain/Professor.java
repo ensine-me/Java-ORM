@@ -1,13 +1,9 @@
 package school.sptech.ensine.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import org.springframework.beans.factory.annotation.Autowired;
-import school.sptech.ensine.service.usuario.AvaliacaoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +33,8 @@ public class Professor extends Usuario {
     private List<Avaliacao> avaliacoes;
 
     @Override
-    public int getId() {
-        return super.getId();
+    public int getIdUsuario() {
+        return super.getIdUsuario();
     }
 
 

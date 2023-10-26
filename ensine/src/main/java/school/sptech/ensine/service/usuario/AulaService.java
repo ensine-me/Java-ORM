@@ -2,7 +2,6 @@ package school.sptech.ensine.service.usuario;
 
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,6 @@ import school.sptech.ensine.util.TxtMaker;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import school.sptech.ensine.util.Arvore;
 import school.sptech.ensine.util.NodeArvore;
@@ -111,8 +109,8 @@ public class AulaService {
 
         for (Aula aula : aulas) {
             for (Usuario aluno : aula.getAlunos()) {
-                System.out.println("ALUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUNO "+aluno.getId());
-                arvore.adicionar(aluno.getId(), aula);
+                System.out.println("ALUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUNO "+aluno.getIdUsuario());
+                arvore.adicionar(aluno.getIdUsuario(), aula);
             }
         }
         arvore.exibe(null);
@@ -138,7 +136,7 @@ public class AulaService {
     public Long countProfessorIdConcluida(int id) {return aulaRepository.countConcluidasByProfessorId(id);}
     public Long countProfessorIdAgendada(int id) {return aulaRepository.countAgendadasByProfessorId(id);}
     public Aula aulaNova(Aula aula){
-        aula.setProfessor(usuarioRepository.findProfessorById(aula.getProfessor().getId()).get());
+        aula.setProfessor(usuarioRepository.findProfessorByIdUsuario(aula.getProfessor().getIdUsuario()).get());
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "+aula.getMateria());
         String nome = aula.getMateria().getNome();
 
@@ -175,12 +173,12 @@ public class AulaService {
     }
 
     public List<ContagemAula> contagemAulas(int idProfessor){
-        Optional<Professor> professor = usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professor = usuarioRepository.findProfessorByIdUsuario(idProfessor);
        return aulaRepository.contagemAulas(professor.get());
     }
 
     public List<Aula> listAulasByProfessorId (int idProfessor){
-        List<Aula> aulas = aulaRepository.findByProfessor_Id(idProfessor);
+        List<Aula> aulas = aulaRepository.findByProfessor_IdUsuario(idProfessor);
         LocalDateTime agora = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmmss");
         String dataFormatada = agora.format(formatter);
@@ -194,11 +192,11 @@ public class AulaService {
         } catch (Exception e) {
 
         }
-        return aulaRepository.findByProfessor_Id(idProfessor);
+        return aulaRepository.findByProfessor_IdUsuario(idProfessor);
     }
 
     public List<Aula> listAulasByAlunoId (int idAluno){
-        return aulaRepository.findByAlunos_Id(idAluno);
+        return aulaRepository.findByAlunos_IdUsuario(idAluno);
     }
 
 }

@@ -40,7 +40,7 @@ public class AvaliacaoServiceTest {
 //        Avaliacao resultado = service.criarAvaliacao(avaliacao);
 //
 //        // assert
-//        assertEquals(resultado.getId(), avaliacao.getId());
+//        assertEquals(resultado.getIdUsuario(), avaliacao.getIdUsuario());
 //        assertEquals(resultado.getProfessor(), avaliacao.getProfessor());
 //        assertEquals(resultado.getUsuario(), avaliacao.getUsuario());
 //        assertEquals(resultado.getNota(), avaliacao.getNota());
