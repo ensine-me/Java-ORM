@@ -77,17 +77,17 @@ VALUES
 
 
 INSERT INTO aula
-(data_hora, descricao, duracao_segundos, limite_participantes, privacidade, titulo, materia_id, professor_usuario_id)
+(data_hora, descricao, status, duracao_segundos, limite_participantes, privacidade, titulo, materia_id, professor_usuario_id)
 VALUES
-('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Logaritmo', 1, 1),
-('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Trigonometria', 1, 2),
-('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Algebra', 1, 3),
-('2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Equação 2º Grau', 1, 9),
-('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Karl Marx', 4, 2),
-('2023-09-16 17:39:01', 'descricao', 3600, 3, 0, 'Mais Valia', 5, 3),
-('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
-('2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
-('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10);
+('2023-09-16 17:39:01', 'descricao', 4, 3600, 5, 0, 'Logaritmo', 1, 1),
+('2023-09-16 17:39:01', 'descricao', 2, 3600, 4, 0, 'Trigonometria', 1, 2),
+('2023-09-16 17:39:01', 'descricao', 2, 3600, 5, 0, 'Algebra', 1, 3),
+('2023-09-16 17:39:01', 'descricao', 4, 3600, 2, 0, 'Equação 2º Grau', 1, 9),
+('2023-09-16 17:39:01', 'descricao', 2, 3600, 4, 0, 'Karl Marx', 4, 2),
+('2023-09-16 17:39:01', 'descricao', 2, 3600, 3, 0, 'Mais Valia', 5, 3),
+('2023-09-16 17:39:01', 'descricao', 2, 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
+('2023-09-16 17:39:01', 'descricao', 2, 3600, 2, 0, 'Verbo To Be', 6, 5),
+('2023-09-16 17:39:01', 'descricao', 2, 3600, 5, 0, 'Verbo To Be+', 6, 10);
 
 INSERT INTO formacao
 (dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
@@ -113,3 +113,8 @@ VALUES
 (false, 'Pedro', 'pedro@email.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', '2000-07-07'),
 --(false, 'Hugo', 'hugohanashirogaldino@gmail.com', '$2a$10$MjqSf1.DF7Uezy80wyget.AUt6z53KPAiuv7.zgryAiIbCAayve3K', '2000-07-07'),
 (false, 'Filipe', 'filipe@email.com', '$2a$10$MjqSf1.DF7Uezy80wyget.AUt6z53KPAiuv7.zgryAiIbCAayve3K', '2000-07-07');
+
+
+-- insert into aula_alunos (aula_id, alunos_id) values (4, 2), (4,3), (4,4)
+insert into aula_alunos (aula_id, alunos_id) values (4, 2), (4,3), (4,4);
+insert into avaliacao (nota, aula_id, professor_usuario_id, usuario_id) values (4, 4, 9, 2), (5,4,9,3);

@@ -150,6 +150,8 @@ public class UsuarioService {
 
     }
 
+
+
     public Optional<Usuario> encontraUsuarioId(Integer id) {
         Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(id);
         if(usuarioEncontrado.isPresent()) {
