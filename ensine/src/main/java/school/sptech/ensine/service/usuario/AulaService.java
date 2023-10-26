@@ -48,7 +48,7 @@ public class AulaService {
     private AuthenticationManager authenticationManager;
 
     public List<Aula> getProfessorIdSolicitado(int id){
-        return this.aulaRepository.findByProfessorIdSolicitado(id);
+        return this.aulaRepository.findByProfessorIdUsuarioSolicitado(id);
     }
 
     public List<Aula> getAulasConcluidasPorProfessorAndUsuario(Usuario aluno, Professor professor) {
@@ -132,9 +132,9 @@ public class AulaService {
     public Long countProfessorNome(String nome){
         return aulaRepository.countByProfessorNomeEqualsIgnoreCase(nome);
     }
-    public Long countProfessorId(int id) {return aulaRepository.countByProfessorId(id);}
-    public Long countProfessorIdConcluida(int id) {return aulaRepository.countConcluidasByProfessorId(id);}
-    public Long countProfessorIdAgendada(int id) {return aulaRepository.countAgendadasByProfessorId(id);}
+    public Long countProfessorId(int id) {return aulaRepository.countByProfessorIdUsuario(id);}
+    public Long countProfessorIdConcluida(int id) {return aulaRepository.countConcluidasByProfessorIdUsuario(id);}
+    public Long countProfessorIdAgendada(int id) {return aulaRepository.countAgendadasByProfessorIdUsuario(id);}
     public Aula aulaNova(Aula aula){
         aula.setProfessor(usuarioRepository.findProfessorByIdUsuario(aula.getProfessor().getIdUsuario()).get());
         System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "+aula.getMateria());

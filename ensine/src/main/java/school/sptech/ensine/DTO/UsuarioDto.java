@@ -18,7 +18,7 @@ import java.util.List;
 public class UsuarioDto {
 
     public UsuarioDto(Usuario usuario) {
-        this.id = usuario.getId();
+        this.id = usuario.getIdUsuario();
         this.nome = usuario.getNome();
         this.email = usuario.getEmail();
     }
