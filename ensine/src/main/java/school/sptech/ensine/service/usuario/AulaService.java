@@ -1,5 +1,6 @@
 package school.sptech.ensine.service.usuario;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +24,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import school.sptech.ensine.util.Arvore;
+import school.sptech.ensine.util.NodeArvore;
 
 @Service
 public class AulaService {
@@ -44,6 +47,10 @@ public class AulaService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    public List<Aula> getProfessorIdSolicitado(int id){
+        return this.aulaRepository.findByProfessorIdSolicitado(id);
+    }
+
     public List<Aula> getAulasConcluidasPorProfessorAndUsuario(Usuario aluno, Professor professor) {
         return this.aulaRepository.findByUsuarioAndProfessorAndStatusConcluida(aluno, professor);
     }
@@ -60,9 +67,15 @@ public class AulaService {
         return this.aulaRepository.findByMateriaContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
+
+//    public List<Aula> getAulaPorSubMateria(String subMateria){
+//
+//    }
+
     public int qtdeAulas(){
         return (int) aulaRepository.count();
     }
+
     public List<Aula> aulas(){
         return aulaRepository.findAll();
     }
@@ -88,18 +101,43 @@ public class AulaService {
     public Boolean existePorId(int id){
         return aulaRepository.existsById(id);
     }
-    public List<Aula> encontraAulaPeloIdAluno(int id){
-        return aulaRepository.findByAlunosIdUsuario(id);
+    public List<Aula> encontraAulaPeloIdAluno(int id) {
+
+        List<Aula> aulas = aulaRepository.findAll();
+
+        Arvore arvore = new Arvore();
+
+        for (Aula aula : aulas) {
+            for (Usuario aluno : aula.getAlunos()) {
+                System.out.println("ALUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUNO "+aluno.getIdUsuario());
+                arvore.adicionar(aluno.getIdUsuario(), aula);
+            }
+        }
+        arvore.exibe(null);
+
+
+
+
+
+        NodeArvore nodeAula = arvore.procura(id, null);
+
+//        Aula aulaAtual = aulaRepository.getById(aula.getIdAula());
+
+        return nodeAula.getAulas();
     }
+
     public Aula referenciaId(int id){
         return aulaRepository.getReferenceById(id);
     }
     public Long countProfessorNome(String nome){
         return aulaRepository.countByProfessorNomeEqualsIgnoreCase(nome);
     }
-
+    public Long countProfessorId(int id) {return aulaRepository.countByProfessorId(id);}
+    public Long countProfessorIdConcluida(int id) {return aulaRepository.countConcluidasByProfessorId(id);}
+    public Long countProfessorIdAgendada(int id) {return aulaRepository.countAgendadasByProfessorId(id);}
     public Aula aulaNova(Aula aula){
         aula.setProfessor(usuarioRepository.findProfessorByIdUsuario(aula.getProfessor().getIdUsuario()).get());
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "+aula.getMateria());
         String nome = aula.getMateria().getNome();
 
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);

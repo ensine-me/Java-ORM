@@ -19,6 +19,13 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByPrivacidadeAndStatus(Privacidade privacidade, Status status);
     Long countByStatus(String status);
     Long countByProfessorNomeEqualsIgnoreCase(String nome);
+    Long countByProfessorIdUsuario(int id);
+    @Query("SELECT a FROM Aula a WHERE a.professor.id = :professorIdUsuario AND a.status = 0")
+    List<Aula> findByProfessorIdUsuarioSolicitado(int professorIdUsuario);
+    @Query("SELECT COUNT(a) FROM Aula a WHERE a.professor.id = :professorIdUsuario AND a.status = 4")
+    Long countConcluidasByProfessorIdUsuario(int professorIdUsuario);
+    @Query("SELECT COUNT(a) FROM Aula a WHERE a.professor.id = :professorIdUsuario AND a.status = 2")
+    Long countAgendadasByProfessorIdUsuario(int professorIdUsuario);
     List<Aula> findByAlunosIdUsuario(int id);
     @Query("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAula(a.materia.nome, COUNT(a), MONTH(a.dataHora)) " +
             "FROM Aula a " +
