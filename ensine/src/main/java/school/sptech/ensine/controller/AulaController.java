@@ -34,6 +34,20 @@ public class AulaController {
     @Autowired
     private DisponibilidadeService disponibilidadeService;
 
+    @PutMapping("/{id}/adicionar-aluno")
+    public ResponseEntity<Aula> adicionarAluno(@PathVariable int id, @RequestParam String email) {
+        Optional<Usuario> usuarioOptional = usuarioService.encontraPorEmail(email);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Optional<Aula> aulaOptional = aulaService.encontraAulaId(id);
+        if (aulaOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Optional<Aula> aulaModificada = aulaService.adicionarAluno(aulaOptional.get(), usuarioOptional.get());
+        return ResponseEntity.ok(aulaModificada.get());
+    }
+
     @GetMapping("/busca-por-descricao")
     public ResponseEntity<List<Aula>> buscarAulasPorDescricao(@RequestParam String termo) {
         List<Aula> aulas = this.aulaService.getAulasPorDescricao(termo);
@@ -193,5 +207,15 @@ public class AulaController {
     @GetMapping("contagem/{idProfessor}")
     public List<ContagemAula> contagemAulas (@PathVariable int idProfessor){
        return aulaService.contagemAulas(idProfessor);
+    }
+
+    @GetMapping("professor/{idProfessor}")
+    public List<Aula> listAulasByProfessorId (@PathVariable int idProfessor) {
+        return aulaService.listAulasByProfessorId(idProfessor);
+    }
+
+    @GetMapping("aluno/{idAluno}")
+    public List<Aula> listAulasByAlunoId (@PathVariable int idAluno) {
+        return aulaService.listAulasByAlunoId(idAluno);
     }
 }

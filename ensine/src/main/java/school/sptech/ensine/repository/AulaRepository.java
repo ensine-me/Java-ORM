@@ -7,6 +7,7 @@ import school.sptech.ensine.domain.Aula;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.enumeration.Privacidade;
+import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByProfessorNomeEqualsIgnoreCase(String nome);
     List<Aula> findByStatus(String status);
     List<Aula> findByPrivacidade(Privacidade privacidade);
+    List<Aula> findByPrivacidadeAndStatus(Privacidade privacidade, Status status);
     Long countByStatus(String status);
     Long countByProfessorNomeEqualsIgnoreCase(String nome);
     List<Aula> findByAlunosIdUsuario(int id);
@@ -44,4 +46,11 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
 
     List<Aula> findByUsuarioAndProfessorAndStatusConcluida(@Param("usuario") Usuario usuario,
                                                   @Param("professor") Professor professor);
+
+    List<Aula> findByProfessor_Id(int id);
+
+    List<Aula> findByAlunos_Id(int id);
+
+
+
 }
