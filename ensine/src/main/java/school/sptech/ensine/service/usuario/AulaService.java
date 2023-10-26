@@ -17,7 +17,11 @@ import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
+import school.sptech.ensine.util.CsvMaker;
+import school.sptech.ensine.util.TxtMaker;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -136,4 +140,27 @@ public class AulaService {
         Optional<Professor> professor = usuarioRepository.findProfessorById(idProfessor);
        return aulaRepository.contagemAulas(professor.get());
     }
+
+    public List<Aula> listAulasByProfessorId (int idProfessor){
+        List<Aula> aulas = aulaRepository.findByProfessor_Id(idProfessor);
+        LocalDateTime agora = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmmss");
+        String dataFormatada = agora.format(formatter);
+        try {
+            CsvMaker.gravaArquivoCsv(aulas, aulas.get(0).getProfessor().getNome() + dataFormatada);
+        } catch (Exception e) {
+
+        }
+        try {
+            TxtMaker.gravaArquivoTxt(aulas, aulas.get(0).getProfessor().getNome() + dataFormatada);
+        } catch (Exception e) {
+
+        }
+        return aulaRepository.findByProfessor_Id(idProfessor);
+    }
+
+    public List<Aula> listAulasByAlunoId (int idAluno){
+        return aulaRepository.findByAlunos_Id(idAluno);
+    }
+
 }

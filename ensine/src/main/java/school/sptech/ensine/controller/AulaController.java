@@ -214,4 +214,14 @@ public class AulaController {
     public List<ContagemAula> contagemAulas (@PathVariable int idProfessor){
        return aulaService.contagemAulas(idProfessor);
     }
+
+    @GetMapping("professor/{idProfessor}")
+    public List<Aula> listAulasByProfessorId (@PathVariable int idProfessor) {
+        return aulaService.listAulasByProfessorId(idProfessor);
+    }
+
+    @GetMapping("aluno/{idAluno}")
+    public List<Aula> listAulasByAlunoId (@PathVariable int idAluno) {
+        return aulaService.listAulasByAlunoId(idAluno);
+    }
 }
