@@ -27,7 +27,7 @@ VALUES
 (9, true, 'Matheus Callegari', 'teste8@email.com', '12345', 'https://img.freepik.com/fotos-gratis/gerente-de-negocios-maduros-no-escritorio_1098-21368.jpg?w=360&t=st=1694654913~exp=1694655513~hmac=121c852a37ef487d8c9334b99d73270e2f0fa1e48a0067d983a5ec5cf9a345d9'),
 (10, true, 'Carlos Roberto', 'teste9@email.com', '12345', 'https://img.freepik.com/fotos-gratis/cara-de-mundoface-japones-em-um-fundo-branco_53876-31202.jpg?w=740&t=st=1694655100~exp=1694655700~hmac=164f83dcf4e045f1396b4f63dff4ce50112b17d71a7eb16aa86f74b221b79553')
 ON CONFLICT (id_usuario) DO NOTHING;
-SELECT setval('usuario_id_usuario_seq', (SELECT MAX(idUsuario) FROM usuario));
+SELECT setval('usuario_id_usuario_seq', (SELECT MAX(id_usuario) FROM usuario));
 
 INSERT INTO professor
 (descricao, preco_hora_aula, usuario_id)
@@ -90,11 +90,11 @@ VALUES
 (8, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
 (9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10)
 ON CONFLICT (id_aula) DO NOTHING;
-SELECT setval('aula_id_aula_seq', (SELECT MAX(idAula) FROM aula));
+SELECT setval('aula_id_aula_seq', (SELECT MAX(id_aula) FROM aula));
 
 INSERT INTO formacao
 (id, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
 VALUES
 (1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
 (2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1);
-SELECT setval('formacao_id_formacao_seq', (SELECT MAX(idFormacao) FROM formacao));
+SELECT setval('formacao_id_formacao_seq', (SELECT MAX(id_formacao) FROM formacao));
