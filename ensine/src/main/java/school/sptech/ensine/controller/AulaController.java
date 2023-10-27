@@ -112,7 +112,7 @@ public class AulaController {
     @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "200", description = "Aulas recuperadas com sucesso")
     public ResponseEntity<List<Aula>> getAulasIdUsuario(@RequestParam int id){
-     return ResponseEntity.status(200).body(aulaService. encontraAulaPeloIdAluno(id));
+     return ResponseEntity.status(200).body(aulaService.encontraAulaPeloIdAluno(id));
     }
 
     @GetMapping("busca-id")
