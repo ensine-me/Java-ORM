@@ -17,6 +17,7 @@ VALUES
 INSERT INTO usuario
 (is_professor, nome, email, senha, foto)
 VALUES
+<<<<<<< Updated upstream
 (true, 'Filipe Filipus', 'filipe.guiraldini@gmail.com', '12345', 'https://i.imgur.com/r4EPYsb.jpg'),
 (true, 'Alessandra Ribeiro', 'teste1@email.com', '12345', 'https://img.freepik.com/fotos-gratis/jovem-empresaria-afro-americana-sorrindo_74855-4088.jpg?w=740&t=st=1694654957~exp=1694655557~hmac=2909dc5b886365e520fbbace1d5decf774436c4e478fbe5164c7708a85c835e6'),
 (true, 'Alessandra Moura', 'teste2@email.com', '12345', 'https://img.freepik.com/fotos-gratis/jovem-professora-de-retrato_23-2148635365.jpg?w=740&t=st=1694654813~exp=1694655413~hmac=7af75ae6784032cf5a2c482e1d4d7ffbee11374f71891f6b4e906dfdb1953bbf'),
@@ -27,6 +28,20 @@ VALUES
 (true, 'Matheus Rodrigues', 'teste7@email.com', '12345', 'https://img.freepik.com/fotos-gratis/homem-usando-oculos-redondos-e-camiseta-casual_273609-19641.jpg?w=740&t=st=1694655076~exp=1694655676~hmac=d1edee50e02f8ea4694c100ed8a3ede4ef36ab3cc6fa8ba4102986101f697357'),
 (true, 'Matheus Callegari', 'teste8@email.com', '12345', 'https://img.freepik.com/fotos-gratis/gerente-de-negocios-maduros-no-escritorio_1098-21368.jpg?w=360&t=st=1694654913~exp=1694655513~hmac=121c852a37ef487d8c9334b99d73270e2f0fa1e48a0067d983a5ec5cf9a345d9'),
 (true, 'Carlos Roberto', 'teste9@email.com', '12345', 'https://img.freepik.com/fotos-gratis/cara-de-mundoface-japones-em-um-fundo-branco_53876-31202.jpg?w=740&t=st=1694655100~exp=1694655700~hmac=164f83dcf4e045f1396b4f63dff4ce50112b17d71a7eb16aa86f74b221b79553');
+=======
+(1, true, 'Filipe Filipus', 'filipe.guiraldini@gmail.com', '12345', 'https://i.imgur.com/r4EPYsb.jpg'),
+(2, true, 'Alessandra Ribeiro', 'teste1@email.com', '12345', 'https://img.freepik.com/fotos-gratis/jovem-empresaria-afro-americana-sorrindo_74855-4088.jpg?w=740&t=st=1694654957~exp=1694655557~hmac=2909dc5b886365e520fbbace1d5decf774436c4e478fbe5164c7708a85c835e6'),
+(3, true, 'Alessandra Moura', 'teste2@email.com', '12345', 'https://img.freepik.com/fotos-gratis/jovem-professora-de-retrato_23-2148635365.jpg?w=740&t=st=1694654813~exp=1694655413~hmac=7af75ae6784032cf5a2c482e1d4d7ffbee11374f71891f6b4e906dfdb1953bbf'),
+(4, true, 'Alessandro Oliveira', 'teste3@email.com', '12345', 'https://img.freepik.com/fotos-gratis/closeup-retrato-de-uma-professora-caucasiana-feliz-de-oculos_74855-9736.jpg?w=740&t=st=1694654846~exp=1694655446~hmac=b2aa97bd25a7f5a705ef448f67ed7b17b4ae198404a50b7233e438ac5ac7e0fa'),
+(5, true, 'Alessandro Molario', 'teste4@email.com', '12345', 'https://img.freepik.com/fotos-gratis/sorrindo-feliz-homem-de-camisa-olhando-para-o-espaco-da-copia_171337-10785.jpg?w=740&t=st=1694654858~exp=1694655458~hmac=32eae557f112c179258911c17e7857b10279633a166a5a468721c9da482db530'),
+(6, true, 'Alexandre Carlos', 'teste5@email.com', '12345', 'https://img.freepik.com/fotos-gratis/homem-de-negocios-serio-com-o-rosto-danificado_1098-1085.jpg?w=360&t=st=1694654867~exp=1694655467~hmac=c01dc4217725049996ae6d8178e8f6ba6217e37282c850198e7537d9609fac68'),
+(7, true, 'Mathilda Cruz', 'teste6@email.com', '12345', 'https://img.freepik.com/fotos-gratis/mulher-de-negocios-no-retrato-dos-vidros_1262-1461.jpg?w=740&t=st=1694654831~exp=1694655431~hmac=ef298914d6aded06e77c17b4d14bd0f001532604c60f3323bc9e7bd9200289a0'),
+(8, true, 'Matheus Rodrigues', 'teste7@email.com', '12345', 'https://img.freepik.com/fotos-gratis/homem-usando-oculos-redondos-e-camiseta-casual_273609-19641.jpg?w=740&t=st=1694655076~exp=1694655676~hmac=d1edee50e02f8ea4694c100ed8a3ede4ef36ab3cc6fa8ba4102986101f697357'),
+(9, true, 'Matheus Callegari', 'teste8@email.com', '12345', 'https://img.freepik.com/fotos-gratis/gerente-de-negocios-maduros-no-escritorio_1098-21368.jpg?w=360&t=st=1694654913~exp=1694655513~hmac=121c852a37ef487d8c9334b99d73270e2f0fa1e48a0067d983a5ec5cf9a345d9'),
+(10, true, 'Carlos Roberto', 'teste9@email.com', '12345', 'https://img.freepik.com/fotos-gratis/cara-de-mundoface-japones-em-um-fundo-branco_53876-31202.jpg?w=740&t=st=1694655100~exp=1694655700~hmac=164f83dcf4e045f1396b4f63dff4ce50112b17d71a7eb16aa86f74b221b79553')
+ON CONFLICT (id_usuario) DO NOTHING;
+SELECT setval('usuario_idUsuario_seq', (SELECT MAX(idUsuario) FROM usuario));
+>>>>>>> Stashed changes
 
 INSERT INTO professor
 (descricao, preco_hora_aula, usuario_id)
@@ -58,6 +73,7 @@ VALUES
 (9, 1),
 (9, 2),
 (10, 4);
+SELECT setval('usuario_materia_id_seq', (SELECT MAX(id) FROM usuario_materia));
 
 INSERT INTO disponibilidade
 (dia_da_semana, horario_fim, horario_inicio, professor_usuario_id)
@@ -79,6 +95,7 @@ VALUES
 INSERT INTO aula
 (data_hora, descricao, duracao_segundos, limite_participantes, privacidade, titulo, materia_id, professor_usuario_id)
 VALUES
+<<<<<<< Updated upstream
 ('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Logaritmo', 1, 1),
 ('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Trigonometria', 1, 2),
 ('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Algebra', 1, 3),
@@ -88,10 +105,24 @@ VALUES
 ('2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
 ('2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
 ('2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10);
+=======
+(1, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Logaritmo', 1, 1),
+(2, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Trigonometria', 1, 2),
+(3, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Algebra', 1, 3),
+(4, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Equação 2º Grau', 1, 9),
+(5, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Karl Marx', 4, 2),
+(6, '2023-09-16 17:39:01', 'descricao', 3600, 3, 0, 'Mais Valia', 5, 3),
+(7, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
+(8, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
+(9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10)
+ON CONFLICT (id_aula) DO NOTHING;
+SELECT setval('aula_idAula_seq', (SELECT MAX(idAula) FROM aula));
+>>>>>>> Stashed changes
 
 INSERT INTO formacao
 (dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
 VALUES
+<<<<<<< Updated upstream
 ('2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
 ('1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1);
 
@@ -113,3 +144,9 @@ VALUES
 (false, 'Pedro', 'pedro@email.com', '$2a$10$0/TKTGxdREbWaWjWYhwf6e9P1fPOAMMNqEnZgOG95jnSkHSfkkIrC', '2000-07-07'),
 --(false, 'Hugo', 'hugohanashirogaldino@gmail.com', '$2a$10$MjqSf1.DF7Uezy80wyget.AUt6z53KPAiuv7.zgryAiIbCAayve3K', '2000-07-07'),
 (false, 'Filipe', 'filipe@email.com', '$2a$10$MjqSf1.DF7Uezy80wyget.AUt6z53KPAiuv7.zgryAiIbCAayve3K', '2000-07-07');
+=======
+(1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
+(2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1)
+ON CONFLICT (id_formacao) DO NOTHING;
+SELECT setval('formacao_idFormacao_seq', (SELECT MAX(idFormacao) FROM formacao));
+>>>>>>> Stashed changes
