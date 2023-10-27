@@ -59,7 +59,6 @@ VALUES
 (9, 1),
 (9, 2),
 (10, 4);
-SELECT setval('usuario_materia_id_seq', (SELECT MAX(id) FROM usuario_materia));
 
 INSERT INTO disponibilidade
 (dia_da_semana, horario_fim, horario_inicio, professor_usuario_id)
