@@ -110,3 +110,5 @@ create table mensagem(
     foreign key (fk_remetente) references usuario (id_usuario),
     foreign key (fk_chat) references chat (id_chat)
 );
+
+ALTER TABLE aula DROP COLUMN id;

@@ -1,7 +1,7 @@
 package school.sptech.ensine.service.usuario;
 
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,15 @@ import school.sptech.ensine.repository.AulaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
+import school.sptech.ensine.util.CsvMaker;
+import school.sptech.ensine.util.TxtMaker;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+import school.sptech.ensine.util.Arvore;
+import school.sptech.ensine.util.NodeArvore;
 
 @Service
 public class AulaService {
@@ -42,6 +47,10 @@ public class AulaService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    public List<Aula> getProfessorIdSolicitado(int id){
+        return this.aulaRepository.findByProfessorIdUsuarioSolicitado(id);
+    }
+
     public List<Aula> getAulasConcluidasPorProfessorAndUsuario(Usuario aluno, Professor professor) {
         return this.aulaRepository.findByUsuarioAndProfessorAndStatusConcluida(aluno, professor);
     }
@@ -58,9 +67,15 @@ public class AulaService {
         return this.aulaRepository.findByMateriaContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
+
+//    public List<Aula> getAulaPorSubMateria(String subMateria){
+//
+//    }
+
     public int qtdeAulas(){
         return (int) aulaRepository.count();
     }
+
     public List<Aula> aulas(){
         return aulaRepository.findAll();
     }
@@ -70,7 +85,7 @@ public class AulaService {
         return listaObj;
     }
     public List<Aula> getAulasPorPrivacidade(Privacidade privacidade) {
-        List<Aula> aulas = aulaRepository.findByPrivacidade(privacidade);
+        List<Aula> aulas = aulaRepository.findByPrivacidadeAndStatus(privacidade, Status.AGENDADO);
         return aulas;
     }
     public Optional<Aula> encontraAulaId(int id){
@@ -86,18 +101,39 @@ public class AulaService {
     public Boolean existePorId(int id){
         return aulaRepository.existsById(id);
     }
-    public List<Aula> encontraAulaPeloIdAluno(int id){
-        return aulaRepository.findByAlunosId(id);
+    public List<Aula> encontraAulaPeloIdAluno(int id) {
+
+        List<Aula> aulas = aulaRepository.findAll();
+
+        Arvore arvore = new Arvore();
+
+        for (Aula aula : aulas) {
+            for (Usuario aluno : aula.getAlunos()) {
+                System.out.println("ALUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUNO "+aluno.getIdUsuario());
+                arvore.adicionar(aluno.getIdUsuario(), aula);
+            }
+        }
+        arvore.exibe(null);
+
+        NodeArvore nodeAula = arvore.procura(id, null);
+
+//        Aula aulaAtual = aulaRepository.getById(aula.getIdAula());
+
+        return nodeAula.getAulas();
     }
+
     public Aula referenciaId(int id){
         return aulaRepository.getReferenceById(id);
     }
     public Long countProfessorNome(String nome){
         return aulaRepository.countByProfessorNomeEqualsIgnoreCase(nome);
     }
-
+    public Long countProfessorId(int id) {return aulaRepository.countByProfessorIdUsuario(id);}
+    public Long countProfessorIdConcluida(int id) {return aulaRepository.countConcluidasByProfessorIdUsuario(id);}
+    public Long countProfessorIdAgendada(int id) {return aulaRepository.countAgendadasByProfessorIdUsuario(id);}
     public Aula aulaNova(Aula aula){
-        aula.setProfessor(usuarioRepository.findProfessorById(aula.getProfessor().getId()).get());
+        aula.setProfessor(usuarioRepository.findProfessorByIdUsuario(aula.getProfessor().getIdUsuario()).get());
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "+aula.getMateria());
         String nome = aula.getMateria().getNome();
 
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);
@@ -125,8 +161,38 @@ public class AulaService {
         return aula;
     }
 
+    public Optional<Aula> adicionarAluno(Aula aula, Usuario usuario) {
+        List<Usuario> alunos = aula.getAlunos();
+        alunos.add(usuario);
+        aula.setAlunos(alunos);
+        return Optional.of(aulaRepository.save(aula));
+    }
+
     public List<ContagemAula> contagemAulas(int idProfessor){
-        Optional<Professor> professor = usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professor = usuarioRepository.findProfessorByIdUsuario(idProfessor);
        return aulaRepository.contagemAulas(professor.get());
     }
+
+    public List<Aula> listAulasByProfessorId (int idProfessor){
+        List<Aula> aulas = aulaRepository.findByProfessor_IdUsuario(idProfessor);
+        LocalDateTime agora = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmmss");
+        String dataFormatada = agora.format(formatter);
+        try {
+            CsvMaker.gravaArquivoCsv(aulas, aulas.get(0).getProfessor().getNome() + dataFormatada);
+        } catch (Exception e) {
+
+        }
+        try {
+            TxtMaker.gravaArquivoTxt(aulas, aulas.get(0).getProfessor().getNome() + dataFormatada);
+        } catch (Exception e) {
+
+        }
+        return aulaRepository.findByProfessor_IdUsuario(idProfessor);
+    }
+
+    public List<Aula> listAulasByAlunoId (int idAluno){
+        return aulaRepository.findByAlunos_IdUsuario(idAluno);
+    }
+
 }

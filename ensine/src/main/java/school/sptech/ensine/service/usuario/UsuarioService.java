@@ -59,19 +59,19 @@ public class UsuarioService {
     }
 
     public List<Professor> getProfessoresByDescricao(String termoDeBusca) {
-        return this.usuarioRepository.findByDescricaoContainingIgnoreCase(termoDeBusca);
+        return this.usuarioRepository.findByDescricaoContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
     public List<Professor> getProfessoresByNome(String termoDeBusca) {
-        return this.usuarioRepository.findByNomeContainingIgnoreCase(termoDeBusca);
+        return this.usuarioRepository.findByNomeContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
     public List<Professor> getProfessoresByMateria(String termoDeBusca) {
-        return this.usuarioRepository.findByMateriaContainingIgnoreCaseAndNormalize(termoDeBusca);
+        return this.usuarioRepository.findByMateriasContainingIgnoreCaseAndNormalize(termoDeBusca);
     }
 
     public Professor cadastrarFormacao(int idProfessor, Formacao formacao) {
-        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorByIdUsuario(idProfessor);
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
@@ -83,7 +83,7 @@ public class UsuarioService {
     }
 
     public Professor cadastrarDisponibilidade(int idProfessor, Disponibilidade disponibilidade) {
-        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorByIdUsuario(idProfessor);
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
@@ -95,21 +95,21 @@ public class UsuarioService {
     }
 
     public List<FormacaoResumoDto> getFormacoes(int idProfessor) {
-        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorByIdUsuario(idProfessor);
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
-        List<Formacao> formacoes = this.formacaoRepository.findByProfessorId(idProfessor);
+        List<Formacao> formacoes = this.formacaoRepository.findByProfessorIdUsuario(idProfessor);
         List<FormacaoResumoDto> formacoesResumo = formacoes.stream().map(FormacaoMapper::mapFormacaoToFormacaoResumoDto).toList();
         return formacoesResumo;
     }
 
     public List<DisponibilidadeResumoDto> getDisponibilidades(int idProfessor) {
-        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorById(idProfessor);
+        Optional<Professor> professorOptional = this.usuarioRepository.findProfessorByIdUsuario(idProfessor);
         if (professorOptional.isEmpty()){
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
-        List<Disponibilidade> disponibilidades = this.disponibilidadeRepository.findByProfessorId(idProfessor);
+        List<Disponibilidade> disponibilidades = this.disponibilidadeRepository.findByProfessorIdUsuario(idProfessor);
         List<DisponibilidadeResumoDto> disponibilidadesResumo = disponibilidades
                 .stream()
                 .map(DisponibilidadeMapper::mapDisponibilidadeToDisponibilidadeResumoDto)
@@ -141,7 +141,7 @@ public class UsuarioService {
         return emailEncontrado;
     }
     public Optional<Professor> encontraProfessorID(Integer id){
-        Optional<Professor> professorEncontrado = usuarioRepository.findProfessorById(id);
+        Optional<Professor> professorEncontrado = usuarioRepository.findProfessorByIdUsuario(id);
         if(professorEncontrado.isPresent()) {
             return professorEncontrado;
         } else {
@@ -149,6 +149,8 @@ public class UsuarioService {
         }
 
     }
+
+
 
     public Optional<Usuario> encontraUsuarioId(Integer id) {
         Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(id);
@@ -214,7 +216,7 @@ public class UsuarioService {
         profNovo.setSenha(senhaCripto);
 
         Professor professor = usuarioRepository.save(ProfessorMapper.of(profNovo));
-        //adicionarMateriaUsuario(professor.getId(), materias);
+        //adicionarMateriaUsuario(professor.getIdUsuario(), materias);
         return profNovo;
     }
 
@@ -244,7 +246,7 @@ public class UsuarioService {
     }
 
     public Map<Avaliacao.Insignia, Integer> countInsigniasProfessor(Integer idProfessor) {
-        List<Avaliacao> avaliacoes = avaliacaoRepository.findByProfessor_Id(idProfessor);
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByProfessor_IdUsuario(idProfessor);
         Map<Avaliacao.Insignia, Integer> insigniaMap = new HashMap<>();
         for (Avaliacao.Insignia insignia:
                 Avaliacao.Insignia.values()) {

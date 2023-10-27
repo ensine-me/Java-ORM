@@ -263,15 +263,15 @@ public class UsuarioController {
 
         UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLogar);
 
-//        for(int i = 0; i < usuariosLogados.size(); i++){
-//            if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
-//                return ResponseEntity.status(409).build();
-//            }
-//        }
+        for(int i = 0; i < usuariosLogados.size(); i++){
+            if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
+                return ResponseEntity.status(409).build();
+            }
+        }
 
-//        Optional<Usuario> usuario = usuarioService.encontraPorEmail(usuarioToken.getEmail());
+        Optional<Usuario> usuario = usuarioService.encontraPorEmail(usuarioToken.getEmail());
 
-//        usuariosLogados.adiciona(new UsuarioDto (usuario.get()));
+        usuariosLogados.adiciona(new UsuarioDto (usuario.get()));
 
         return ResponseEntity.status(200).body(usuarioToken);
     }
@@ -292,9 +292,6 @@ public class UsuarioController {
                 break;
             }
         }
-        // por que estamos comparando o tamanho da lista com o tamanho da lista?
-        // por que isso implica que o usuário não está logado?
-        // remover o IF não dá no mesmo?
         if (usuariosLogados.size() == tamanho){
             return ResponseEntity.status(404).body("Usuario não está logado");
         }

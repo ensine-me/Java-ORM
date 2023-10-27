@@ -1,8 +1,7 @@
-package school.sptech.ensine.service.usuario.dto.mapper;
+package school.sptech.ensine.service.usuario.dto;
 
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
-import school.sptech.ensine.service.usuario.dto.UsuarioCriacaoDto;
 
 public class UsuarioMapper {
 
@@ -14,8 +13,7 @@ public class UsuarioMapper {
         usuario.setSenha(usuarioCriacaoDto.getSenha());
         usuario.setDataNasc(usuarioCriacaoDto.getDataNasc());
         usuario.setProfessor(usuarioCriacaoDto.isProfessor());
-        usuario.setMaterias(usuarioCriacaoDto.getMaterias());
-        usuario.setFoto(usuarioCriacaoDto.getFoto());
+
         return usuario;
     }
 
@@ -26,8 +24,6 @@ public class UsuarioMapper {
         usuarioTokenDto.setEmail(usuario.getEmail());
         usuarioTokenDto.setNome(usuario.getNome());
         usuarioTokenDto.setToken(token);
-        usuarioTokenDto.setFoto(usuario.getFoto());
-        usuarioTokenDto.setDisciplinas(usuario.getMaterias());
 
         return usuarioTokenDto;
     }

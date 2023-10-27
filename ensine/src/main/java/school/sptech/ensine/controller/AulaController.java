@@ -1,7 +1,6 @@
 package school.sptech.ensine.controller;
 
 
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -9,24 +8,19 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.domain.exception.ParametrosInvalidosException;
 import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
-import school.sptech.ensine.repository.AulaRepository;
-import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.AulaService;
 import school.sptech.ensine.service.usuario.DisponibilidadeService;
 import school.sptech.ensine.service.usuario.UsuarioService;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.SubmissionPublisher;
 
 @Tag(name = "Aula", description = "Requisições relacionada às aulas")
 @SecurityRequirement(name = "Bearer")
@@ -39,6 +33,20 @@ public class AulaController {
     private UsuarioService usuarioService;
     @Autowired
     private DisponibilidadeService disponibilidadeService;
+
+    @PutMapping("/{id}/adicionar-aluno")
+    public ResponseEntity<Aula> adicionarAluno(@PathVariable int id, @RequestParam String email) {
+        Optional<Usuario> usuarioOptional = usuarioService.encontraPorEmail(email);
+        if (usuarioOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Optional<Aula> aulaOptional = aulaService.encontraAulaId(id);
+        if (aulaOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Optional<Aula> aulaModificada = aulaService.adicionarAluno(aulaOptional.get(), usuarioOptional.get());
+        return ResponseEntity.ok(aulaModificada.get());
+    }
 
     @GetMapping("/busca-por-descricao")
     public ResponseEntity<List<Aula>> buscarAulasPorDescricao(@RequestParam String termo) {
@@ -104,7 +112,7 @@ public class AulaController {
     @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "200", description = "Aulas recuperadas com sucesso")
     public ResponseEntity<List<Aula>> getAulasIdUsuario(@RequestParam int id){
-     return ResponseEntity.status(200).body(aulaService.encontraAulaPeloIdAluno(id));
+     return ResponseEntity.status(200).body(aulaService. encontraAulaPeloIdAluno(id));
     }
 
     @GetMapping("busca-id")
@@ -113,6 +121,31 @@ public class AulaController {
     @ApiResponse(responseCode = "200", description = "Aula recuperada com sucesso")
     public ResponseEntity<Aula> getAulaPorId(@RequestParam int id) {
         return ResponseEntity.of(aulaService.encontraAulaId(id));
+    }
+
+    @GetMapping("conta-aulas-professor-id")
+    @Tag(name = "conta aula por id", description = "devolve int qtd aulas")
+    @ApiResponse(responseCode = "404", description = "qtd de Aula não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "qtd de Aula recuperada com sucesso")
+    public ResponseEntity<Long> countAulaProfessorPorId(@RequestParam int id) {
+        Long qtdAulas = aulaService.countProfessorId(id);
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("conta-aulas-professorid-concluida")
+    @ApiResponse(responseCode = "404", description = "qtd de Aula não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "qtd de Aula recuperada com sucesso")
+    public ResponseEntity<Long> countAulaProfessorConcluidaPorId(@RequestParam int id) {
+        Long qtdAulas = aulaService.countProfessorIdConcluida(id);
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("conta-aulas-professorid-agendada")
+    @ApiResponse(responseCode = "404", description = "qtd de Aulas agendadas não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "qtd de Aulas agendadas recuperada com sucesso")
+    public ResponseEntity<Long> countAulaProfessorAgendadaPorId(@RequestParam int id) {
+        Long qtdAulas = aulaService.countProfessorIdAgendada(id);
+        return ResponseEntity.ok(qtdAulas);
     }
 
     @GetMapping("busca-professor")
@@ -134,6 +167,20 @@ public class AulaController {
         return ResponseEntity.status(404).build();
     }
 
+    @GetMapping("busca-professor-id-solicitado")
+    @Tag(name = "Pegar aulas por professorid solicitado", description = "Devolve uma aula dado o nome de um professor id solicitado")
+    @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "Aulas recuperadas com sucesso")
+    @ApiResponse(responseCode = "404", description = "Professor não encontrado", content = @Content(schema = @Schema(hidden = true)))
+    public ResponseEntity<List<Aula>> getProfessorIdSolicitado(@RequestParam int id) {
+        List<Aula> aulas = aulaService.getProfessorIdSolicitado(id);
+        if(aulas.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        } else {
+            return ResponseEntity.ok(aulas);
+        }
+    }
+
     @PostMapping
     @Tag(name = "Cadastrar aula", description = "Cadastra uma nova aula")
     @ApiResponse(responseCode = "201", description = "Aula cadastrada com sucesso")
@@ -142,7 +189,7 @@ public class AulaController {
         LocalTime horarioAulaFim = horarioAula.plusSeconds(newAula.getDuracaoSegundos());
 
         Professor professor = newAula.getProfessor();
-        List<Disponibilidade> disponibilidades = this.disponibilidadeService.getDisponibilidadesByProfessorId(professor.getId());
+        List<Disponibilidade> disponibilidades = this.disponibilidadeService.getDisponibilidadesByProfessorId(professor.getIdUsuario());
 
         boolean estaDisponivel = false;
 
@@ -199,5 +246,15 @@ public class AulaController {
     @GetMapping("contagem/{idProfessor}")
     public List<ContagemAula> contagemAulas (@PathVariable int idProfessor){
        return aulaService.contagemAulas(idProfessor);
+    }
+
+    @GetMapping("professor/{idProfessor}")
+    public List<Aula> listAulasByProfessorId (@PathVariable int idProfessor) {
+        return aulaService.listAulasByProfessorId(idProfessor);
+    }
+
+    @GetMapping("aluno/{idAluno}")
+    public List<Aula> listAulasByAlunoId (@PathVariable int idAluno) {
+        return aulaService.listAulasByAlunoId(idAluno);
     }
 }

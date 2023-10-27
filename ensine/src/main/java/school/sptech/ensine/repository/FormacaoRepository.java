@@ -6,5 +6,5 @@ import school.sptech.ensine.domain.Formacao;
 import java.util.List;
 
 public interface FormacaoRepository extends JpaRepository<Formacao, Integer> {
-    List<Formacao> findByProfessorId(int id);
+    List<Formacao> findByProfessorIdUsuario(int id);
 }

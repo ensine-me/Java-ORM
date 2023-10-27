@@ -1,12 +1,8 @@
-package school.sptech.ensine.service.usuario.dto.mapper;
+package school.sptech.ensine.service.usuario.dto;
 
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.service.usuario.autenticacao.dto.UsuarioTokenDto;
-import school.sptech.ensine.service.usuario.dto.ProfessorCriacaoDto;
-import school.sptech.ensine.service.usuario.dto.ProfessorResumoDto;
-
-import java.util.Objects;
 
 public class ProfessorMapper{
     public static Professor of(ProfessorCriacaoDto professorCriacaoDto) {
@@ -18,18 +14,8 @@ public class ProfessorMapper{
         professor.setDataNasc(professorCriacaoDto.getDataNasc());
         professor.setProfessor(professorCriacaoDto.isProfessor());
         professor.setDescricao(professorCriacaoDto.getDescricao());
-        professor.setMaterias(professorCriacaoDto.getMaterias());
-        professor.setFoto(professorCriacaoDto.getFoto());
-        professor.setPrecoHoraAula(professorCriacaoDto.getPrecoHoraAula());
 
         return professor;
-    }
-
-    public static ProfessorResumoDto mapProfessorToProfessorResumoDto(Professor professor) {
-        if(Objects.isNull(professor)) {
-            return null;
-        }
-        return new ProfessorResumoDto(professor.getIdUsuario(), professor.getNome(), professor.getEmail());
     }
 
     public static UsuarioTokenDto of(Usuario usuario, String token) {

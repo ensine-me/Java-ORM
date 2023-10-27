@@ -8,6 +8,7 @@ import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.repository.AvaliacaoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AvaliacaoService {
@@ -15,8 +16,8 @@ public class AvaliacaoService {
     AvaliacaoRepository avaliacaoRepository;
 
     public Avaliacao criarAvaliacao(@Valid Avaliacao avaliacao) {
-        if (avaliacaoRepository.findByIdAndAula_Alunos_Id(avaliacao.getAula().getId(),
-                avaliacao.getUsuario().getId()).isEmpty()) {
+        if (avaliacaoRepository.findByIdAndAula_Alunos_IdUsuario(avaliacao.getAula().getId(),
+                avaliacao.getUsuario().getIdUsuario()).isEmpty()) {
             return this.avaliacaoRepository.save(avaliacao);
         }
         throw new IllegalStateException("Aluno já avaliou esta aula");
@@ -31,12 +32,14 @@ public class AvaliacaoService {
     }
 
     public List<Avaliacao> listAvaliacaoByProfessorId(Integer idProfessor) {
-        return this.avaliacaoRepository.findByProfessor_Id(idProfessor);
+        return this.avaliacaoRepository.findByProfessor_IdUsuario(idProfessor);
     }
 
     public List<Avaliacao> listAvaliacaoByAlunoId(Integer idAluno) {
-        return this.avaliacaoRepository.findByUsuario_Id(idAluno);
+        return this.avaliacaoRepository.findByUsuario_IdUsuario(idAluno);
     }
 
-
+    public Double getMediaByProfessorId(Professor professor) {
+        return this.avaliacaoRepository.findMeanNotaByProfessor(professor);
+    }
 }

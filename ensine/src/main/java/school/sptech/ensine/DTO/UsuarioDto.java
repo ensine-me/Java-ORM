@@ -1,6 +1,19 @@
-package school.sptech.ensine.service.usuario.dto;
+package school.sptech.ensine.DTO;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
+import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Usuario;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.List;
 
 public class UsuarioDto {
 
