@@ -88,8 +88,8 @@ VALUES
 (7, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4),
 (8, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5),
 (9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10)
-ON CONFLICT (id_aula) DO NOTHING;
-SELECT setval('aula_id_aula_seq', (SELECT MAX(id_aula) FROM aula));
+ON CONFLICT (id) DO NOTHING;
+SELECT setval('aula_id_aula_seq', (SELECT MAX(id) FROM aula));
 
 INSERT INTO formacao
 (id, dt_inicio, dt_termino, instituicao, nome_curso, tipo_formacao, professor_usuario_id)
