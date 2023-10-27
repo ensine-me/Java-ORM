@@ -96,4 +96,4 @@ INSERT INTO formacao
 VALUES
 (1, '2000-09-16', '2004-09-10', 'USP', 'Engenharia Aplicada', 1, 1),
 (2, '1996-09-16', '1999-12-01', 'PUC-SP', 'Matemática', 0, 1);
-SELECT setval('formacao_id_formacao_seq', (SELECT MAX(id_formacao) FROM formacao));
+SELECT setval('formacao_id_seq', (SELECT MAX(id) FROM formacao));
