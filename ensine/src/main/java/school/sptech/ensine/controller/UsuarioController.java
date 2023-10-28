@@ -27,18 +27,12 @@ import java.util.*;
 @RequestMapping("usuarios")
 public class UsuarioController {
 
-//  private List<UsuarioDto> usuariosLogados = new ArrayList<>();
-
     @Autowired
     UsuarioService usuarioService;
 
     @Autowired
     MateriaRepository materiaRepository;
 
-
-    //pode ocorrer um bug na lista de usuariosLogados ao tentar cadastrar um novo usuário e logá-lo
-    //logo em seguida, porque o limite da lista será o de número de usuários cadastrados anteriormente.
-    private ListaObj<UsuarioDto> usuariosLogados = new ListaObj<>();
     private TabelaHashProfessor tabelaHashProfessor = new TabelaHashProfessor(3);
     @GetMapping("/existe-por-email")
     public ResponseEntity<Boolean> existePorEmail(@RequestParam String emailUsuario) {
@@ -240,20 +234,6 @@ public class UsuarioController {
         return usuario.map(value -> ResponseEntity.status(200).body(value)).orElseGet(() -> ResponseEntity.status(400).build());
     }
 
-    @SecurityRequirement(name = "Bearer")
-    @Tag(name = "Listar usuários logados", description = "Lista os usuários atualmente logados no sistema")
-    @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
-    @GetMapping("/logados")
-    @ApiResponse(responseCode = "200", description = "Usuários encontrados com sucesso")
-    public ResponseEntity<ListaObj<UsuarioDto>> listarLogados(){
-        ListaObj<UsuarioDto> usuariosLogadosDto = new ListaObj<>(usuariosLogados.size());
-        for (int i = 0; i < usuariosLogados.size(); i++) {
-            UsuarioDto usuarioDto = new UsuarioDto(usuariosLogados.get(i));
-            usuariosLogadosDto.adiciona(usuarioDto);
-        }
-        return ResponseEntity.status(200).body(usuariosLogadosDto);
-    }
-
 
     @PostMapping("/login")
     @Tag(name = "Login", description = "Autentica os usuários no sistema")
@@ -263,39 +243,7 @@ public class UsuarioController {
 
         UsuarioTokenDto usuarioToken = usuarioService.autenticar(usuarioLogar);
 
-        for(int i = 0; i < usuariosLogados.size(); i++){
-            if (usuariosLogados.get(i).getEmail().equals(usuarioToken.getEmail())){
-                return ResponseEntity.status(409).build();
-            }
-        }
-
-        Optional<Usuario> usuario = usuarioService.encontraPorEmail(usuarioToken.getEmail());
-
-        usuariosLogados.adiciona(new UsuarioDto (usuario.get()));
-
         return ResponseEntity.status(200).body(usuarioToken);
-    }
-
-    @DeleteMapping("/logoff/{email}")
-    @SecurityRequirement(name = "Bearer")
-    @Tag(name = "LogOff", description = "Desautentica os usuários no sistema")
-    @ApiResponse(responseCode = "404", description = "Usuário não existe ou não está logado")
-    @ApiResponse(responseCode = "200", description = "Usuário deslogado com sucesso")
-    @ApiResponse(responseCode = "401", description = "Login não foi realizado", content = @Content(schema = @Schema(hidden = true)))
-    public ResponseEntity<String> logoff(@PathVariable String email){
-
-        int tamanho = usuariosLogados.size();
-
-        for(int i = 0; i < usuariosLogados.size(); i++){
-            if(usuariosLogados.get(i).getEmail().equals(email)){
-                usuariosLogados.remove(i);
-                break;
-            }
-        }
-        if (usuariosLogados.size() == tamanho){
-            return ResponseEntity.status(404).body("Usuario não está logado");
-        }
-        return ResponseEntity.status(200).body("Usuario deslogado com sucesso");
     }
 
     @GetMapping("/professor/insignia/{idProfessor}")
