@@ -11,6 +11,7 @@ public class UsuarioTokenDto {
     private String token;
     private String foto;
     private List<Materia> disciplinas;
+    private boolean isProfessor;
 
     public Long getUserId() {
         return userId;
@@ -58,5 +59,13 @@ public class UsuarioTokenDto {
 
     public void setDisciplinas(List<Materia> disciplinas) {
         this.disciplinas = disciplinas;
+    }
+
+    public boolean isProfessor() {
+        return isProfessor;
+    }
+
+    public void setProfessor(boolean professor) {
+        isProfessor = professor;
     }
 }
