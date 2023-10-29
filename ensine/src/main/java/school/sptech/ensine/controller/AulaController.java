@@ -238,7 +238,6 @@ public class AulaController {
         }
         return ResponseEntity.status(404).body("Aula não encontrada");
     }
-    @CrossOrigin("http://localhost:3000")
     @PatchMapping("/{id}/mudanca-status")
     public ResponseEntity<Aula> mudarStatus(@PathVariable int id, @RequestParam Status status) {
         return ResponseEntity.of(aulaService.atualizarStatusAula(id, status));
