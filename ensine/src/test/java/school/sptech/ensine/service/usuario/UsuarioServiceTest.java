@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
+import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
@@ -251,7 +252,7 @@ public class UsuarioServiceTest {
         Mockito.when(passwordEncoder.encode(professorCriacaoDto.getSenha())).
                 thenReturn(senhaNova);
         // then
-        ProfessorCriacaoDto resultado = service.criarProfessor(professorCriacaoDto);
+        Professor resultado = service.criarProfessor(professorCriacaoDto);
 
         // assert
         assertNotNull(resultado);
