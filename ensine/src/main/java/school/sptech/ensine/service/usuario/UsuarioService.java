@@ -198,7 +198,7 @@ public class UsuarioService {
         return aluno;
 
     }
-    public Professor criarProfessor(@RequestBody ProfessorCriacaoDto profNovo){
+    public ProfessorCriacaoDto criarProfessor(@RequestBody ProfessorCriacaoDto profNovo){
         // arrumar aulas
         profNovo.setProfessor(true);
 
@@ -217,7 +217,7 @@ public class UsuarioService {
 
         Professor professor = usuarioRepository.save(ProfessorMapper.of(profNovo));
         //adicionarMateriaUsuario(professor.getIdUsuario(), materias);
-        return professor;
+        return profNovo;
     }
 
 
