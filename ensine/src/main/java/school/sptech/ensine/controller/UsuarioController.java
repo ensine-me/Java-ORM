@@ -152,6 +152,11 @@ public class UsuarioController {
         List<Professor> professors = tabelaHashProfessor.buscaLista(nome);
         return ResponseEntity.status(200).body(professors);
     }
+    @GetMapping("/professor/{email}")
+    public ResponseEntity<Usuario> buscarProfessorPorEmail(@PathVariable String email) {
+        Optional<Usuario> usuarioOptional = usuarioService.encontraPorEmail(email);
+        return usuarioOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
     @GetMapping("/materias")
     @SecurityRequirement(name = "Bearer")
     @Tag(name = "Listar matérias", description = "Devolve uma lista de disciplinas")
