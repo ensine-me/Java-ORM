@@ -93,13 +93,13 @@ public class UsuarioController {
         return ResponseEntity.ok().body(professores);
     }
 
-    @GetMapping("/professor/{idProfessor}/formacao") //cadastra formação nova em um professor existente
+    @PostMapping("/professor/{idProfessor}/formacao") //cadastra formação nova em um professor existente
     public ResponseEntity<Professor> cadastrarFormacao(@PathVariable int idProfessor, @RequestBody Formacao formacao) {
         Professor professor = this.usuarioService.cadastrarFormacao(idProfessor, formacao);
         return ResponseEntity.created(null).body(professor);
     }
 
-    @GetMapping("/professor/{idProfessor}/disponibilidade") //cadastra disponibilidade nova em um professor existente
+    @PostMapping("/professor/{idProfessor}/disponibilidade") //cadastra disponibilidade nova em um professor existente
     public ResponseEntity<Professor> cadastrarDisponibilidade(@PathVariable int idProfessor, @RequestBody Disponibilidade disponibilidade) {
         Professor professor = this.usuarioService.cadastrarDisponibilidade(idProfessor, disponibilidade);
         return ResponseEntity.created(null).body(professor);
