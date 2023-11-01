@@ -79,8 +79,8 @@ VALUES
 INSERT INTO aula
 (id, data_hora, descricao, duracao_segundos, limite_participantes, privacidade, titulo, materia_id, professor_usuario_id, status)
 VALUES
-(1, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Logaritmo', 1, 1, 0),
-(2, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Trigonometria', 1, 2, 0),
+(1, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Logaritmo', 1, 1, 2),
+(2, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Trigonometria', 1, 2, 2),
 (3, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Algebra', 1, 3, 0),
 (4, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Equação 2º Grau', 1, 9, 0),
 (5, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Karl Marx', 4, 2, 0),
