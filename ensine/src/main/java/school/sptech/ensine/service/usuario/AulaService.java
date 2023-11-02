@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.Aula;
+import school.sptech.ensine.domain.AvaliacaoVisualizada;
 import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.ListaObj;
@@ -14,6 +15,7 @@ import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
+import school.sptech.ensine.repository.AvaliacaoVisualizadaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
@@ -46,6 +48,9 @@ public class AulaService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private AvaliacaoVisualizadaRepository avaliacaoVisualizadaRepository;
 
     public List<Aula> getProfessorIdSolicitado(int id){
         return this.aulaRepository.findByProfessorIdUsuarioSolicitado(id);
@@ -195,4 +200,15 @@ public class AulaService {
         return aulaRepository.findByAlunos_IdUsuario(idAluno);
     }
 
+    public void finalizarAula (int id){
+        Aula aula = referenciaId(id);
+        aula.setStatus(Status.CONCLUIDA);
+        aulaRepository.save(aula);
+        AvaliacaoVisualizada a;
+        for (Usuario u:
+             aula.getAlunos()) {
+            a = new AvaliacaoVisualizada(u, aula);
+            avaliacaoVisualizadaRepository.save(a);
+        }
+    }
 }

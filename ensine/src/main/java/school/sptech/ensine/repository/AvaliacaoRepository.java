@@ -22,4 +22,5 @@ public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Integer> {
 
     List<Avaliacao> findByUsuario_IdUsuario(int id);
 
+
 }

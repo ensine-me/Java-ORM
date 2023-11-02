@@ -23,6 +23,7 @@ public class Avaliacao {
     private Double nota;
 
     private List<Insignia> insignias;
+
     public Avaliacao() {
     }
 
@@ -120,6 +121,4 @@ public class Avaliacao {
     public void setNota(Double nota) {
         this.nota = nota;
     }
-
-
 }

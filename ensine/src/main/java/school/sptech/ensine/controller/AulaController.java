@@ -232,8 +232,7 @@ public class AulaController {
     @ApiResponse(responseCode = "404", description = "Aula não encontrada")
     public ResponseEntity<String> finalizarAula(@RequestParam int id) {
         if (aulaService.existePorId(id)) {
-            Aula aula = aulaService.referenciaId(id);
-            aula.setStatus(Status.CONCLUIDA);
+            aulaService.finalizarAula(id);
             return ResponseEntity.status(200).body("Aula finalizada");
         }
         return ResponseEntity.status(404).body("Aula não encontrada");
