@@ -31,6 +31,8 @@ public class Professor extends Usuario {
     private List<Formacao> formacoes;
     @OneToMany(mappedBy = "professor")
     private List<Avaliacao> avaliacoes;
+    private Double nota;
+
 
     @Override
     public int getIdUsuario() {
@@ -88,4 +90,26 @@ public class Professor extends Usuario {
         return formacoes;
     }
 
+    public Double getNota() {
+        return nota;
+    }
+
+    public void setNota(Double nota) {
+        this.nota = nota;
+    }
+
+    public Professor(String descricao, List<Aula> aulas, Double precoHoraAula, List<Disponibilidade> disponibilidades, List<Formacao> formacoes,
+                     List<Avaliacao> avaliacoes) {
+        this.descricao = descricao;
+        this.aulas = aulas;
+        this.precoHoraAula = precoHoraAula;
+        this.disponibilidades = disponibilidades;
+        this.formacoes = formacoes;
+        this.avaliacoes = avaliacoes;
+        this.nota = 5.0;
+    }
+
+    public Professor() {
+        this.nota = 5.0;
+    }
 }
