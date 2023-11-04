@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.ensine.domain.Aula;
 import school.sptech.ensine.domain.Avaliacao;
+import school.sptech.ensine.domain.AvaliacaoVisualizada;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.domain.exception.EntidadeNaoEncontradaException;
@@ -85,7 +86,7 @@ public class AvaliacaoController {
             throw new EntidadeNaoEncontradaException("Professor não encontrado");
         }
         Double mediaProfessor = avaliacaoService.getMediaByProfessorId(professor.get());
-        return ResponseEntity.ok(2.2);
+        return ResponseEntity.ok(mediaProfessor);
     }
 
     @GetMapping("/aluno/{idAluno}")
@@ -97,6 +98,13 @@ public class AvaliacaoController {
         List<Avaliacao> avaliacoes = avaliacaoService.listAvaliacaoByAlunoId(idAluno);
         return ResponseEntity.ok(avaliacoes);
     }
-
+    @GetMapping("/visualizada/aluno/{idAluno}")
+    public ResponseEntity<AvaliacaoVisualizada> recuperaUltimaNaoVisualizada(@PathVariable Integer idAluno){
+        Optional<AvaliacaoVisualizada> avaliacao = avaliacaoService.recuperaUltimaNaoVisualizada(idAluno);
+        if(avaliacao.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(avaliacao.get());
+    }
 
 }
