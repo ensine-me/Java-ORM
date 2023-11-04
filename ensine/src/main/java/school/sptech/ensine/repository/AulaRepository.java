@@ -10,6 +10,7 @@ import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AulaRepository extends JpaRepository<Aula, Integer> {
@@ -58,6 +59,30 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
 
     List<Aula> findByAlunos_IdUsuario(int id);
 
+    @Query("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAula(a.materia.nome, COUNT(a), FUNCTION('MONTH', a.dataHora)) " +
+            "FROM Aula a " +
+            "WHERE a.materia.nome IN ('Matematica', 'Lingua Portuguesa', 'Geografia', 'Historia', 'Biologia') " +
+            "AND a.dataHora BETWEEN :start AND :end " +
+            "GROUP BY a.materia.nome, FUNCTION('YEAR', a.dataHora), FUNCTION('MONTH', a.dataHora)")
+    List<ContagemAula> countAulasByMateriaAndMonth(
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end
+    );
 
+    @Query("SELECT MONTH(a.dataHora), SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.dataHora >= :start AND a.dataHora <= :end " +
+            "GROUP BY MONTH(a.dataHora)")
+    List<Object[]> totalValorArrecadadoUltimosTresMeses(
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end
+    );
 
+    @Query("SELECT COUNT(a) " +
+            "FROM Aula a " +
+            "WHERE FUNCTION('YEAR', a.dataHora) = FUNCTION('YEAR', CURRENT_DATE) " +
+            "AND FUNCTION('MONTH', a.dataHora) = FUNCTION('MONTH', CURRENT_DATE) " +
+            "AND FUNCTION('DAY', a.dataHora) = FUNCTION('DAY', CURRENT_DATE)")
+    Long countAulasMarcadasParaHoje();
 }

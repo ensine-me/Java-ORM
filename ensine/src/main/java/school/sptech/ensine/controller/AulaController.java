@@ -18,7 +18,10 @@ import school.sptech.ensine.service.usuario.DisponibilidadeService;
 import school.sptech.ensine.service.usuario.UsuarioService;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -255,5 +258,46 @@ public class AulaController {
     @GetMapping("aluno/{idAluno}")
     public List<Aula> listAulasByAlunoId (@PathVariable int idAluno) {
         return aulaService.listAulasByAlunoId(idAluno);
+    }
+
+    @GetMapping("qtd-aulas-hoje")
+    public ResponseEntity<List<Object>> contagemAulasHoje(){
+        long qtdAulasHoje = aulaService.getQtdAulasHoje();
+        LocalDateTime dataAtual = LocalDateTime.now();
+        DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dataFormatada = dataAtual.format(formatoData);
+
+        List<Object> responseList = Arrays.asList(dataFormatada, qtdAulasHoje);
+        return ResponseEntity.status(200).body(responseList);
+    }
+
+    @GetMapping("qtd-aulas-meses")
+    public ResponseEntity<List<ContagemAula>> qtdAulasUltimosMeses(){
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime threeMonthsAgo = currentTime.minusMonths(3);
+
+        List<ContagemAula> qtd = aulaService.getContagemAulasUltimosTresMeses(currentTime, threeMonthsAgo);
+
+        if (qtd.isEmpty()){
+
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(qtd);
+    }
+
+    @GetMapping("total-valor-aulas")
+    public ResponseEntity<List<Object[]>> totalValorAulas(){
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime threeMonthsAgo = currentTime.minusMonths(3);
+
+        List<Object[]> qtd = aulaService.getTotalValorAulas(currentTime, threeMonthsAgo);
+
+        if (qtd.isEmpty()){
+
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(qtd);
     }
 }

@@ -200,6 +200,19 @@ public class AulaService {
         return aulaRepository.findByAlunos_IdUsuario(idAluno);
     }
 
+    public List<ContagemAula> getContagemAulasUltimosTresMeses(LocalDateTime currentTime, LocalDateTime threeMonthsAgo) {
+
+        return aulaRepository.countAulasByMateriaAndMonth(threeMonthsAgo, currentTime);
+    }
+
+    public List<Object[]> getTotalValorAulas(LocalDateTime currentTime, LocalDateTime threeMonthsAgo) {
+
+        return aulaRepository.totalValorArrecadadoUltimosTresMeses(threeMonthsAgo, currentTime);
+    }
+
+    public Long getQtdAulasHoje(){
+        return aulaRepository.countAulasMarcadasParaHoje();
+
     public void finalizarAula (int id){
         Aula aula = referenciaId(id);
         aula.setStatus(Status.CONCLUIDA);
