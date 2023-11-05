@@ -151,6 +151,7 @@ public class AulaController {
         return ResponseEntity.ok(qtdAulas);
     }
 
+
     @GetMapping("busca-professor")
     @Tag(name = "Pegar aulas por professor", description = "Devolve uma aula dado o nome de um professor")
     @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))
@@ -183,6 +184,8 @@ public class AulaController {
             return ResponseEntity.ok(aulas);
         }
     }
+
+
 
     @PostMapping
     @Tag(name = "Cadastrar aula", description = "Cadastra uma nova aula")
@@ -286,6 +289,44 @@ public class AulaController {
         return ResponseEntity.status(200).body(qtd);
     }
 
+    @GetMapping("qtd-aulas-mes")
+    public ResponseEntity<List<ContagemAula>> qtdAulasUltimoMes(){
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime OneMonthAgo = currentTime.minusMonths(1);
+
+        List<ContagemAula> qtd = aulaService.getContagemAulasUltimoMes(currentTime, OneMonthAgo);
+
+        if (qtd.isEmpty()){
+
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(qtd);
+    }
+
+    @GetMapping("qtd-aulas-semana")
+    public ResponseEntity<List<ContagemAula>> qtdAulasUltimaSemana(){
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime sevenDaysAgo = currentTime.minusDays(7);
+
+        List<ContagemAula> qtd = aulaService.getContagemAulasUltimaSemana(currentTime, sevenDaysAgo);
+
+        if (qtd.isEmpty()){
+
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(qtd);
+    }
+
+    @GetMapping("conta-aulas-concluidas")
+    @ApiResponse(responseCode = "404", description = "qtd de Aulas concluidas não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "qtd de Aulas concluidas recuperada com sucesso")
+    public ResponseEntity<Long> countTotalAulasConcluidas() {
+        Long qtdAulas = aulaService.countTotalAulasConcluidas();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
     @GetMapping("total-valor-aulas")
     public ResponseEntity<List<Object[]>> totalValorAulas(){
         LocalDateTime currentTime = LocalDateTime.now();
@@ -299,5 +340,18 @@ public class AulaController {
         }
 
         return ResponseEntity.status(200).body(qtd);
+    }
+
+    @GetMapping("total-preco-por-professor-mat")
+    public ResponseEntity<List<Object[]>> totalPrecoPorProfessorMat(){
+
+        List<Object[]> qtdPreco = aulaService.totalPrecoPorProfessor();
+
+        if (qtdPreco.isEmpty()){
+
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(qtdPreco);
     }
 }

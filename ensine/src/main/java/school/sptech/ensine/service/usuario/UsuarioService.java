@@ -276,4 +276,8 @@ public class UsuarioService {
     private void popularTabelaHash(List<Professor> professores) {
 
     }
+
+    public Long countTotalProfessores() {
+        return usuarioRepository.countProfessores();
+    }
 }

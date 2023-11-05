@@ -52,7 +52,7 @@ public class AulaService {
     @Autowired
     private AvaliacaoVisualizadaRepository avaliacaoVisualizadaRepository;
 
-    public List<Aula> getProfessorIdSolicitado(int id){
+    public List<Aula> getProfessorIdSolicitado(int id) {
         return this.aulaRepository.findByProfessorIdUsuarioSolicitado(id);
     }
 
@@ -77,35 +77,40 @@ public class AulaService {
 //
 //    }
 
-    public int qtdeAulas(){
+    public int qtdeAulas() {
         return (int) aulaRepository.count();
     }
 
-    public List<Aula> aulas(){
+    public List<Aula> aulas() {
         return aulaRepository.findAll();
     }
+
     public ListaObj<Aula> getAulasPorStatus(String status) {
         ListaObj<Aula> listaObj = new ListaObj<>(Math.toIntExact(aulaRepository.countByStatus(status)));
         listaObj.adiciona(aulaRepository.findByStatus(status));
         return listaObj;
     }
+
     public List<Aula> getAulasPorPrivacidade(Privacidade privacidade) {
         List<Aula> aulas = aulaRepository.findByPrivacidadeAndStatus(privacidade, Status.AGENDADO);
         return aulas;
     }
-    public Optional<Aula> encontraAulaId(int id){
+
+    public Optional<Aula> encontraAulaId(int id) {
         Optional<Aula> aulaEncontrada = aulaRepository.findById(id);
 
-        if (aulaEncontrada.isEmpty()){
+        if (aulaEncontrada.isEmpty()) {
 
             throw new IllegalArgumentException("Essa aula não existe");
         }
 
         return aulaEncontrada;
     }
-    public Boolean existePorId(int id){
+
+    public Boolean existePorId(int id) {
         return aulaRepository.existsById(id);
     }
+
     public List<Aula> encontraAulaPeloIdAluno(int id) {
 
         List<Aula> aulas = aulaRepository.findAll();
@@ -114,7 +119,7 @@ public class AulaService {
 
         for (Aula aula : aulas) {
             for (Usuario aluno : aula.getAlunos()) {
-                System.out.println("ALUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUNO "+aluno.getIdUsuario());
+                System.out.println("ALUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUNO " + aluno.getIdUsuario());
                 arvore.adicionar(aluno.getIdUsuario(), aula);
             }
         }
@@ -127,22 +132,33 @@ public class AulaService {
         return nodeAula.getAulas();
     }
 
-    public Aula referenciaId(int id){
+    public Aula referenciaId(int id) {
         return aulaRepository.getReferenceById(id);
     }
-    public Long countProfessorNome(String nome){
+
+    public Long countProfessorNome(String nome) {
         return aulaRepository.countByProfessorNomeEqualsIgnoreCase(nome);
     }
-    public Long countProfessorId(int id) {return aulaRepository.countByProfessorIdUsuario(id);}
-    public Long countProfessorIdConcluida(int id) {return aulaRepository.countConcluidasByProfessorIdUsuario(id);}
-    public Long countProfessorIdAgendada(int id) {return aulaRepository.countAgendadasByProfessorIdUsuario(id);}
-    public Aula aulaNova(Aula aula){
+
+    public Long countProfessorId(int id) {
+        return aulaRepository.countByProfessorIdUsuario(id);
+    }
+
+    public Long countProfessorIdConcluida(int id) {
+        return aulaRepository.countConcluidasByProfessorIdUsuario(id);
+    }
+
+    public Long countProfessorIdAgendada(int id) {
+        return aulaRepository.countAgendadasByProfessorIdUsuario(id);
+    }
+
+    public Aula aulaNova(Aula aula) {
         aula.setProfessor(usuarioRepository.findProfessorByIdUsuario(aula.getProfessor().getIdUsuario()).get());
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA "+aula.getMateria());
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + aula.getMateria());
         String nome = aula.getMateria().getNome();
 
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);
-        if(materia.isEmpty()){
+        if (materia.isEmpty()) {
             throw new IllegalArgumentException("MATERIA NAO EXISTE!");
         }
         aula.setMateria(materia.get());
@@ -158,7 +174,7 @@ public class AulaService {
     public Optional<Aula> atualizarStatusAula(int id, Status status) {
         Optional<Aula> aula = aulaRepository.findById(id);
 
-        if (aula.isEmpty()){
+        if (aula.isEmpty()) {
             throw new IllegalArgumentException("Essa aula não existe");
         }
         aula.get().setStatus(status);
@@ -173,12 +189,12 @@ public class AulaService {
         return Optional.of(aulaRepository.save(aula));
     }
 
-    public List<ContagemAula> contagemAulas(int idProfessor){
+    public List<ContagemAula> contagemAulas(int idProfessor) {
         Optional<Professor> professor = usuarioRepository.findProfessorByIdUsuario(idProfessor);
-       return aulaRepository.contagemAulas(professor.get());
+        return aulaRepository.contagemAulas(professor.get());
     }
 
-    public List<Aula> listAulasByProfessorId (int idProfessor){
+    public List<Aula> listAulasByProfessorId(int idProfessor) {
         List<Aula> aulas = aulaRepository.findByProfessor_IdUsuario(idProfessor);
         LocalDateTime agora = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmmss");
@@ -196,7 +212,7 @@ public class AulaService {
         return aulaRepository.findByProfessor_IdUsuario(idProfessor);
     }
 
-    public List<Aula> listAulasByAlunoId (int idAluno){
+    public List<Aula> listAulasByAlunoId(int idAluno) {
         return aulaRepository.findByAlunos_IdUsuario(idAluno);
     }
 
@@ -204,24 +220,48 @@ public class AulaService {
 
         return aulaRepository.countAulasByMateriaAndMonth(threeMonthsAgo, currentTime);
     }
+    // Pedrinho 1
+    public List<ContagemAula> getContagemAulasUltimoMes(LocalDateTime currentTime, LocalDateTime oneMonthAgo) {
+
+        return aulaRepository.countAulasByMateriaAndMonth(oneMonthAgo, currentTime);
+    }
+    // Pedrinho 2
+    public List<ContagemAula> getContagemAulasUltimaSemana(LocalDateTime currentTime, LocalDateTime sevenDaysAgo) {
+
+        return aulaRepository.countAulasByMateriaAndMonth(sevenDaysAgo, currentTime);
+    }
+    // Pedrinho 3 - nesse aqui vc precisa fazer ele (dividido) pelo total de professores da plataforma depois do fetch
+    // eu coloquei la no UsuarioService, UsuarioController e UsuarioRepository
+    public Long countTotalAulasConcluidas() {
+        return aulaRepository.countTotalAulasConcluidas();
+    }
+
+    public List<Object[]> totalPrecoPorProfessor() {
+
+        return aulaRepository.totalPrecoPorProfessorDeMatematica();
+    }
 
     public List<Object[]> getTotalValorAulas(LocalDateTime currentTime, LocalDateTime threeMonthsAgo) {
 
         return aulaRepository.totalValorArrecadadoUltimosTresMeses(threeMonthsAgo, currentTime);
     }
 
-    public Long getQtdAulasHoje(){
+    public Long getQtdAulasHoje() {
         return aulaRepository.countAulasMarcadasParaHoje();
+    }
 
-    public void finalizarAula (int id){
-        Aula aula = referenciaId(id);
-        aula.setStatus(Status.CONCLUIDA);
-        aulaRepository.save(aula);
-        AvaliacaoVisualizada a;
-        for (Usuario u:
-             aula.getAlunos()) {
-            a = new AvaliacaoVisualizada(u, aula);
-            avaliacaoVisualizadaRepository.save(a);
+
+
+        public void finalizarAula (int id){
+            Aula aula = referenciaId(id);
+            aula.setStatus(Status.CONCLUIDA);
+            aulaRepository.save(aula);
+            AvaliacaoVisualizada a;
+            for (Usuario u :
+                    aula.getAlunos()) {
+                a = new AvaliacaoVisualizada(u, aula);
+                avaliacaoVisualizadaRepository.save(a);
+            }
         }
     }
-}
+

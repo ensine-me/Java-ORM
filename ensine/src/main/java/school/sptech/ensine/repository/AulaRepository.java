@@ -23,8 +23,12 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
     Long countByProfessorIdUsuario(int id);
     @Query("SELECT a FROM Aula a WHERE a.professor.idUsuario = :professorIdUsuario AND a.status = 0")
     List<Aula> findByProfessorIdUsuarioSolicitado(int professorIdUsuario);
+
     @Query("SELECT COUNT(a) FROM Aula a WHERE a.professor.idUsuario = :professorIdUsuario AND a.status = 4")
     Long countConcluidasByProfessorIdUsuario(int professorIdUsuario);
+    // de agr3
+    @Query("SELECT COUNT(a) FROM Aula a WHERE a.status = 4")
+    Long countTotalAulasConcluidas();
     @Query("SELECT COUNT(a) FROM Aula a WHERE a.professor.idUsuario = :professorIdUsuario AND a.status = 2")
     Long countAgendadasByProfessorIdUsuario(int professorIdUsuario);
     List<Aula> findByAlunosIdUsuario(int id);
@@ -85,4 +89,11 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
             "AND FUNCTION('MONTH', a.dataHora) = FUNCTION('MONTH', CURRENT_DATE) " +
             "AND FUNCTION('DAY', a.dataHora) = FUNCTION('DAY', CURRENT_DATE)")
     Long countAulasMarcadasParaHoje();
+
+    @Query("SELECT p.idUsuario, p.nome, SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Matemática' " +
+            "GROUP BY p.idUsuario, p.nome")
+    List<Object[]> totalPrecoPorProfessorDeMatematica();
 }
