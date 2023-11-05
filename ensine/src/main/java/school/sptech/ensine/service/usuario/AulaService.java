@@ -240,6 +240,20 @@ public class AulaService {
 
         return aulaRepository.totalPrecoPorProfessorDeMatematica();
     }
+    public Long totalPrecoTotalMatematica() {return aulaRepository.totalPrecoParaMatematica();}
+
+    public Long totalPrecoTotalFisica() {return aulaRepository.totalPrecoParaFisica();}
+
+    public Long totalPrecoTotalArtes() {return aulaRepository.totalPrecoParaArtes();}
+    public Long totalPrecoTotalFilosofia() {return aulaRepository.totalPrecoParaFilosofia();}
+    public Long totalPrecoTotalSociologia() {return aulaRepository.totalPrecoParaSociologia();}
+    public Long totalPrecoTotalLinguaInglesa() {return aulaRepository.totalPrecoParaLinguaInglesa();}
+    public Long totalPrecoTotalQuimica() {return aulaRepository.totalPrecoParaQuimica();}
+    public Long totalPrecoTotalBiologia() {return aulaRepository.totalPrecoParaBiologia();}
+    public Long totalPrecoTotalGeografia() {return aulaRepository.totalPrecoParaGeografia();}
+    public Long totalPrecoTotalHistoria() {return aulaRepository.totalPrecoParaHistoria();}
+    public Long totalPrecoTotalLinguaPortuguesa() {return aulaRepository.totalPrecoParaLinguaPortuguesa();}
+
 
     public List<Object[]> getTotalValorAulas(LocalDateTime currentTime, LocalDateTime threeMonthsAgo) {
 

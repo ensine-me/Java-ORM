@@ -87,7 +87,8 @@ VALUES
 (6, '2023-09-16 17:39:01', 'descricao', 3600, 3, 0, 'Mais Valia', 5, 3, 0),
 (7, '2023-09-16 17:39:01', 'descricao', 3600, 4, 0, 'Valencia e Covalencia', 7, 4, 0),
 (8, '2023-09-16 17:39:01', 'descricao', 3600, 2, 0, 'Verbo To Be', 6, 5, 0),
-(9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10, 0)
+(9, '2023-09-16 17:39:01', 'descricao', 3600, 5, 0, 'Verbo To Be+', 6, 10, 0),
+(10, '2023-09-16 17:39:01', 'testando ', 3600, 5, 0, 'Matematicatrie', 1, 1, 2)
 ON CONFLICT (id) DO NOTHING;
 SELECT setval('aula_id_seq', (SELECT MAX(id) FROM aula));
 

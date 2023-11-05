@@ -354,4 +354,92 @@ public class AulaController {
 
         return ResponseEntity.status(200).body(qtdPreco);
     }
+
+    @GetMapping("preco-total-matematica")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total matematica", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total matematica encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorMatematica() {
+        Long qtdAulas = aulaService.totalPrecoTotalMatematica();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-fisica")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total fisica", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total fisica encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorFisica() {
+        Long qtdAulas = aulaService.totalPrecoTotalFisica();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-artes")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total artes", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total artes encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorArtes() {
+        Long qtdAulas = aulaService.totalPrecoTotalArtes();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-filosofia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total Filosofia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total filosofia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorFilosofia() {
+        Long qtdAulas = aulaService.totalPrecoTotalFilosofia();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-sociologia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total sociologia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total sociologia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorSociologia() {
+        Long qtdAulas = aulaService.totalPrecoTotalSociologia();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-lingua-inglesa")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total lingua inglesa", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total lingua inglesa encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorLinguaInglesa() {
+        Long qtdAulas = aulaService.totalPrecoTotalLinguaInglesa();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-quimica")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total quimica", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total quimica encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorQuimica() {
+        Long qtdAulas = aulaService.totalPrecoTotalQuimica();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-biologia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total biologia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total biologia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorBiologia() {
+        Long qtdAulas = aulaService.totalPrecoTotalBiologia();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-geografia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total geografia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total geografia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorGeografia() {
+        Long qtdAulas = aulaService.totalPrecoTotalGeografia();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-historia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total historia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total historia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorHistoria() {
+        Long qtdAulas = aulaService.totalPrecoTotalHistoria();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-lingua-portuguesa")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total lingua portuguesa", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total lingua portuguesa encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorLinguaPortuguesa() {
+        Long qtdAulas = aulaService.totalPrecoTotalLinguaPortuguesa();
+        return ResponseEntity.ok(qtdAulas);
+    }
 }

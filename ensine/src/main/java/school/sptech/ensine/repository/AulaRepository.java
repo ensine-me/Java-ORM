@@ -93,7 +93,81 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
     @Query("SELECT p.idUsuario, p.nome, SUM(p.precoHoraAula) " +
             "FROM Aula a " +
             "JOIN Professor p ON a.professor = p " +
-            "WHERE a.materia.nome = 'Matemática' " +
+            "WHERE a.materia.nome = 'Matematica' " +
             "GROUP BY p.idUsuario, p.nome")
     List<Object[]> totalPrecoPorProfessorDeMatematica();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Matematica'")
+    Long totalPrecoParaMatematica();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Fisica'")
+    Long totalPrecoParaFisica();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Artes'")
+    Long totalPrecoParaArtes();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Filosofia'")
+    Long totalPrecoParaFilosofia();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Sociologia'")
+    Long totalPrecoParaSociologia();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Lingua Inglesa'")
+    Long totalPrecoParaLinguaInglesa();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Quimica'")
+    Long totalPrecoParaQuimica();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Biologia'")
+    Long totalPrecoParaBiologia();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Geografia'")
+    Long totalPrecoParaGeografia();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Historia'")
+    Long totalPrecoParaHistoria();
+
+    @Query("SELECT SUM(p.precoHoraAula) " +
+            "FROM Aula a " +
+            "JOIN Professor p ON a.professor = p " +
+            "WHERE a.materia.nome = 'Lingua Portuguesa'")
+    Long totalPrecoParaLinguaPortuguesa();
+//    @Query("SELECT SUM(subquery.totalPreco) " +
+//            "FROM (SELECT SUM(p.precoHoraAula) as totalPreco " +
+//            "FROM Aula a " +
+//            "JOIN Professor p ON a.professor = p " +
+//            "WHERE a.materia.nome = 'Matematica' " +
+//            "GROUP BY p.idUsuario, p.nome) subquery")
+//    Long totalPrecoTotalPorMatematica();
+
 }
