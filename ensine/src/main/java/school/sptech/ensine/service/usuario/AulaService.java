@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.Aula;
+import school.sptech.ensine.domain.Avaliacao;
 import school.sptech.ensine.domain.AvaliacaoVisualizada;
 import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Professor;
@@ -15,6 +16,7 @@ import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
+import school.sptech.ensine.repository.AvaliacaoRepository;
 import school.sptech.ensine.repository.AvaliacaoVisualizadaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
@@ -39,6 +41,9 @@ public class AulaService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private AvaliacaoRepository avaliacaoRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -210,8 +215,9 @@ public class AulaService {
         return aulaRepository.totalValorArrecadadoUltimosTresMeses(threeMonthsAgo, currentTime);
     }
 
-    public Long getQtdAulasHoje(){
+    public Long getQtdAulasHoje() {
         return aulaRepository.countAulasMarcadasParaHoje();
+    }
 
     public void finalizarAula (int id){
         Aula aula = referenciaId(id);
@@ -223,5 +229,27 @@ public class AulaService {
             a = new AvaliacaoVisualizada(u, aula);
             avaliacaoVisualizadaRepository.save(a);
         }
+    }
+
+    public List<Aula> listaAulasNaoAvaliadas(Integer alunoId) {
+        List<Aula> aulas = aulaRepository.findByAlunos_IdUsuarioAndStatus(alunoId, Status.CONCLUIDA);
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByUsuario_IdUsuario(alunoId);
+        List<Aula> aulasNaoAvaliadas = new ArrayList();
+        boolean avaliada = false;
+        for (Aula aula:
+             aulas) {
+            for (Avaliacao avaliacao:
+                 avaliacoes) {
+                if(avaliacao.getAula().getId() == aula.getId()){
+                    avaliada = true;
+                    break;
+                }
+            }
+            if(!avaliada) {
+                aulasNaoAvaliadas.add(aula);
+            }
+            avaliada = false;
+        }
+        return aulasNaoAvaliadas;
     }
 }

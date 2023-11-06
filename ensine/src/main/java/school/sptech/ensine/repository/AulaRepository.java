@@ -85,4 +85,8 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
             "AND FUNCTION('MONTH', a.dataHora) = FUNCTION('MONTH', CURRENT_DATE) " +
             "AND FUNCTION('DAY', a.dataHora) = FUNCTION('DAY', CURRENT_DATE)")
     Long countAulasMarcadasParaHoje();
+
+    List<Aula> findByAlunos_IdUsuarioAndStatus(int idUsuario, Status status);
+
+
 }
