@@ -245,6 +245,11 @@ public class UsuarioService {
         return UsuarioMapper.of(usuarioAutenticado, token);
     }
 
+    public Usuario cadastrarEmailGoogle(Usuario usuario, String googleEmail) {
+        usuario.setGoogleEmail(googleEmail);
+        return usuarioRepository.save(usuario);
+    }
+
     public Map<Avaliacao.Insignia, Integer> countInsigniasProfessor(Integer idProfessor) {
         List<Avaliacao> avaliacoes = avaliacaoRepository.findByProfessor_IdUsuario(idProfessor);
         Map<Avaliacao.Insignia, Integer> insigniaMap = new HashMap<>();

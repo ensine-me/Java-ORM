@@ -112,4 +112,18 @@ public class Professor extends Usuario {
     public Professor() {
         this.nota = 5.0;
     }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "descricao='" + descricao + '\'' +
+                ", aulas=" + aulas +
+                ", precoHoraAula=" + precoHoraAula +
+                ", disponibilidades=" + disponibilidades +
+                ", formacoes=" + formacoes +
+                ", avaliacoes=" + avaliacoes +
+                ", nota=" + nota +
+                ", googleEmail=" + this.getGoogleEmail() +
+                '}';
+    }
 }
