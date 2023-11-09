@@ -62,6 +62,15 @@ public class Usuario implements ObserverInterface
 
     private String foto;
 
+    private String googleEmail;
+
+    public String getGoogleEmail() {
+        return googleEmail;
+    }
+
+    public void setGoogleEmail(String googleEmail) {
+        this.googleEmail = googleEmail;
+    }
 //    @ManyToMany(cascade=CascadeType.PERSIST)
 //    @JoinTable(name = "usuario_materia",
 //        joinColumns = @JoinColumn,

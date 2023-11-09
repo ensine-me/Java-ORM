@@ -239,6 +239,20 @@ public class UsuarioController {
         return usuario.map(value -> ResponseEntity.status(200).body(value)).orElseGet(() -> ResponseEntity.status(400).build());
     }
 
+    @PostMapping("/{id}/conectar-com-google")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<Usuario> conectarComGoogle(@PathVariable int id, @RequestParam String googleEmail) {
+        Optional<Usuario> usuarioOptional = usuarioService.encontraUsuarioId(id);
+
+        if(usuarioOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Usuario retorno = usuarioService.cadastrarEmailGoogle(usuarioOptional.get(), googleEmail);
+
+        return ResponseEntity.ok(retorno);
+    }
+
 
     @PostMapping("/login")
     @Tag(name = "Login", description = "Autentica os usuários no sistema")

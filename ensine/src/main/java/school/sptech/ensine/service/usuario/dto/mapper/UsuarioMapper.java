@@ -16,6 +16,7 @@ public class UsuarioMapper {
         usuario.setProfessor(usuarioCriacaoDto.isProfessor());
         usuario.setMaterias(usuarioCriacaoDto.getMaterias());
         usuario.setFoto(usuarioCriacaoDto.getFoto());
+        usuario.setGoogleEmail(usuarioCriacaoDto.getGoogleEmail());
         return usuario;
     }
 
@@ -29,6 +30,7 @@ public class UsuarioMapper {
         usuarioTokenDto.setFoto(usuario.getFoto());
         usuarioTokenDto.setDisciplinas(usuario.getMaterias());
         usuarioTokenDto.setProfessor(usuario.isProfessor());
+        usuarioTokenDto.setGoogleEmail(usuarioTokenDto.getGoogleEmail());
 
         return usuarioTokenDto;
     }

@@ -21,6 +21,7 @@ public class ProfessorMapper{
         professor.setMaterias(professorCriacaoDto.getMaterias());
         professor.setFoto(professorCriacaoDto.getFoto());
         professor.setPrecoHoraAula(professorCriacaoDto.getPrecoHoraAula());
+        professor.setGoogleEmail(professorCriacaoDto.getGoogleEmail());
 
         return professor;
     }
