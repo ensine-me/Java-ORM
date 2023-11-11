@@ -156,7 +156,7 @@ public class AulaService {
 
     public Aula aulaNova(Aula aula) {
         aula.setProfessor(usuarioRepository.findProfessorByIdUsuario(aula.getProfessor().getIdUsuario()).get());
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA " + aula.getMateria());
+        System.out.println(aula.getMateria());
         String nome = aula.getMateria().getNome();
 
         Optional<Materia> materia = materiaRepository.findByNomeContainingIgnoreCase(nome);

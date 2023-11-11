@@ -29,6 +29,8 @@ public class Aula {
 
     private LocalDateTime dataHora;
 
+    private LocalDateTime dataHoraFim;
+
     // limiteParticipantes
     private int limiteParticipantes;
 
@@ -151,6 +153,13 @@ public class Aula {
         this.privacidade = privacidade;
     }
 
+    public LocalDateTime getDataHoraFim() {
+        return dataHoraFim;
+    }
+
+    public void setDataHoraFim(LocalDateTime dataHoraFim) {
+        this.dataHoraFim = dataHoraFim;
+    }
 
     @Override
     public String toString() {

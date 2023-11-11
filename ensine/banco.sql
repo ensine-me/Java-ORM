@@ -85,6 +85,7 @@ create table aula(
     fk_disciplina int,
     titulo varchar(255),
     data_hora datetime,
+    data_hora_fim datetime,
     descricao varchar(255),
     limite_participantes int,
     duracao_segundos int,
