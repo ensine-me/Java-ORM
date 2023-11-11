@@ -85,6 +85,11 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
             @Param("end") LocalDateTime end
     );
 
+    @Query("SELECT AVG(FUNCTION('TIMESTAMPDIFF', SECOND, a.dataHora, a.dataHoraFim)) " +
+            "FROM Aula a " +
+            "WHERE a.status = 4")
+    Double calcularTempoMedioAulas();
+
     @Query("SELECT COUNT(a) " +
             "FROM Aula a " +
             "WHERE FUNCTION('YEAR', a.dataHora) = FUNCTION('YEAR', CURRENT_DATE) " +

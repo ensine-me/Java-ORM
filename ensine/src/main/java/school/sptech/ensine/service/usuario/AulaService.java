@@ -266,8 +266,6 @@ public class AulaService {
         return aulaRepository.countAulasMarcadasParaHoje();
     }
 
-
-
         public void finalizarAula (int id){
             Aula aula = referenciaId(id);
             aula.setStatus(Status.CONCLUIDA);
@@ -286,6 +284,10 @@ public class AulaService {
 
         return totalAulas;
         }
+
+    public Double tempoMediaAulas() {
+        return aulaRepository.calcularTempoMedioAulas();
+    }
 
     }
 

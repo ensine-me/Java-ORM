@@ -452,4 +452,12 @@ public class AulaController {
         List<ContagemAulaStatus> totalAulas = aulaService.totalAulasPorStatus();
         return ResponseEntity.ok(totalAulas);
     }
+    // ESTOU PUXANDO A MÉDIA EM SEGUNDOS divida por 3600 para obter a média em horas
+    @GetMapping("tempo-media-aulas-segundos")
+    @Tag(name = "Pegar aula por id", description = "Devolve uma aula dado um id")
+    @ApiResponse(responseCode = "404", description = "Aula não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "Aula recuperada com sucesso")
+    public ResponseEntity<Double> tempoMediaAulas() {
+        return ResponseEntity.ok(aulaService.tempoMediaAulas());
+    }
 }
