@@ -19,12 +19,14 @@ import school.sptech.ensine.repository.AvaliacaoVisualizadaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
+import school.sptech.ensine.service.usuario.dto.ContagemAulaStatus;
 import school.sptech.ensine.util.CsvMaker;
 import school.sptech.ensine.util.TxtMaker;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import school.sptech.ensine.util.Arvore;
 import school.sptech.ensine.util.NodeArvore;
@@ -277,5 +279,13 @@ public class AulaService {
                 avaliacaoVisualizadaRepository.save(a);
             }
         }
+
+        public List<ContagemAulaStatus> totalAulasPorStatus(){
+
+        List<ContagemAulaStatus> totalAulas = aulaRepository.countAulasByStatus();
+
+        return totalAulas;
+        }
+
     }
 

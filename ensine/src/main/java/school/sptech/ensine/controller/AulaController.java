@@ -17,12 +17,14 @@ import school.sptech.ensine.service.usuario.AulaService;
 import school.sptech.ensine.service.usuario.DisponibilidadeService;
 import school.sptech.ensine.service.usuario.UsuarioService;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
+import school.sptech.ensine.service.usuario.dto.ContagemAulaStatus;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Tag(name = "Aula", description = "Requisições relacionada às aulas")
@@ -441,5 +443,13 @@ public class AulaController {
     public ResponseEntity<Long> totalPrecoTotalPorLinguaPortuguesa() {
         Long qtdAulas = aulaService.totalPrecoTotalLinguaPortuguesa();
         return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("total-aulas-status")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total lingua portuguesa", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total lingua portuguesa encontrado com sucesso")
+    public ResponseEntity<List<ContagemAulaStatus>> porcentagemDeAulasPorStatus(){
+        List<ContagemAulaStatus> totalAulas = aulaService.totalAulasPorStatus();
+        return ResponseEntity.ok(totalAulas);
     }
 }

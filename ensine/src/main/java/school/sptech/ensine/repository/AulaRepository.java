@@ -9,9 +9,11 @@ import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
+import school.sptech.ensine.service.usuario.dto.ContagemAulaStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByProfessorNomeEqualsIgnoreCase(String nome);
@@ -169,5 +171,8 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
 //            "WHERE a.materia.nome = 'Matematica' " +
 //            "GROUP BY p.idUsuario, p.nome) subquery")
 //    Long totalPrecoTotalPorMatematica();
+
+    @Query ("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAulaStatus(a.status, COUNT(a)) from Aula a Group by a.status")
+    List<ContagemAulaStatus> countAulasByStatus();
 
 }
