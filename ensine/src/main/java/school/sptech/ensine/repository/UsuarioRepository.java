@@ -38,6 +38,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     List<Professor> findByIsProfessorAndNomeStartsWithIgnoreCase(boolean isProfessor, String nome);
 
-
-
 }

@@ -185,16 +185,13 @@ public class AulaService {
 
     public List<Aula> listAulasByProfessorId (int idProfessor){
         List<Aula> aulas = aulaRepository.findByProfessor_IdUsuario(idProfessor);
-        LocalDateTime agora = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmmss");
-        String dataFormatada = agora.format(formatter);
         try {
-            CsvMaker.gravaArquivoCsv(aulas, aulas.get(0).getProfessor().getNome() + dataFormatada);
+            CsvMaker.gravaArquivoCsv(aulas, "relatorio");
         } catch (Exception e) {
 
         }
         try {
-            TxtMaker.gravaArquivoTxt(aulas, aulas.get(0).getProfessor().getNome() + dataFormatada);
+            TxtMaker.gravaArquivoTxt(aulas, "relatorio");
         } catch (Exception e) {
 
         }

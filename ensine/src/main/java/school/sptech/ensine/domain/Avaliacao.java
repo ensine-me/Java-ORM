@@ -24,6 +24,8 @@ public class Avaliacao {
 
     private List<Insignia> insignias;
 
+    private Integer experiencia;
+
     public Avaliacao() {
     }
 
@@ -59,6 +61,14 @@ public class Avaliacao {
         }
     }
 
+    public Integer getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(Integer experiencia) {
+        this.experiencia = experiencia;
+    }
+
     public Avaliacao(int id, Aula aula, Professor professor, Usuario usuario, Double nota, List<Integer> insigniasInt) {
         this.id = id;
         this.aula = aula;
@@ -72,6 +82,7 @@ public class Avaliacao {
                 insignias.add(Insignia.values()[i]);
             }
         }
+
     }
 
     public Aula getAula() {

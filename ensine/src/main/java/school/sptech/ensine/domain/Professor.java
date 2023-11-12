@@ -33,6 +33,7 @@ public class Professor extends Usuario {
     private List<Avaliacao> avaliacoes;
     private Double nota;
 
+    private Integer experiencia;
 
     @Override
     public int getIdUsuario() {
@@ -98,6 +99,14 @@ public class Professor extends Usuario {
         this.nota = nota;
     }
 
+    public Integer getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(Integer experiencia) {
+        this.experiencia = experiencia;
+    }
+
     public Professor(String descricao, List<Aula> aulas, Double precoHoraAula, List<Disponibilidade> disponibilidades, List<Formacao> formacoes,
                      List<Avaliacao> avaliacoes) {
         this.descricao = descricao;
@@ -107,10 +116,12 @@ public class Professor extends Usuario {
         this.formacoes = formacoes;
         this.avaliacoes = avaliacoes;
         this.nota = 5.0;
+        this.experiencia = 0;
     }
 
     public Professor() {
         this.nota = 5.0;
+        this.experiencia = 0;
     }
 
     @Override
