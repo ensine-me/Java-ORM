@@ -242,7 +242,7 @@ public class AulaService {
 
         return aulaRepository.totalPrecoPorProfessorDeMatematica();
     }
-    public Long totalPrecoTotalMatematica() {return aulaRepository.totalPrecoParaMatematica();}
+    public List<Object[]> totalPrecoTotalMatematica() {return aulaRepository.totalPrecoParaMatematica();}
 
     public Long totalPrecoTotalFisica() {return aulaRepository.totalPrecoParaFisica();}
 

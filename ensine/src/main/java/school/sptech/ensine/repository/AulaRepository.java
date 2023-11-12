@@ -65,11 +65,11 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
 
     List<Aula> findByAlunos_IdUsuario(int id);
 
-    @Query("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAula(a.materia.nome, COUNT(a), FUNCTION('MONTH', a.dataHora)) " +
+    @Query("SELECT NEW school.sptech.ensine.service.usuario.dto.ContagemAula(a.materia.nome, COUNT(a), EXTRACT(MONTH FROM a.dataHora)) " +
             "FROM Aula a " +
             "WHERE a.materia.nome IN ('Matematica', 'Lingua Portuguesa', 'Geografia', 'Historia', 'Biologia') " +
             "AND a.dataHora BETWEEN :start AND :end " +
-            "GROUP BY a.materia.nome, FUNCTION('YEAR', a.dataHora), FUNCTION('MONTH', a.dataHora)")
+            "GROUP BY a.materia.nome, EXTRACT(YEAR FROM a.dataHora), EXTRACT(MONTH FROM a.dataHora)")
     List<ContagemAula> countAulasByMateriaAndMonth(
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end
@@ -87,14 +87,14 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
 
     @Query("SELECT AVG(FUNCTION('TIMESTAMPDIFF', SECOND, a.dataHora, a.dataHoraFim)) " +
             "FROM Aula a " +
-            "WHERE a.status = 4")
+            "WHERE a.status = 2")
     Double calcularTempoMedioAulas();
 
     @Query("SELECT COUNT(a) " +
             "FROM Aula a " +
-            "WHERE FUNCTION('YEAR', a.dataHora) = FUNCTION('YEAR', CURRENT_DATE) " +
-            "AND FUNCTION('MONTH', a.dataHora) = FUNCTION('MONTH', CURRENT_DATE) " +
-            "AND FUNCTION('DAY', a.dataHora) = FUNCTION('DAY', CURRENT_DATE)")
+            "WHERE EXTRACT(YEAR FROM a.dataHora) = EXTRACT(YEAR FROM CURRENT_DATE) " +
+            "AND EXTRACT(MONTH FROM a.dataHora) = EXTRACT(MONTH FROM CURRENT_DATE) " +
+            "AND EXTRACT(DAY FROM a.dataHora) = EXTRACT(DAY FROM CURRENT_DATE)")
     Long countAulasMarcadasParaHoje();
 
     @Query("SELECT p.idUsuario, p.nome, SUM(p.precoHoraAula) " +
@@ -104,11 +104,14 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
             "GROUP BY p.idUsuario, p.nome")
     List<Object[]> totalPrecoPorProfessorDeMatematica();
 
-    @Query("SELECT SUM(p.precoHoraAula) " +
+    @Query("SELECT SUM(p.precoHoraAula), a.materia.nome " +
             "FROM Aula a " +
             "JOIN Professor p ON a.professor = p " +
-            "WHERE a.materia.nome = 'Matematica'")
-    Long totalPrecoParaMatematica();
+            "WHERE a.materia.nome IN ('Matematica', 'Lingua Portuguesa', 'Geografia', 'Historia', 'Biologia') " +
+            "GROUP BY a.materia.nome " +
+            "ORDER BY SUM(p.precoHoraAula) DESC")
+    List<Object[]> totalPrecoParaMatematica();
+
 
     @Query("SELECT SUM(p.precoHoraAula) " +
             "FROM Aula a " +

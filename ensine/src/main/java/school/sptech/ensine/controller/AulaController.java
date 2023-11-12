@@ -360,8 +360,8 @@ public class AulaController {
     @GetMapping("preco-total-matematica")
     @ApiResponse(responseCode = "404", description = "Nao encontrado preco total matematica", content = @Content(schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "200", description = "preco total matematica encontrado com sucesso")
-    public ResponseEntity<Long> totalPrecoTotalPorMatematica() {
-        Long qtdAulas = aulaService.totalPrecoTotalMatematica();
+    public ResponseEntity<List<Object[]>> totalPrecoTotalPorMatematica() {
+        List<Object[]> qtdAulas = aulaService.totalPrecoTotalMatematica();
         return ResponseEntity.ok(qtdAulas);
     }
 
@@ -458,6 +458,7 @@ public class AulaController {
     @ApiResponse(responseCode = "404", description = "Aula não encontrada", content = @Content(schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "200", description = "Aula recuperada com sucesso")
     public ResponseEntity<Double> tempoMediaAulas() {
-        return ResponseEntity.ok(aulaService.tempoMediaAulas());
+        Double media = aulaService.tempoMediaAulas()/3600;
+        return ResponseEntity.ok(media);
     }
 }
