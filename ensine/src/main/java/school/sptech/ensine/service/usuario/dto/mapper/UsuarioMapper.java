@@ -30,7 +30,7 @@ public class UsuarioMapper {
         usuarioTokenDto.setFoto(usuario.getFoto());
         usuarioTokenDto.setDisciplinas(usuario.getMaterias());
         usuarioTokenDto.setProfessor(usuario.isProfessor());
-        usuarioTokenDto.setGoogleEmail(usuarioTokenDto.getGoogleEmail());
+        usuarioTokenDto.setGoogleEmail(usuario.getGoogleEmail());
 
         return usuarioTokenDto;
     }
