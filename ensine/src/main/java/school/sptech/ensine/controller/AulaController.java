@@ -307,4 +307,23 @@ public class AulaController {
         List<Aula> aulas = aulaService.listaAulasNaoAvaliadas(alunoId);
         return ResponseEntity.status(200).body(aulas);
     }
+
+    @PostMapping("report")
+    public ResponseEntity<ReportAula> criaReport(@RequestBody ReportAula reportAula){
+        ReportAula report = aulaService.criaReport(reportAula);
+
+        return ResponseEntity.status(200).body(report);
+    }
+
+    @GetMapping("report")
+    public ResponseEntity<List<ReportAula>> getAllReports(){
+        List<ReportAula> reports = aulaService.getAllReports();
+        return ResponseEntity.status(200).body(reports);
+    }
+
+    @GetMapping("report/{id}")
+    public ResponseEntity<ReportAula> getReportById(@PathVariable Integer id){
+        ReportAula report = aulaService.getReportById(id);
+        return ResponseEntity.status(200).body(report);
+    }
 }
