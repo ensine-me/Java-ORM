@@ -279,9 +279,9 @@ public class AulaController {
     @GetMapping("qtd-aulas-meses")
     public ResponseEntity<List<ContagemAula>> qtdAulasUltimosMeses(){
         LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime threeMonthsAgo = currentTime.minusMonths(3);
+        LocalDateTime twoMonthsAgo = currentTime.minusMonths(3);
 
-        List<ContagemAula> qtd = aulaService.getContagemAulasUltimosTresMeses(currentTime, threeMonthsAgo);
+        List<ContagemAula> qtd = aulaService.getContagemAulasUltimosDoisMeses(currentTime, twoMonthsAgo);
 
         if (qtd.isEmpty()){
 
@@ -332,9 +332,9 @@ public class AulaController {
     @GetMapping("total-valor-aulas")
     public ResponseEntity<List<Object[]>> totalValorAulas(){
         LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime threeMonthsAgo = currentTime.minusMonths(3);
+        LocalDateTime twoMonthsAgo = currentTime.minusMonths(2);
 
-        List<Object[]> qtd = aulaService.getTotalValorAulas(currentTime, threeMonthsAgo);
+        List<Object[]> qtd = aulaService.getTotalValorAulas(currentTime, twoMonthsAgo);
 
         if (qtd.isEmpty()){
 

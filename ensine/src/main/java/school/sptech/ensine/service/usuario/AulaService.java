@@ -218,9 +218,9 @@ public class AulaService {
         return aulaRepository.findByAlunos_IdUsuario(idAluno);
     }
 
-    public List<ContagemAula> getContagemAulasUltimosTresMeses(LocalDateTime currentTime, LocalDateTime threeMonthsAgo) {
+    public List<ContagemAula> getContagemAulasUltimosDoisMeses(LocalDateTime currentTime, LocalDateTime twoMonthsAgo) {
 
-        return aulaRepository.countAulasByMateriaAndMonth(threeMonthsAgo, currentTime);
+        return aulaRepository.countAulasByMateriaAndMonth(twoMonthsAgo, currentTime);
     }
     // Pedrinho 1
     public List<ContagemAula> getContagemAulasUltimoMes(LocalDateTime currentTime, LocalDateTime oneMonthAgo) {
@@ -257,9 +257,9 @@ public class AulaService {
     public Long totalPrecoTotalLinguaPortuguesa() {return aulaRepository.totalPrecoParaLinguaPortuguesa();}
 
 
-    public List<Object[]> getTotalValorAulas(LocalDateTime currentTime, LocalDateTime threeMonthsAgo) {
+    public List<Object[]> getTotalValorAulas(LocalDateTime currentTime, LocalDateTime twoMonthsAgo) {
 
-        return aulaRepository.totalValorArrecadadoUltimosTresMeses(threeMonthsAgo, currentTime);
+        return aulaRepository.totalValorArrecadadoUltimosDoisMeses(twoMonthsAgo, currentTime);
     }
 
     public Long getQtdAulasHoje() {

@@ -11,6 +11,7 @@ import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 import school.sptech.ensine.service.usuario.dto.ContagemAulaStatus;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -39,15 +40,6 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
             "WHERE a.professor = :professor " +
             "GROUP BY a.materia.nome")
     List<ContagemAula> contagemAulas(@Param("professor") Professor professor);
-
-//    @Query("SELECT a FROM Aula a WHERE LOWER(a.descricao) LIKE LOWER(CONCAT('%', :descricao, '%'))")
-//    List<Aula> findByDescricaoContainingIgnoreCase(@Param("descricao") String descricao);
-//
-//    @Query("SELECT a FROM Aula a JOIN a.materia m WHERE LOWER(m.nome) LIKE LOWER(CONCAT('%', :materiaNome, '%'))")
-//    List<Aula> findByMateriaNomeContainingIgnoreCase(@Param("materiaNome") String materiaNome);
-//
-//    @Query("SELECT a FROM Aula a WHERE LOWER(a.titulo) LIKE LOWER(CONCAT('%', :titulo, '%'))")
-//    List<Aula> findByTituloContainingIgnoreCase(@Param("titulo") String titulo);
 
     @Query("SELECT a FROM Aula a WHERE LOWER(TRANSLATE(a.descricao, 'áàãâäéèẽêëíìĩîïóòõôöúùũûüçÁÀÃÂÄÉÈẼÊËÍÌĨÎÏÓÒÕÔÖÚÙŨÛÜÇ', 'aaaaaeeeeiiiiiooooouuuuucAAAAAEEEEIIIIIOOOOOUUUUUC')) LIKE LOWER(CONCAT('%', TRANSLATE(:descricao, 'áàãâäéèẽêëíìĩîïóòõôöúùũûüçÁÀÃÂÄÉÈẼÊËÍÌĨÎÏÓÒÕÔÖÚÙŨÛÜÇ', 'aaaaaeeeeiiiiiooooouuuuucAAAAAEEEEIIIIIOOOOOUUUUUC'), '%'))")
     List<Aula> findByDescricaoContainingIgnoreCaseAndNormalize(@Param("descricao") String descricao);
@@ -80,14 +72,21 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
             "JOIN Professor p ON a.professor = p " +
             "WHERE a.dataHora >= :start AND a.dataHora <= :end " +
             "GROUP BY MONTH(a.dataHora)")
-    List<Object[]> totalValorArrecadadoUltimosTresMeses(
+    List<Object[]> totalValorArrecadadoUltimosDoisMeses(
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end
     );
 
+//    @Query("SELECT AVG(FUNCTION('TIMESTAMPDIFF', SECOND, a.dataHora, a.dataHoraFim)) " +
+//            "FROM Aula a " +
+//            "WHERE a.status = 4")
+//    Double calcularTempoMedioAulas();
+
     @Query("SELECT AVG(FUNCTION('TIMESTAMPDIFF', SECOND, a.dataHora, a.dataHoraFim)) " +
             "FROM Aula a " +
-            "WHERE a.status = 2")
+            "WHERE a.status = 4 " +
+            "AND EXTRACT(MONTH FROM a.dataHora) = EXTRACT(MONTH FROM CURRENT_DATE) " +
+            "AND EXTRACT(YEAR FROM a.dataHora) = EXTRACT(YEAR FROM CURRENT_DATE)")
     Double calcularTempoMedioAulas();
 
     @Query("SELECT COUNT(a) " +
@@ -108,6 +107,8 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
             "FROM Aula a " +
             "JOIN Professor p ON a.professor = p " +
             "WHERE a.materia.nome IN ('Matematica', 'Lingua Portuguesa', 'Geografia', 'Historia', 'Biologia') " +
+            "AND EXTRACT(MONTH FROM a.dataHora) = EXTRACT(MONTH FROM CURRENT_DATE) " +
+            "AND EXTRACT(YEAR FROM a.dataHora) = EXTRACT(YEAR FROM CURRENT_DATE) " +
             "GROUP BY a.materia.nome " +
             "ORDER BY SUM(p.precoHoraAula) DESC")
     List<Object[]> totalPrecoParaMatematica();
@@ -172,15 +173,16 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
             "JOIN Professor p ON a.professor = p " +
             "WHERE a.materia.nome = 'Lingua Portuguesa'")
     Long totalPrecoParaLinguaPortuguesa();
-//    @Query("SELECT SUM(subquery.totalPreco) " +
-//            "FROM (SELECT SUM(p.precoHoraAula) as totalPreco " +
-//            "FROM Aula a " +
-//            "JOIN Professor p ON a.professor = p " +
-//            "WHERE a.materia.nome = 'Matematica' " +
-//            "GROUP BY p.idUsuario, p.nome) subquery")
-//    Long totalPrecoTotalPorMatematica();
 
-    @Query ("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAulaStatus(a.status, COUNT(a)) from Aula a Group by a.status")
+    @Query("SELECT NEW school.sptech.ensine.service.usuario.dto.ContagemAulaStatus(a.status, COUNT(a)) " +
+            "FROM Aula a " +
+            "WHERE EXTRACT(MONTH FROM a.dataHora) = EXTRACT(MONTH FROM CURRENT_DATE) " +
+            "AND EXTRACT(YEAR FROM a.dataHora) = EXTRACT(YEAR FROM CURRENT_DATE) " +
+            "GROUP BY a.status")
     List<ContagemAulaStatus> countAulasByStatus();
+
+//    @Query ("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAulaStatus(a.status, COUNT(a)) from Aula a Group by a.status")
+//    List<ContagemAulaStatus> countAulasByStatus(
+//    );
 
 }
