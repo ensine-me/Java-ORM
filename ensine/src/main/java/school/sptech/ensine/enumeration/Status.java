@@ -5,5 +5,7 @@ public enum Status {
     AGUARDANDO_PAGAMENTO,
     AGENDADO,
     EM_PROGRESSO,
-    CONCLUIDA;
+    CONCLUIDA,
+    CANCELADO,
+    REJEITADO;
 }

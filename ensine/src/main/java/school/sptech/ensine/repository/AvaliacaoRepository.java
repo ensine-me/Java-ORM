@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface AvaliacaoRepository extends JpaRepository<Avaliacao, Integer> {
 
-    Optional<Avaliacao> findByIdAndAula_Alunos_IdUsuario(int idAula, int idAluno);
+    Optional<Avaliacao> findByAula_IdAndUsuario_IdUsuario(int idAula, int idUsuario);
 
     @Query("SELECT AVG(a.nota) FROM Avaliacao a WHERE a.professor = :professor")
     Double findMeanNotaByProfessor(@Param("professor") Professor professor);

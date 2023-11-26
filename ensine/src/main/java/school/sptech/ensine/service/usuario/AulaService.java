@@ -94,10 +94,9 @@ public class AulaService {
     public List<Aula> aulas(){
         return aulaRepository.findAll();
     }
-    public ListaObj<Aula> getAulasPorStatus(String status) {
-        ListaObj<Aula> listaObj = new ListaObj<>(Math.toIntExact(aulaRepository.countByStatus(status)));
-        listaObj.adiciona(aulaRepository.findByStatus(status));
-        return listaObj;
+    public List<Aula> getAulasPorStatus(Status status) {
+        List<Aula> aulas = aulaRepository.findByStatus(status);
+        return aulas;
     }
     public List<Aula> getAulasPorPrivacidade(Privacidade privacidade) {
         List<Aula> aulas = aulaRepository.findByPrivacidadeAndStatus(privacidade, Status.AGENDADO);

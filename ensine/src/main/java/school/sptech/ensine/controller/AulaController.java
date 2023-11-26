@@ -94,8 +94,8 @@ public class AulaController {
     }
 
     @GetMapping("/{status}")
-    public ResponseEntity<ListaObj<Aula>> getAulasByStatus(@PathVariable String status) {
-        ListaObj<Aula> aulas = aulaService.getAulasPorStatus(status);
+    public ResponseEntity<List<Aula>> getAulasByStatus(@PathVariable Status status) {
+        List<Aula> aulas = aulaService.getAulasPorStatus(status);
         if (aulas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
