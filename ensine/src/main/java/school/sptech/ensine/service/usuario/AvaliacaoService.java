@@ -25,7 +25,7 @@ public class AvaliacaoService {
     AvaliacaoVisualizadaRepository avaliacaoVisualizadaRepository;
 
     public Avaliacao criarAvaliacao(@Valid Avaliacao avaliacao) {
-        if (avaliacaoRepository.findByIdAndAula_Alunos_IdUsuario(avaliacao.getAula().getId(),
+        if (avaliacaoRepository.findByAula_IdAndUsuario_IdUsuario(avaliacao.getAula().getId(),
                 avaliacao.getUsuario().getIdUsuario()).isEmpty()) {
             Integer experiencia = (int) (avaliacao.getNota() * 100) + (avaliacao.getInsignias().size() * 50);
             avaliacao.setExperiencia(experiencia);
@@ -40,6 +40,10 @@ public class AvaliacaoService {
             return avaliacao1;
         }
         throw new IllegalStateException("Aluno já avaliou esta aula");
+    }
+
+    public Optional<Avaliacao> getAvaliacaoByAulaAndUsuario(int idAula, int idUsuario){
+        return avaliacaoRepository.findByAula_IdAndUsuario_IdUsuario(idAula, idUsuario);
     }
 
     public Double getNotaByProfessor(Professor professor) {
