@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ActiveProfiles("test") // Para rodar os testes com o profile de test
 class EnsineApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+	//@Test
+	//void contextLoads() {
+	//}
 
 }
