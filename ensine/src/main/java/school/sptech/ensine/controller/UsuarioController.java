@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import school.sptech.ensine.domain.exception.EntidadeNaoEncontradaException;
+import school.sptech.ensine.service.usuario.AvaliacaoService;
 import school.sptech.ensine.service.usuario.dto.*;
 import school.sptech.ensine.domain.*;
 import school.sptech.ensine.repository.MateriaRepository;
@@ -35,6 +36,9 @@ public class UsuarioController {
     @Autowired
     MateriaRepository materiaRepository;
 
+    @Autowired
+    AvaliacaoService avaliacaoService;
+
     private TabelaHashProfessor tabelaHashProfessor = new TabelaHashProfessor(3);
     @GetMapping("/existe-por-email")
     public ResponseEntity<Boolean> existePorEmail(@RequestParam String emailUsuario) {
@@ -48,6 +52,10 @@ public class UsuarioController {
         for (String disciplina : disciplinas) {
             List<Professor> professoresEncontrados = this.usuarioService.getProfessoresByMateria(disciplina);
             professores.addAll(professoresEncontrados); // Use addAll to add all professors at once
+        }
+
+        for (Professor professor : professores) {
+            professor.setNota(avaliacaoService.getMediaByProfessorId(professor));
         }
 
         if (professores.isEmpty()) {
