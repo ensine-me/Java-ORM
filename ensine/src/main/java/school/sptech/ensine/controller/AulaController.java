@@ -230,7 +230,7 @@ public class AulaController {
         return ResponseEntity.status(404).body("Aula não encontrada");
     }
 
-    @PutMapping("/finalizar-aula")
+    @PostMapping("/finalizar-aula")
     @Tag(name = "Finalizar aula", description = "Muda o status de uma aula para finalizada")
     @ApiResponse(responseCode = "200", description = "Aula finalizada com sucesso")
     @ApiResponse(responseCode = "404", description = "Aula não encontrada")
