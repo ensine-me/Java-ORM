@@ -15,10 +15,10 @@ import java.util.List;
 
 public interface AulaRepository extends JpaRepository<Aula, Integer> {
     List<Aula> findByProfessorNomeEqualsIgnoreCase(String nome);
-    List<Aula> findByStatus(String status);
+    List<Aula> findByStatus(Status status);
     List<Aula> findByPrivacidade(Privacidade privacidade);
     List<Aula> findByPrivacidadeAndStatus(Privacidade privacidade, Status status);
-    Long countByStatus(String status);
+    Long countByStatus(Status status);
     Long countByProfessorNomeEqualsIgnoreCase(String nome);
     Long countByProfessorIdUsuario(int id);
     @Query("SELECT a FROM Aula a WHERE a.professor.idUsuario = :professorIdUsuario AND a.status = 0")

@@ -99,7 +99,7 @@ public class AulaServiceTest {
     void deveRetornarListaDeDuasAulasPorStatus() {
 
         // given
-        String status = "Teste";
+        Status status = Status.valueOf("REJEITADO");
         Aula[] listaAula = AulaBuilder.criarListaObjAula();
 
         // Mock
@@ -108,11 +108,11 @@ public class AulaServiceTest {
                 .thenReturn(Arrays.asList(listaAula));
 
         // when
-        ListaObj<Aula> resultado = service.getAulasPorStatus(status);
+        List<Aula> resultado = service.getAulasPorStatus(status);
 
         // then
         assertNotNull(resultado);
-        assertArrayEquals(listaAula, resultado.getVetor());
+        assertEquals(Arrays.asList(listaAula), resultado);
     }
 
     @Test
