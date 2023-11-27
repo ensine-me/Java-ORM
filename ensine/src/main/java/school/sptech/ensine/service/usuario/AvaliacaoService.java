@@ -35,6 +35,18 @@ public class AvaliacaoService {
             professor.setNota(media);
 
             professor.setExperiencia(professor.getExperiencia() + avaliacao1.getExperiencia());
+
+            Optional<AvaliacaoVisualizada> avaliacaoVisualizada =
+                    avaliacaoVisualizadaRepository.findByAluno_IdUsuarioAndAula_IdAndVisualizada(
+                            avaliacao1.getUsuario().getIdUsuario(),
+                            avaliacao1.getAula().getId(),
+                            false
+                    );
+            if(!avaliacaoVisualizada.isEmpty()){
+                AvaliacaoVisualizada avaliacaoVisualizada1 = avaliacaoVisualizada.get();
+                avaliacaoVisualizada1.setVisualizada(true);
+                avaliacaoVisualizadaRepository.save(avaliacaoVisualizada1);
+            }
             usuarioRepository.save(professor);
 
             return avaliacao1;
