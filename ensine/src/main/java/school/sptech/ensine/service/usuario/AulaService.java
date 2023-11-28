@@ -95,8 +95,7 @@ public class AulaService {
         return aulaRepository.findAll();
     }
     public List<Aula> getAulasPorStatus(Status status) {
-        List<Aula> aulas = aulaRepository.findByStatus(status);
-        return aulas;
+        return aulaRepository.findByStatus(status);
     }
     public List<Aula> getAulasPorPrivacidade(Privacidade privacidade) {
         List<Aula> aulas = aulaRepository.findByPrivacidadeAndStatus(privacidade, Status.AGENDADO);
