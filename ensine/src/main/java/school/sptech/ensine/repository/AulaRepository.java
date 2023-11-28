@@ -57,7 +57,7 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
 
     List<Aula> findByAlunos_IdUsuario(int id);
 
-    @Query("SELECT NEW school.sptech.ensine.service.usuario.dto.ContagemAula(a.materia.nome, COUNT(a), EXTRACT(MONTH FROM a.dataHora)) " +
+    @Query("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAula(a.materia.nome, COUNT(a), FUNCTION('MONTH', a.dataHora)) " +
             "FROM Aula a " +
             "WHERE a.materia.nome IN ('Matematica', 'Lingua Portuguesa', 'Geografia', 'Historia', 'Biologia') " +
             "AND a.dataHora BETWEEN :start AND :end " +
@@ -184,5 +184,9 @@ public interface AulaRepository extends JpaRepository<Aula, Integer> {
 //    @Query ("SELECT new school.sptech.ensine.service.usuario.dto.ContagemAulaStatus(a.status, COUNT(a)) from Aula a Group by a.status")
 //    List<ContagemAulaStatus> countAulasByStatus(
 //    );
+
+
+    List<Aula> findByAlunos_IdUsuarioAndStatus(int idUsuario, Status status);
+
 
 }

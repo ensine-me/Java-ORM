@@ -45,6 +45,9 @@ public class UsuarioService {
     private DisponibilidadeRepository disponibilidadeRepository;
 
     @Autowired
+    private ProfessorRepository professorRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -245,6 +248,11 @@ public class UsuarioService {
         return UsuarioMapper.of(usuarioAutenticado, token);
     }
 
+    public Usuario cadastrarEmailGoogle(Usuario usuario, String googleEmail) {
+        usuario.setGoogleEmail(googleEmail);
+        return usuarioRepository.save(usuario);
+    }
+
     public Map<Avaliacao.Insignia, Integer> countInsigniasProfessor(Integer idProfessor) {
         List<Avaliacao> avaliacoes = avaliacaoRepository.findByProfessor_IdUsuario(idProfessor);
         Map<Avaliacao.Insignia, Integer> insigniaMap = new HashMap<>();
@@ -271,6 +279,16 @@ public class UsuarioService {
             tabelaHashProfessor.insere(profesor);
         }
         return tabelaHashProfessor;
+    }
+
+    public Integer getExperienciaProfessor(Integer idProfessor){
+        Optional<Professor> professor = professorRepository.findById(idProfessor);
+        return professor.get().getExperiencia();
+    }
+
+    public List<Professor> listTop10Professors() {
+        List<Professor> professors = professorRepository.findTop10ByOrderByExperienciaDesc();
+        return professors;
     }
 
     private void popularTabelaHash(List<Professor> professores) {

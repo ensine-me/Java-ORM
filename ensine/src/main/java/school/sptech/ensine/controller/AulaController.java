@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -153,7 +154,6 @@ public class AulaController {
         return ResponseEntity.ok(qtdAulas);
     }
 
-
     @GetMapping("busca-professor")
     @Tag(name = "Pegar aulas por professor", description = "Devolve uma aula dado o nome de um professor")
     @ApiResponse(responseCode = "204", description = "Não há aulas cadastradas", content = @Content(schema = @Schema(hidden = true)))
@@ -186,8 +186,6 @@ public class AulaController {
             return ResponseEntity.ok(aulas);
         }
     }
-
-
 
     @PostMapping
     @Tag(name = "Cadastrar aula", description = "Cadastra uma nova aula")
@@ -460,5 +458,30 @@ public class AulaController {
     public ResponseEntity<Double> tempoMediaAulas() {
         Double media = aulaService.tempoMediaAulas()/3600;
         return ResponseEntity.ok(media);
+    }
+
+    @GetMapping("alunos/nao-avaliadas/{alunoId}")
+    public ResponseEntity<List<Aula>> listaAulasNaoAvaliadas(@PathVariable Integer alunoId) {
+        List<Aula> aulas = aulaService.listaAulasNaoAvaliadas(alunoId);
+        return ResponseEntity.status(200).body(aulas);
+    }
+
+    @PostMapping("report")
+    public ResponseEntity<ReportAula> criaReport(@RequestBody ReportAula reportAula){
+        ReportAula report = aulaService.criaReport(reportAula);
+
+        return ResponseEntity.status(200).body(report);
+    }
+
+    @GetMapping("report")
+    public ResponseEntity<List<ReportAula>> getAllReports(){
+        List<ReportAula> reports = aulaService.getAllReports();
+        return ResponseEntity.status(200).body(reports);
+    }
+
+    @GetMapping("report/{id}")
+    public ResponseEntity<ReportAula> getReportById(@PathVariable Integer id){
+        ReportAula report = aulaService.getReportById(id);
+        return ResponseEntity.status(200).body(report);
     }
 }

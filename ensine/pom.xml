@@ -15,6 +15,9 @@
 	<description>java do projeto ensine.me</description>
 	<properties>
 		<java.version>17</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.resources.sourceEncoding>UTF-8</project.resources.sourceEncoding>
 	</properties>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
@@ -87,11 +90,6 @@
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 			<version>2.1.0</version>
 		</dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -124,7 +122,22 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<resources>
+						<resource>
+							<directory>src/main/resources</directory>
+							<filtering>true</filtering>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
+	<packaging>jar</packaging>
 
 </project>

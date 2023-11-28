@@ -27,11 +27,16 @@ public class AvaliacaoService {
     public Avaliacao criarAvaliacao(@Valid Avaliacao avaliacao) {
         if (avaliacaoRepository.findByIdAndAula_Alunos_IdUsuario(avaliacao.getAula().getId(),
                 avaliacao.getUsuario().getIdUsuario()).isEmpty()) {
+            Integer experiencia = (int) (avaliacao.getNota() * 100) + (avaliacao.getInsignias().size() * 50);
+            avaliacao.setExperiencia(experiencia);
             Avaliacao avaliacao1 = this.avaliacaoRepository.save(avaliacao);
             Professor professor = avaliacao1.getProfessor();
             Double media = avaliacaoRepository.findMeanNotaByProfessor(professor);
             professor.setNota(media);
+
+            professor.setExperiencia(professor.getExperiencia() + avaliacao1.getExperiencia());
             usuarioRepository.save(professor);
+
             return avaliacao1;
         }
         throw new IllegalStateException("Aluno já avaliou esta aula");

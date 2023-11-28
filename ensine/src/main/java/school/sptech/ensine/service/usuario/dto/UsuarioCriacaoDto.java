@@ -35,6 +35,16 @@ public class UsuarioCriacaoDto {
 
     private String foto;
 
+    private String googleEmail;
+
+    public String getGoogleEmail() {
+        return googleEmail;
+    }
+
+    public void setGoogleEmail(String googleEmail) {
+        this.googleEmail = googleEmail;
+    }
+
     public boolean isProfessor() {
         return isProfessor;
     }
@@ -92,6 +102,20 @@ public class UsuarioCriacaoDto {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    @Override
+    public String toString() {
+        return "UsuarioCriacaoDto{" +
+                "isProfessor=" + isProfessor +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", dataNasc=" + dataNasc +
+                ", materias=" + materias +
+                ", foto='" + foto + '\'' +
+                ", googleEmail='" + googleEmail + '\'' +
+                '}';
     }
 }
 

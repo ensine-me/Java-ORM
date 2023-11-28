@@ -6,7 +6,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.config.RepositoryNameSpaceHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -239,6 +241,20 @@ public class UsuarioController {
         return usuario.map(value -> ResponseEntity.status(200).body(value)).orElseGet(() -> ResponseEntity.status(400).build());
     }
 
+    @PostMapping("/{id}/conectar-com-google")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<Usuario> conectarComGoogle(@PathVariable int id, @RequestParam String googleEmail) {
+        Optional<Usuario> usuarioOptional = usuarioService.encontraUsuarioId(id);
+
+        if(usuarioOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Usuario retorno = usuarioService.cadastrarEmailGoogle(usuarioOptional.get(), googleEmail);
+
+        return ResponseEntity.ok(retorno);
+    }
+
 
     @PostMapping("/login")
     @Tag(name = "Login", description = "Autentica os usuários no sistema")
@@ -260,6 +276,17 @@ public class UsuarioController {
         Map<Avaliacao.Insignia, Integer> insignias = usuarioService.countInsigniasProfessor(idProfessor);
 
         return ResponseEntity.ok(insignias);
+    }
+
+    @GetMapping("professor/experiencia/{idProfessor}")
+    public ResponseEntity<Integer> getExperienciaProfessor(@PathVariable Integer idProfessor) {
+        Integer experienciaProfessor = usuarioService.getExperienciaProfessor(idProfessor);
+        return ResponseEntity.ok(experienciaProfessor);
+    }
+
+    @GetMapping("professor/experiencia/top")
+    public ResponseEntity<List<Professor>> getTopExperienciaProfessor() {
+        return ResponseEntity.ok(usuarioService.listTop10Professors());
     }
 
     private void popularTabelaHash(List<Professor> professores) {

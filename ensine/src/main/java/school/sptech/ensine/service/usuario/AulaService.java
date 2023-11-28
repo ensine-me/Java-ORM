@@ -7,16 +7,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import school.sptech.ensine.api.security.jwt.GerenciadorTokenJwt;
 import school.sptech.ensine.domain.Aula;
+import school.sptech.ensine.domain.Avaliacao;
 import school.sptech.ensine.domain.AvaliacaoVisualizada;
 import school.sptech.ensine.domain.Materia;
 import school.sptech.ensine.domain.Professor;
 import school.sptech.ensine.domain.ListaObj;
+import school.sptech.ensine.domain.ReportAula;
 import school.sptech.ensine.domain.Usuario;
 import school.sptech.ensine.enumeration.Privacidade;
 import school.sptech.ensine.enumeration.Status;
 import school.sptech.ensine.repository.AulaRepository;
+import school.sptech.ensine.repository.AvaliacaoRepository;
 import school.sptech.ensine.repository.AvaliacaoVisualizadaRepository;
 import school.sptech.ensine.repository.MateriaRepository;
+import school.sptech.ensine.repository.ReportAulaRepository;
 import school.sptech.ensine.repository.UsuarioRepository;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
 import school.sptech.ensine.service.usuario.dto.ContagemAulaStatus;
@@ -40,7 +44,13 @@ public class AulaService {
     private MateriaRepository materiaRepository;
 
     @Autowired
+    private ReportAulaRepository reportAulaRepository;
+
+    @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private AvaliacaoRepository avaliacaoRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -202,12 +212,12 @@ public class AulaService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmmss");
         String dataFormatada = agora.format(formatter);
         try {
-            CsvMaker.gravaArquivoCsv(aulas, aulas.get(0).getProfessor().getNome() + dataFormatada);
+            CsvMaker.gravaArquivoCsv(aulas, "relatorio");
         } catch (Exception e) {
 
         }
         try {
-            TxtMaker.gravaArquivoTxt(aulas, aulas.get(0).getProfessor().getNome() + dataFormatada);
+            TxtMaker.gravaArquivoTxt(aulas, "relatorio");
         } catch (Exception e) {
 
         }
@@ -287,7 +297,53 @@ public class AulaService {
 
     public Double tempoMediaAulas() {
         return aulaRepository.calcularTempoMedioAulas();
-    }
 
     }
 
+    public List<Aula> listaAulasNaoAvaliadas(Integer alunoId) {
+        List<Aula> aulas = aulaRepository.findByAlunos_IdUsuarioAndStatus(alunoId, Status.CONCLUIDA);
+        List<Avaliacao> avaliacoes = avaliacaoRepository.findByUsuario_IdUsuario(alunoId);
+        List<Aula> aulasNaoAvaliadas = new ArrayList();
+        boolean avaliada = false;
+        for (Aula aula:
+             aulas) {
+            for (Avaliacao avaliacao:
+                 avaliacoes) {
+                if(avaliacao.getAula().getId() == aula.getId()){
+                    avaliada = true;
+                    break;
+                }
+            }
+            if(!avaliada) {
+                aulasNaoAvaliadas.add(aula);
+            }
+            avaliada = false;
+        }
+        return aulasNaoAvaliadas;
+    }
+
+    public ReportAula criaReport(ReportAula reportAula){
+        for (Usuario a:
+            aulaRepository.findById(reportAula.getAula().getId()).get().getAlunos()) {
+            if(a.getIdUsuario() == reportAula.getAluno().getIdUsuario()){
+                ReportAula reportSalvo = reportAulaRepository.save(reportAula);
+                return reportSalvo;
+            }
+        }
+
+        throw new IllegalArgumentException("Esse aluno não pertence a essa aula");
+    }
+
+    public List<ReportAula> getAllReports(){
+        List<ReportAula> reports = reportAulaRepository.findAll();
+        return reports;
+    }
+
+    public ReportAula getReportById(Integer id){
+        Optional<ReportAula> reportAula = reportAulaRepository.findById(id);
+        if(reportAula.isEmpty()) {
+            throw new IllegalArgumentException("Aula não encontrada");
+        }
+        return reportAula.get();
+    }
+}

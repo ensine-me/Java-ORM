@@ -28,4 +28,13 @@ public class ProfessorCriacaoDto extends UsuarioCriacaoDto{
     public void setPrecoHoraAula(Double precoHoraAula) {
         this.precoHoraAula = precoHoraAula;
     }
+
+    @Override
+    public String toString() {
+        return "ProfessorCriacaoDto{" +
+                "descricao='" + descricao + '\'' +
+                ", precoHoraAula=" + precoHoraAula +
+                ", googleEmail=" + this.getGoogleEmail() +
+                '}';
+    }
 }

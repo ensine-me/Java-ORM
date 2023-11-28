@@ -13,6 +13,16 @@ public class UsuarioTokenDto {
     private List<Materia> disciplinas;
     private boolean isProfessor;
 
+    private String googleEmail;
+
+    public String getGoogleEmail() {
+        return googleEmail;
+    }
+
+    public void setGoogleEmail(String googleEmail) {
+        this.googleEmail = googleEmail;
+    }
+
     public Long getUserId() {
         return userId;
     }
