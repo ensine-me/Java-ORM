@@ -97,7 +97,7 @@ public class AulaService {
         return aulaRepository.findAll();
     }
 
-    public ListaObj<Aula> getAulasPorStatus(String status) {
+    public ListaObj<Aula> getAulasPorStatus(Status status) {
         ListaObj<Aula> listaObj = new ListaObj<>(Math.toIntExact(aulaRepository.countByStatus(status)));
         listaObj.adiciona(aulaRepository.findByStatus(status));
         return listaObj;
@@ -147,8 +147,7 @@ public class AulaService {
     public Aula referenciaId(int id) {
         return aulaRepository.getReferenceById(id);
     }
-
-    public Long countProfessorNome(String nome) {
+    public Long countProfessorNome(String nome){
         return aulaRepository.countByProfessorNomeEqualsIgnoreCase(nome);
     }
 

@@ -59,6 +59,25 @@ public class AvaliacaoController {
         }
     }
 
+    @GetMapping("/{idAluno}/{idAula}")
+    public ResponseEntity<Avaliacao> getAvaliacaoByAlunoAula(@PathVariable int idAluno, @PathVariable int idAula) {
+        Optional<Usuario> alunoOpt = this.usuarioService.encontraUsuarioId(idAluno);
+        Optional<Aula> aulaOpt = this.aulaService.encontraAulaId(idAula);
+
+        if (alunoOpt.isEmpty() || aulaOpt.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+
+        Optional<Avaliacao> avaliacaoOpt = this.avaliacaoService.getAvaliacaoByAulaAndUsuario(idAula, idAluno);
+
+        if (avaliacaoOpt.isPresent()) {
+            return ResponseEntity.ok(avaliacaoOpt.get());
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+
     @GetMapping("/aula/{idAula}")
     public ResponseEntity<List<Avaliacao>> listAvaliacaoByAulaId(@PathVariable Integer idAula) {
         Optional<Aula> aula = this.aulaService.encontraAulaId(idAula);

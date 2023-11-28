@@ -109,4 +109,16 @@ public class ReportAula {
     public void setDataHora(LocalDateTime dataHora) {
         this.dataHora = dataHora;
     }
+
+    @Override
+    public String toString() {
+        return "ReportAula{" +
+                "id=" + id +
+                ", aluno=" + aluno +
+                ", aula=" + aula +
+                ", acontecimento=" + acontecimento +
+                ", descricao='" + descricao + '\'' +
+                ", dataHora=" + dataHora +
+                '}';
+    }
 }

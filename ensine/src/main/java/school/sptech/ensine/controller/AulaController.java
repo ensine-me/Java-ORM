@@ -96,8 +96,8 @@ public class AulaController {
     }
 
     @GetMapping("/{status}")
-    public ResponseEntity<ListaObj<Aula>> getAulasByStatus(@PathVariable String status) {
-        ListaObj<Aula> aulas = aulaService.getAulasPorStatus(status);
+    public ResponseEntity<List<Aula>> getAulasByStatus(@PathVariable Status status) {
+        List<Aula> aulas = aulaService.getAulasPorStatus(status);
         if (aulas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
@@ -232,7 +232,7 @@ public class AulaController {
         return ResponseEntity.status(404).body("Aula não encontrada");
     }
 
-    @PutMapping("/finalizar-aula")
+    @PostMapping("/finalizar-aula")
     @Tag(name = "Finalizar aula", description = "Muda o status de uma aula para finalizada")
     @ApiResponse(responseCode = "200", description = "Aula finalizada com sucesso")
     @ApiResponse(responseCode = "404", description = "Aula não encontrada")
