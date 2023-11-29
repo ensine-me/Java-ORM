@@ -54,10 +54,6 @@ public class UsuarioController {
             professores.addAll(professoresEncontrados); // Use addAll to add all professors at once
         }
 
-        for (Professor professor : professores) {
-            professor.setNota(avaliacaoService.getMediaByProfessorId(professor));
-        }
-
         if (professores.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
