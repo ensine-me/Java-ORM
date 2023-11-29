@@ -286,16 +286,18 @@ public class UsuarioController {
         return ResponseEntity.ok(insignias);
     }
 
-    @GetMapping("professor/experiencia/{idProfessor}")
-    public ResponseEntity<Integer> getExperienciaProfessor(@PathVariable Integer idProfessor) {
+    @GetMapping("professor/experiencia")
+    public ResponseEntity<Integer> getExperienciaProfessor(@RequestParam Integer idProfessor) {
         Integer experienciaProfessor = usuarioService.getExperienciaProfessor(idProfessor);
         return ResponseEntity.ok(experienciaProfessor);
     }
 
+
     @GetMapping("professor/experiencia/top")
     public ResponseEntity<List<Professor>> getTopExperienciaProfessor() {
-        return ResponseEntity.ok(usuarioService.listTop10Professors());
+        return ResponseEntity.ok(usuarioService.listTop5Professors());
     }
+
 
     private void popularTabelaHash(List<Professor> professores) {
         tabelaHashProfessor = new TabelaHashProfessor(2);
