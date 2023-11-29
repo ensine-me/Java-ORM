@@ -108,7 +108,7 @@ public class AulaServiceTest {
                 .thenReturn(Arrays.asList(listaAula));
 
         // when
-        List<Aula> resultado = service.getAulasPorStatus(status);
+        ListaObj<Aula> resultado = service.getAulasPorStatus(status);
 
         // then
         assertNotNull(resultado);

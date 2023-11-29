@@ -306,5 +306,11 @@ public class UsuarioController {
             tabelaHashProfessor.insere(profesor);
         }
     }
-
+    @GetMapping("conta-professores")
+    @ApiResponse(responseCode = "404", description = "qtd professores não encontrado", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "qtd professores recuperado com sucesso")
+    public ResponseEntity<Long> countTotalAulasConcluidas() {
+        Long qtdProfessores = usuarioService.countTotalProfessores();
+        return ResponseEntity.ok(qtdProfessores);
+    }
 }

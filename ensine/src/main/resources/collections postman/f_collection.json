@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8f72aba7-cf3b-400d-81a9-a6ec49d3ecfc",
+		"_postman_id": "0a63b64a-75e7-41c0-a6a1-1aa58171492c",
 		"name": "Ensine-me",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "23004419"
+		"_exporter_id": "26061468"
 	},
 	"item": [
 		{
@@ -537,6 +537,402 @@
 		},
 		{
 			"name": "Buscar professores por matéria",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar professores por id",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar aula por id usuario",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contar aula por id professor",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contar aula por idprofessor e CONCLUIDO",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Contar aula por idprofessor e agendada",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAulasProfessorIdSolicitado",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "conta-aulas-concluidas-geral",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "qtd-aulas-mes",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "total-preco-por-professor-mat",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "totalPrecoTotalPorMatematica",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "tempo-media-aulas-segundos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtcmJlYXN0MUBlbWFpbC5jb20iLCJpYXQiOjE2ODQ5NjkxOTksImV4cCI6MTY4ODU2OTE5OX0.Ul08OXsWQ5QoH7lWvHXLmaeVvj4U-5u-1PP0oMfkj7Lygb5Qzx2TO841sPcjBknWyLN_q9Clgl9Mi1Xw0Vt-Dw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/professor/busca-por-materia?termo=Matemática",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"professor",
+						"busca-por-materia"
+					],
+					"query": [
+						{
+							"key": "termo",
+							"value": "Matemática"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "total-aulas-status",
 			"request": {
 				"method": "GET",
 				"header": [

@@ -5,7 +5,9 @@ public enum Status {
     AGUARDANDO_PAGAMENTO("Aguardando Pagamento"),
     AGENDADO("Agendado"),
     EM_PROGRESSO("Em Progresso"),
-    CONCLUIDA("Concluída");
+    CONCLUIDA("Concluída"),
+    CANCELADO("Cancelada"),
+    REJEITADO("Rejeitada");
 
     @Override
     public String toString() {

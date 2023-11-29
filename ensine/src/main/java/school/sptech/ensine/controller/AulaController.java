@@ -18,12 +18,14 @@ import school.sptech.ensine.service.usuario.AulaService;
 import school.sptech.ensine.service.usuario.DisponibilidadeService;
 import school.sptech.ensine.service.usuario.UsuarioService;
 import school.sptech.ensine.service.usuario.dto.ContagemAula;
+import school.sptech.ensine.service.usuario.dto.ContagemAulaStatus;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Tag(name = "Aula", description = "Requisições relacionada às aulas")
@@ -94,8 +96,8 @@ public class AulaController {
     }
 
     @GetMapping("/{status}")
-    public ResponseEntity<List<Aula>> getAulasByStatus(@PathVariable Status status) {
-        List<Aula> aulas = aulaService.getAulasPorStatus(status);
+    public ResponseEntity<ListaObj<Aula>> getAulasByStatus(@PathVariable Status status) {
+        ListaObj<Aula> aulas = aulaService.getAulasPorStatus(status);
         if (aulas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
@@ -275,9 +277,9 @@ public class AulaController {
     @GetMapping("qtd-aulas-meses")
     public ResponseEntity<List<ContagemAula>> qtdAulasUltimosMeses(){
         LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime threeMonthsAgo = currentTime.minusMonths(3);
+        LocalDateTime twoMonthsAgo = currentTime.minusMonths(3);
 
-        List<ContagemAula> qtd = aulaService.getContagemAulasUltimosTresMeses(currentTime, threeMonthsAgo);
+        List<ContagemAula> qtd = aulaService.getContagemAulasUltimosDoisMeses(currentTime, twoMonthsAgo);
 
         if (qtd.isEmpty()){
 
@@ -287,12 +289,12 @@ public class AulaController {
         return ResponseEntity.status(200).body(qtd);
     }
 
-    @GetMapping("total-valor-aulas")
-    public ResponseEntity<List<Object[]>> totalValorAulas(){
+    @GetMapping("qtd-aulas-mes")
+    public ResponseEntity<List<ContagemAula>> qtdAulasUltimoMes(){
         LocalDateTime currentTime = LocalDateTime.now();
-        LocalDateTime threeMonthsAgo = currentTime.minusMonths(3);
+        LocalDateTime OneMonthAgo = currentTime.minusMonths(1);
 
-        List<Object[]> qtd = aulaService.getTotalValorAulas(currentTime, threeMonthsAgo);
+        List<ContagemAula> qtd = aulaService.getContagemAulasUltimoMes(currentTime, OneMonthAgo);
 
         if (qtd.isEmpty()){
 
@@ -300,6 +302,162 @@ public class AulaController {
         }
 
         return ResponseEntity.status(200).body(qtd);
+    }
+
+    @GetMapping("qtd-aulas-semana")
+    public ResponseEntity<List<ContagemAula>> qtdAulasUltimaSemana(){
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime sevenDaysAgo = currentTime.minusDays(7);
+
+        List<ContagemAula> qtd = aulaService.getContagemAulasUltimaSemana(currentTime, sevenDaysAgo);
+
+        if (qtd.isEmpty()){
+
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(qtd);
+    }
+
+    @GetMapping("conta-aulas-concluidas")
+    @ApiResponse(responseCode = "404", description = "qtd de Aulas concluidas não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "qtd de Aulas concluidas recuperada com sucesso")
+    public ResponseEntity<Long> countTotalAulasConcluidas() {
+        Long qtdAulas = aulaService.countTotalAulasConcluidas();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("total-valor-aulas")
+    public ResponseEntity<List<Object[]>> totalValorAulas(){
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime twoMonthsAgo = currentTime.minusMonths(2);
+
+        List<Object[]> qtd = aulaService.getTotalValorAulas(currentTime, twoMonthsAgo);
+
+        if (qtd.isEmpty()){
+
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(qtd);
+    }
+
+    @GetMapping("total-preco-por-professor-mat")
+    public ResponseEntity<List<Object[]>> totalPrecoPorProfessorMat(){
+
+        List<Object[]> qtdPreco = aulaService.totalPrecoPorProfessor();
+
+        if (qtdPreco.isEmpty()){
+
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(qtdPreco);
+    }
+
+    @GetMapping("preco-total-matematica")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total matematica", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total matematica encontrado com sucesso")
+    public ResponseEntity<List<Object[]>> totalPrecoTotalPorMatematica() {
+        List<Object[]> qtdAulas = aulaService.totalPrecoTotalMatematica();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-fisica")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total fisica", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total fisica encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorFisica() {
+        Long qtdAulas = aulaService.totalPrecoTotalFisica();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-artes")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total artes", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total artes encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorArtes() {
+        Long qtdAulas = aulaService.totalPrecoTotalArtes();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-filosofia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total Filosofia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total filosofia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorFilosofia() {
+        Long qtdAulas = aulaService.totalPrecoTotalFilosofia();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-sociologia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total sociologia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total sociologia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorSociologia() {
+        Long qtdAulas = aulaService.totalPrecoTotalSociologia();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-lingua-inglesa")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total lingua inglesa", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total lingua inglesa encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorLinguaInglesa() {
+        Long qtdAulas = aulaService.totalPrecoTotalLinguaInglesa();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-quimica")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total quimica", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total quimica encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorQuimica() {
+        Long qtdAulas = aulaService.totalPrecoTotalQuimica();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-biologia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total biologia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total biologia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorBiologia() {
+        Long qtdAulas = aulaService.totalPrecoTotalBiologia();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-geografia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total geografia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total geografia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorGeografia() {
+        Long qtdAulas = aulaService.totalPrecoTotalGeografia();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-historia")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total historia", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total historia encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorHistoria() {
+        Long qtdAulas = aulaService.totalPrecoTotalHistoria();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("preco-total-lingua-portuguesa")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total lingua portuguesa", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total lingua portuguesa encontrado com sucesso")
+    public ResponseEntity<Long> totalPrecoTotalPorLinguaPortuguesa() {
+        Long qtdAulas = aulaService.totalPrecoTotalLinguaPortuguesa();
+        return ResponseEntity.ok(qtdAulas);
+    }
+
+    @GetMapping("total-aulas-status")
+    @ApiResponse(responseCode = "404", description = "Nao encontrado preco total lingua portuguesa", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "preco total lingua portuguesa encontrado com sucesso")
+    public ResponseEntity<List<ContagemAulaStatus>> porcentagemDeAulasPorStatus(){
+        List<ContagemAulaStatus> totalAulas = aulaService.totalAulasPorStatus();
+        return ResponseEntity.ok(totalAulas);
+    }
+    // ESTOU PUXANDO A MÉDIA EM SEGUNDOS divida por 3600 para obter a média em horas
+    @GetMapping("tempo-media-aulas-segundos")
+    @Tag(name = "Pegar aula por id", description = "Devolve uma aula dado um id")
+    @ApiResponse(responseCode = "404", description = "Aula não encontrada", content = @Content(schema = @Schema(hidden = true)))
+    @ApiResponse(responseCode = "200", description = "Aula recuperada com sucesso")
+    public ResponseEntity<Double> tempoMediaAulas() {
+        Double media = aulaService.tempoMediaAulas()/3600;
+        return ResponseEntity.ok(media);
     }
 
     @GetMapping("alunos/nao-avaliadas/{alunoId}")
