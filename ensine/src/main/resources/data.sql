@@ -51,28 +51,28 @@ ON CONFLICT (id_usuario) DO NOTHING;
 SELECT setval('usuario_id_usuario_seq', (SELECT MAX(id_usuario) FROM usuario));
 
 INSERT INTO professor
-(descricao, preco_hora_aula, usuario_id)
+(descricao, preco_hora_aula, usuario_id, experiencia)
 VALUES
-    ('Gosto de ensinar e ajudar alunos a atingir seus objetivos', 20.00, 1),
-    ('Gosto de ensinar', 15.00, 2),
-    ('Gosto de ensinar', 29.00, 3),
-    ('Gosto de ensinar', 38.00, 4),
-    ('Gosto de ensinar', 16.00, 5),
-    ('Gosto de ensinar', 25.00, 6),
-    ('Gosto de ensinar', 31.00, 7),
-    ('Gosto de ensinar', 12.00, 8),
-    ('Gosto de ensinar', 28.00, 9),
-    ('Gosto de ensinar', 37.00, 10),
-    ('Gosto de ensinar', 21.00, 11),
-    ('Gosto de ensinar', 32.00, 12),
-    ('Gosto de ensinar', 21.00, 13),
-    ('Gosto de ensinar', 23.00, 14),
-    ('Gosto de ensinar', 35.00, 15),
-    ('Gosto de ensinar', 39.00, 16),
-    ('Gosto de ensinar', 18.00, 17),
-    ('Gosto de ensinar', 11.00, 18),
-    ('Gosto de ensinar', 36.00, 19),
-    ('Gosto de ensinar', 15.00, 20);
+('Gosto de ensinar e ajudar alunos a atingir seus objetivos', 20.00, 1, 2000),
+('Gosto de ensinar', 15.00, 2, 3000),
+('Gosto de ensinar', 29.00, 3, 4000),
+('Gosto de ensinar', 38.00, 4, 1000),
+('Gosto de ensinar', 16.00, 5, 1500),
+('Gosto de ensinar', 25.00, 6, 6000),
+('Gosto de ensinar', 31.00, 7, 0),
+('Gosto de ensinar', 12.00, 8, 0),
+('Gosto de ensinar', 28.00, 9, 0),
+('Gosto de ensinar', 37.00, 10, 0),
+('Gosto de ensinar', 21.00, 11, 0),
+('Gosto de ensinar', 32.00, 12, 0),
+('Gosto de ensinar', 21.00, 13, 0),
+('Gosto de ensinar', 23.00, 14, 0),
+('Gosto de ensinar', 35.00, 15, 0),
+('Gosto de ensinar', 39.00, 16, 0),
+('Gosto de ensinar', 18.00, 17, 0),
+('Gosto de ensinar', 11.00, 18, 0),
+('Gosto de ensinar', 36.00, 19, 0),
+('Gosto de ensinar', 15.00, 20, 0);
 
 INSERT INTO usuario_materia
 (usuarios_id_usuario, materias_id)

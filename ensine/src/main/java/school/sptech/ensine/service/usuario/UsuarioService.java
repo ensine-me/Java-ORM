@@ -286,8 +286,8 @@ public class UsuarioService {
         return professor.get().getExperiencia();
     }
 
-    public List<Professor> listTop10Professors() {
-        List<Professor> professors = professorRepository.findTop10ByOrderByExperienciaDesc();
+    public List<Professor> listTop5Professors() {
+        List<Professor> professors = professorRepository.findTop5ByOrderByExperienciaDesc();
         return professors;
     }
 
