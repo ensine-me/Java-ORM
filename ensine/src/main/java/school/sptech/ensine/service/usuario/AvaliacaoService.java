@@ -27,7 +27,20 @@ public class AvaliacaoService {
     public Avaliacao criarAvaliacao(@Valid Avaliacao avaliacao) {
         if (avaliacaoRepository.findByAula_IdAndUsuario_IdUsuario(avaliacao.getAula().getId(),
                 avaliacao.getUsuario().getIdUsuario()).isEmpty()) {
-            Integer experiencia = (int) (avaliacao.getNota() * 100) + (avaliacao.getInsignias().size() * 50);
+            Integer xpNota = (int)(avaliacao.getNota() * 100);
+            Integer xpInsignia = 0;
+            for (Avaliacao.Insignia i:
+                 avaliacao.getInsignias()) {
+                if (i.ordinal() <= 5) {
+                    xpInsignia += 50;
+                } else {
+                    xpInsignia -= 50;
+                }
+            }
+            Integer experiencia = xpInsignia + xpNota;
+            if (experiencia < 0) {
+                experiencia = 0;
+            }
             avaliacao.setExperiencia(experiencia);
             Avaliacao avaliacao1 = this.avaliacaoRepository.save(avaliacao);
             Professor professor = avaliacao1.getProfessor();
